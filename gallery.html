@@ -1,177 +1,322 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title data-i18n="galleryPageTitle">My Gallery – Wplace Color Converter</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="icon" type="image/png" href="favicon.png" />
-  <link rel="icon" type="image/x-icon" href="favicon.ico" />
-  <link rel="stylesheet" href="main.css" />
-  <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
-</head>
-<body class="gallery">
-  <!-- Header -->
-  <header class="site-header">
-    <div class="container header-inner">
-      <a class="brand" href="index.html">
-        <img src="favicon.png" alt="" class="brand-mark" />
-        <span class="brand-name" data-i18n="pageTitle">Wplace Color Converter</span>
-      </a>
+  <head>
+    <meta charset="UTF-8" />
+    <title data-i18n="galleryPageTitle">
+      My Gallery – Wplace Color Converter
+    </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/overlays-layout.css" />
+    <link rel="stylesheet" href="css/controls-colors.css" />
+    <link rel="stylesheet" href="css/canvas-footer.css" />
+    <link rel="stylesheet" href="css/responsive.css" />
+    <link rel="stylesheet" href="css/advanced-footer.css" />
+    <link rel="stylesheet" href="css/gallery.css" />
+    <link rel="stylesheet" href="css/gallery-responsive.css" />
+    <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+  </head>
+  <body class="gallery">
+    <!-- Header -->
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="brand" href="index.html">
+          <img src="favicon.png" alt="" class="brand-mark" />
+          <span class="brand-name" data-i18n="pageTitle"
+            >Wplace Color Converter</span
+          >
+        </a>
 
-      <nav class="primary-nav">
-        <a class="nav-link" href="index.html" data-i18n="home" data-keep-lang>Home</a>
-        <a class="nav-link" href="studio.html" data-i18n="studioTitle" data-keep-lang>Studio</a>
-      </nav>
+        <nav class="primary-nav">
+          <a class="nav-link" href="index.html" data-i18n="home" data-keep-lang
+            >Home</a
+          >
+          <a
+            class="nav-link"
+            href="studio.html"
+            data-i18n="studioTitle"
+            data-keep-lang
+            >Studio</a
+          >
+        </nav>
 
-      <div class="nav-tools">
-        <select id="lang-select" aria-label="Language">
-          <option value="en">🇺🇸 English</option>
-          <option value="pt">🇵🇹 Português 🇧🇷</option>
-          <option value="de">🇩🇪 Deutsch</option>
-          <option value="es">🇪🇸 Español</option>
-          <option value="fr">🇫🇷 Français</option>
-          <option value="he">🇮🇱 Hebrew</option>
-          <option value="uk">🇺🇦 Українська</option>
-          <option value="vi">🇻🇳 Tiếng Việt</option>
-          <option value="pl">🇵🇱 Polski</option>
-          <option value="ja">🇯🇵 日本語</option>
-          <option value="de-CH">🇨🇭 Deutsch (Schweiz)</option>
-          <option value="nl">🇳🇱 Nederlands</option>
-          <option value="ru">🇷🇺 Русский</option>
-          <option value="tr">🇹🇷 Türkçe</option>
-          <option value="it">🇮🇹 Italiano</option>
-          <option value="zh-CN">🇨🇳 简体中文</option>
-        </select>
-        <button class="nav-burger" aria-label="Menu" aria-expanded="false">
-          <span></span><span></span><span></span>
-        </button>
-      </div>
-    </div>
-  </header>
-
-  <!-- Mobile menu -->
-  <div id="menuBackdrop" class="menu-backdrop" hidden></div>
-  <div id="mobileMenu" class="mobile-menu">
-    <div class="mobile-menu-inner">
-      <a class="menu-item" href="index.html" data-i18n="home" data-keep-lang>Home</a>
-      <a class="menu-item" href="gallery.html" data-i18n="studioTitle" data-keep-lang>Studio</a>
-      <!---<hr class="menu-sep" />-->
-      </label>
-    </div>
-  </div>
-
-  <!-- Main -->
-  <main class="container app gallery-shell" id="galleryApp">
-    <header class="gallery-head">
-      <h2 class="gallery-title" data-i18n="galleryTitle">Your Image Gallery</h2>
-
-      <div class="storage-meter">
-        <div class="storage-bar"><span id="storageBar"></span></div>
-        <small id="storageText">0%</small>
-      </div>
-
-      <div class="gallery-tools">
-        <button id="clearAllBtn" class="icon-btn danger" data-i18n-title="deleteAll" title="Delete All">
-          <img src="https://www.svgrepo.com/show/521000/trash-2.svg" alt="Delete" />
-        </button>
-        <button id="exportGallery" class="btn btn-secondary" data-i18n="exportGallery">Export Gallery</button>
-        <input type="file" id="importGallery" accept=".zip,image/*" multiple hidden />
-        <label for="importGallery" class="btn btn-secondary" data-i18n="importGallery">Import Gallery</label>
+        <div class="nav-tools">
+          <select id="lang-select" aria-label="Language">
+            <option value="en">🇺🇸 English</option>
+            <option value="pt">🇵🇹 Português 🇧🇷</option>
+            <option value="de">🇩🇪 Deutsch</option>
+            <option value="es">🇪🇸 Español</option>
+            <option value="fr">🇫🇷 Français</option>
+            <option value="he">🇮🇱 Hebrew</option>
+            <option value="uk">🇺🇦 Українська</option>
+            <option value="vi">🇻🇳 Tiếng Việt</option>
+            <option value="pl">🇵🇱 Polski</option>
+            <option value="ja">🇯🇵 日本語</option>
+            <option value="de-CH">🇨🇭 Deutsch (Schweiz)</option>
+            <option value="nl">🇳🇱 Nederlands</option>
+            <option value="ru">🇷🇺 Русский</option>
+            <option value="tr">🇹🇷 Türkçe</option>
+            <option value="it">🇮🇹 Italiano</option>
+            <option value="zh-CN">🇨🇳 简体中文</option>
+          </select>
+          <button class="nav-burger" aria-label="Menu" aria-expanded="false">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
       </div>
     </header>
 
-    <!-- Toolbar -->
-    <section class="gallery-toolbar card">
-      <div id="selectionBar" class="selection-bar" hidden>
-        <span id="selectionCount">
-          <span data-i18n="selectionCount">0 selected</span>
-        </span>
-        <div class="selection-actions">
-          <button id="selectionExport" class="btn btn-secondary" data-i18n="exportSelected">Export Selected</button>
-          <button id="selectionDelete" class="btn btn-danger" data-i18n="deleteSelected">Delete Selected</button>
-        </div>
+    <!-- Mobile menu -->
+    <div id="menuBackdrop" class="menu-backdrop" hidden></div>
+    <div id="mobileMenu" class="mobile-menu">
+      <div class="mobile-menu-inner">
+        <a class="menu-item" href="index.html" data-i18n="home" data-keep-lang
+          >Home</a
+        >
+        <a
+          class="menu-item"
+          href="studio.html"
+          data-i18n="studioTitle"
+          data-keep-lang
+          >Studio</a
+        >
+        <!---<hr class="menu-sep" />-->
       </div>
-      <div class="toolbar-row">
-        <input id="searchBox" type="search" class="input"
-              placeholder="Search…" data-i18n-placeholder="searchPlaceholder" />
-        <select id="collectionFilter" class="input"
-                aria-label="Collection filter" data-i18n-aria-label="collectionFilter">   
-        </select>
-        <input id="tagFilter" type="text" class="input"
-              placeholder="Tag filter" data-i18n-placeholder="tagFilter" />
-        <select id="sortSelect" class="input"
-                aria-label="Sort" data-i18n-aria-label="sort">
-          <option value="newest" data-i18n="sortNewest">Newest first</option>
-          <option value="oldest" data-i18n="sortOldest">Oldest first</option>
-          <option value="nameAsc" data-i18n="sortNameAsc">Name A→Z</option>
-          <option value="sizeDesc" data-i18n="sortSizeDesc">Largest</option>
-        </select>
-      </div>
-    </section>
+    </div>
 
-    <!-- Empty -->
-    <section id="emptyState" class="album-empty card">
-      <div class="empty-inner">
-        <div class="empty-icon">📁</div>
-        <p data-i18n="emptyGallery">
-          No images yet<br><span class="muted">Convert an image and add it to your gallery</span>
+    <!-- Main -->
+    <main class="container app gallery-shell" id="galleryApp">
+      <header class="gallery-head">
+        <h2 class="gallery-title" data-i18n="galleryTitle">
+          Your Image Gallery
+        </h2>
+
+        <div class="storage-meter">
+          <div class="storage-bar"><span id="storageBar"></span></div>
+          <small id="storageText">0%</small>
+        </div>
+
+        <div class="gallery-tools">
+          <button
+            id="clearAllBtn"
+            class="icon-btn danger"
+            data-i18n-title="deleteAll"
+            title="Delete All"
+          >
+            <img
+              src="https://www.svgrepo.com/show/521000/trash-2.svg"
+              alt="Delete"
+            />
+          </button>
+          <button
+            id="exportGallery"
+            class="btn btn-secondary"
+            data-i18n="exportGallery"
+          >
+            Export Gallery
+          </button>
+          <input
+            type="file"
+            id="importGallery"
+            accept=".zip,image/*"
+            multiple
+            hidden
+          />
+          <label
+            for="importGallery"
+            class="btn btn-secondary"
+            data-i18n="importGallery"
+            >Import Gallery</label
+          >
+        </div>
+      </header>
+
+      <!-- Toolbar -->
+      <section class="gallery-toolbar card">
+        <div id="selectionBar" class="selection-bar" hidden>
+          <span id="selectionCount">
+            <span data-i18n="selectionCount">0 selected</span>
+          </span>
+          <div class="selection-actions">
+            <button
+              id="selectionExport"
+              class="btn btn-secondary"
+              data-i18n="exportSelected"
+            >
+              Export Selected
+            </button>
+            <button
+              id="selectionDelete"
+              class="btn btn-danger"
+              data-i18n="deleteSelected"
+            >
+              Delete Selected
+            </button>
+          </div>
+        </div>
+        <div class="toolbar-row">
+          <input
+            id="searchBox"
+            type="search"
+            class="input"
+            placeholder="Search…"
+            data-i18n-placeholder="searchPlaceholder"
+          />
+          <select
+            id="collectionFilter"
+            class="input"
+            aria-label="Collection filter"
+            data-i18n-aria-label="collectionFilter"
+          ></select>
+          <input
+            id="tagFilter"
+            type="text"
+            class="input"
+            placeholder="Tag filter"
+            data-i18n-placeholder="tagFilter"
+          />
+          <select
+            id="sortSelect"
+            class="input"
+            aria-label="Sort"
+            data-i18n-aria-label="sort"
+          >
+            <option value="newest" data-i18n="sortNewest">Newest first</option>
+            <option value="oldest" data-i18n="sortOldest">Oldest first</option>
+            <option value="nameAsc" data-i18n="sortNameAsc">Name A→Z</option>
+            <option value="sizeDesc" data-i18n="sortSizeDesc">Largest</option>
+          </select>
+        </div>
+      </section>
+
+      <!-- Empty -->
+      <section id="emptyState" class="album-empty card">
+        <div class="empty-inner">
+          <div class="empty-icon">📁</div>
+          <p data-i18n="emptyGallery">
+            No images yet<br /><span class="muted"
+              >Convert an image and add it to your gallery</span
+            >
+          </p>
+          <a href="index.html" class="btn" data-i18n="goConvert">Go Convert</a>
+        </div>
+      </section>
+
+      <!-- Grid -->
+      <section id="gallery" class="album-grid"></section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+      <div class="container footer-content">
+        <small class="license"
+          >&copy; Wplace Color Converter — Forked from
+          <a
+            href="https://github.com/PEPOAFONSO/color_converter_wplace"
+            target="_blank"
+            >PEPOAFONSO</a
+          >
+          by
+          <a href="https://github.com/cdakotabrown" target="_blank"
+            >cdakotabrown</a
+          >
+          <span id="year"></span
+        ></small>
+        <nav class="footer-links">
+          <a class="nav-link" href="https://wplace.live" target="_blank"
+            >Wplace</a
+          >
+          <a
+            class="nav-link"
+            href="https://github.com/cdakotabrown/color_converter_wplace"
+            target="_blank"
+            >GitHub</a
+          >
+        </nav>
+      </div>
+    </footer>
+
+    <!-- Toast -->
+    <div
+      id="globalToast"
+      class="toast"
+      aria-live="polite"
+      aria-atomic="true"
+    ></div>
+
+    <!-- Clear all modal -->
+    <div id="confirmModal" class="modal" hidden>
+      <div class="modal-content">
+        <p data-i18n="clearAllPrompt">
+          Are you sure you want to delete all images?
         </p>
-        <a href="index.html" class="btn" data-i18n="goConvert">Go Convert</a>
-      </div>
-    </section>
-
-    <!-- Grid -->
-    <section id="gallery" class="album-grid"></section>
-  </main>
-
-  <!-- Footer -->
-  <footer class="site-footer">
-    <div class="container footer-content">
-      <small class="license">&copy; <span id="year"></span> Wplace Color Converter — <span data-i18n="personalGallery">Your personal gallery</span></small>
-      <nav class="footer-links">
-        <a class="nav-link" href="https://wplace.live" target="_blank">Wplace</a>
-        <a class="nav-link" href="https://github.com/PEPOAFONSO/color_converter_wplace" target="_blank">GitHub</a>
-      </nav>
-    </div>
-  </footer>
-
-  <!-- Toast -->
-  <div id="globalToast" class="toast" aria-live="polite" aria-atomic="true"></div>
-
-  <!-- Clear all modal -->
-  <div id="confirmModal" class="modal" hidden>
-    <div class="modal-content">
-      <p data-i18n="clearAllPrompt">Are you sure you want to delete all images?</p>
-      <div class="modal-actions">
-        <button id="confirmYes" class="btn btn-danger" data-i18n="yes">Yes</button>
-        <button id="confirmNo" class="btn btn-secondary" data-i18n="cancel">Cancel</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Viewer -->
-  <div id="viewer" class="viewer" hidden>
-    <div class="viewer-inner">
-      <button class="viewer-close" id="viewerClose">✕</button>
-      <!-- Always-visible selection checkbox inside viewer -->
-      <button id="viewerSelect" class="viewer-select" aria-pressed="false" title="Select">✓</button>
-      <button class="viewer-nav prev" id="viewerPrev">‹</button>
-      <button class="viewer-nav next" id="viewerNext">›</button>
-      <img id="viewerImg" alt="Image" />
-      <div class="viewer-meta">
-      <input id="viewerName" class="input" placeholder="Name…" data-i18n-placeholder="viewerNamePlaceholder" />
-      <input id="viewerTags" class="input" placeholder="Tags…" data-i18n-placeholder="viewerTagsPlaceholder" />
-      <input id="viewerCollection" class="input" placeholder="Collection" data-i18n-placeholder="viewerCollectionPlaceholder" />
-        <div class="viewer-actions">
-          <button id="viewerSave" class="btn btn-secondary" data-i18n="save">Save</button>
-          <a id="viewerDownload" class="btn btn-secondary" data-i18n="download">Download</a>
-          <button id="viewerDelete" class="btn btn-danger" data-i18n="delete">Delete</button>
+        <div class="modal-actions">
+          <button id="confirmYes" class="btn btn-danger" data-i18n="yes">
+            Yes
+          </button>
+          <button id="confirmNo" class="btn btn-secondary" data-i18n="cancel">
+            Cancel
+          </button>
         </div>
       </div>
     </div>
-  </div>
-<script src="translations.js"></script>
-<script src="toast.js"></script>
-<script src="gallery.js" defer></script>
-</body>
+
+    <!-- Viewer -->
+    <div id="viewer" class="viewer" hidden>
+      <div class="viewer-inner">
+        <button class="viewer-close" id="viewerClose">✕</button>
+        <!-- Always-visible selection checkbox inside viewer -->
+        <button
+          id="viewerSelect"
+          class="viewer-select"
+          aria-pressed="false"
+          title="Select"
+        >
+          ✓
+        </button>
+        <button class="viewer-nav prev" id="viewerPrev">‹</button>
+        <button class="viewer-nav next" id="viewerNext">›</button>
+        <img id="viewerImg" alt="Image" />
+        <div class="viewer-meta">
+          <input
+            id="viewerName"
+            class="input"
+            placeholder="Name…"
+            data-i18n-placeholder="viewerNamePlaceholder"
+          />
+          <input
+            id="viewerTags"
+            class="input"
+            placeholder="Tags…"
+            data-i18n-placeholder="viewerTagsPlaceholder"
+          />
+          <input
+            id="viewerCollection"
+            class="input"
+            placeholder="Collection"
+            data-i18n-placeholder="viewerCollectionPlaceholder"
+          />
+          <div class="viewer-actions">
+            <button id="viewerSave" class="btn btn-secondary" data-i18n="save">
+              Save
+            </button>
+            <a
+              id="viewerDownload"
+              class="btn btn-secondary"
+              data-i18n="download"
+              >Download</a
+            >
+            <button id="viewerDelete" class="btn btn-danger" data-i18n="delete">
+              Delete
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="translations.js"></script>
+    <script src="toast.js"></script>
+    <script src="gallery.js" defer></script>
+  </body>
 </html>

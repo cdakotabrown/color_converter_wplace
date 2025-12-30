@@ -1,0 +1,477 @@
+/* ---------- Inputs / Controls ---------- */
+/* Hide native file input */
+.custom-upload input[type="file"] {
+  position: absolute;
+  left: -9999px;
+}
+
+/* Upload container */
+.upload-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 30px 20px;
+  border: 2px dashed var(--brand);
+  border-radius: var(--radius);
+  background: linear-gradient(
+    160deg,
+    rgba(0, 149, 255, 0.1),
+    rgba(0, 149, 255, 0.1)
+  );
+  color: var(--text);
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.upload-box:hover,
+.custom-upload.dragover .upload-box {
+  background: linear-gradient(
+    160deg,
+    rgba(0, 149, 255, 0.12),
+    rgba(0, 149, 255, 0.2)
+  );
+  box-shadow: 0 0 12px rgba(0, 149, 255, 0.4);
+  transform: scale(1.02);
+}
+
+.controls-row {
+  display: flex;
+  gap: 16px;
+  align-items: stretch;
+}
+
+.upload-inline {
+  flex: 0 0 20%;
+  min-width: 140px;
+  display: flex;
+}
+
+.upload-inline .upload-box {
+  width: 100%;
+  height: 100%;
+  padding: 16px 10px;
+  min-height: 150px;
+}
+
+.upload-inline .upload-text strong {
+  font-size: 0.95rem;
+}
+
+.upload-inline .upload-text span {
+  font-size: 0.8rem;
+}
+
+.controls-main {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Icon */
+.upload-icon {
+  font-size: 2.5rem;
+}
+
+/* Text */
+.upload-text strong {
+  font-size: 1.1rem;
+}
+.upload-text span {
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+/* sliders */
+.scroll-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 10px 0;
+}
+#scaleRange,
+#zoomRange {
+  width: 350px;
+  max-width: 100%;
+  accent-color: var(--brand);
+  background: #222;
+  border-radius: 8px;
+  height: 8px;
+}
+#scaleValue,
+#zoomValue {
+  font-size: 1.05rem;
+  font-weight: bold;
+  color: var(--brand);
+}
+.scale-input {
+  width: 90px;
+  height: 34px;
+  padding: 0 8px;
+  background: var(--bg);
+  color: #fff;
+  border: 2px solid var(--brand);
+  border-radius: 7px;
+  font-size: 1.05rem;
+  font-weight: bold;
+  text-align: center;
+  appearance: textfield;
+}
+.scale-input::-webkit-inner-spin-button,
+.scale-input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.scale-suffix {
+  font-size: 1.05rem;
+  font-weight: bold;
+  color: var(--brand);
+}
+.zoom-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* space between slider and value */
+}
+
+/* dimensions (keeps your original look) */
+.dimensions {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+}
+.dimension-input {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.dimension-input label {
+  font-size: 1.05rem;
+  margin-bottom: 0.3rem;
+  color: #fff;
+}
+.dimension-input input[type="number"],
+.dimension-input .area-box {
+  width: 100px;
+  height: 30px;
+  padding: 0 0.75em;
+  background: var(--bg);
+  color: #fff;
+  border: 2px solid var(--brand);
+  border-radius: 7px;
+  font-size: 1.05rem;
+  font-weight: bold;
+  text-align: center;
+  transition:
+    background 0.2s,
+    box-shadow 0.2s,
+    transform 0.1s;
+  appearance: none;
+  -moz-appearance: textfield;
+  box-sizing: border-box;
+}
+.dimension-input input[type="number"]::-webkit-inner-spin-button,
+.dimension-input input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.dimension-input input[type="number"]:hover,
+.dimension-input .area-box:hover {
+  transform: scale(1.05);
+}
+
+/* ---------- Buttons / Chips ---------- */
+.button,
+.btn {
+  margin: 10px 10px;
+  padding: 12px 22px;
+  height: 44px;
+  background: #007bff;
+  color: #fff;
+  border-radius: 12px;
+  font-size: 1rem;
+  border: none;
+  box-shadow: 0 2px 8px #0006;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+  transition:
+    background 0.2s,
+    transform 0.2s,
+    box-shadow 0.2s;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.button:hover,
+.btn:hover {
+  cursor: pointer;
+  transform: scale(1.05);
+  background: #0095ff;
+}
+.btn-chip {
+  width: 260px; /* pick a value that fits both texts */
+  text-align: center;
+  font-size: 1.05rem;
+  height: 44px;
+}
+.btn-toggle.active,
+.toggle-color.active {
+  border: 3px solid #00eaff;
+  box-shadow: 0 0px 12px #0095ff;
+}
+
+.toggle-row {
+  margin: 20px 0 0 0;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.dither-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  margin: 20px 0 10px 0;
+  width: 100%;
+}
+
+.dither-row .btn {
+  flex: 0 0 auto;
+  max-width: none;
+  white-space: nowrap;
+  overflow: visible;
+  text-overflow: clip;
+}
+
+.sampler-row {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin: 12px 0 0 0;
+}
+
+.sampler-label {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.sampler-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 4px;
+  width: 100%;
+}
+
+.sampler-buttons .btn {
+  margin: 0;
+  flex: 0 0 auto;
+  max-width: none;
+  white-space: nowrap;
+  overflow: visible;
+  text-overflow: clip;
+}
+
+.controls-main .actions {
+  margin-top: 12px;
+  gap: 10px;
+  justify-content: center;
+}
+.controls-main .actions .btn {
+  margin: 0;
+}
+
+/* color chips container */
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  background: #232526;
+  border-radius: 18px;
+  padding: 12px;
+  box-shadow: 0 2px 12px #0008;
+}
+
+.color-list-controls {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px 28px;
+  flex-wrap: wrap;
+}
+
+.color-list-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  min-width: 220px;
+}
+
+/* individual color chip buttons (keep your original) */
+.toggle-color {
+  width: 100%;
+  min-width: 0;
+  padding: 10px 12px;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border: 2px solid #1f2a3b;
+  box-shadow: none;
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition:
+    transform 0.12s,
+    box-shadow 0.2s,
+    border-color 0.2s;
+  text-align: center;
+}
+
+/* secondary buttons so Download/Copy stay primary */
+.btn-secondary {
+  background: #0f1420;
+  color: #e8eef8;
+  border: 1px solid var(--border);
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-weight: 600;
+  font-family: var(--font) !important;
+}
+.btn-secondary:hover {
+  transform: translateY(-1px);
+}
+
+.toggle-color:hover {
+  transform: translateY(-1px);
+}
+.toggle-color.active {
+  border-color: #00eaff;
+  box-shadow: 0 0 0 2px #00eaff55;
+}
+
+/* Eye button inside each color chip */
+.toggle-color {
+  position: relative;
+}
+.toggle-color .hide-eye {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 22px;
+  height: 22px;
+  border: 0;
+  border-radius: 6px;
+  background: none;
+  cursor: pointer;
+  padding: 0;
+  display: grid;
+  place-items: center;
+  opacity: 0.85;
+  color: #111;
+}
+.toggle-color .hide-eye:hover {
+  opacity: 1;
+}
+
+.toggle-color[style*="color: #fff"] .hide-eye {
+  color: #fff;
+}
+
+/* SVG icons via mask (no extra files) */
+/* eye on */
+.hide-eye::before {
+  content: "";
+  width: 16px;
+  height: 16px;
+  display: block;
+  background: currentColor;
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5C21.27 7.61 17 4.5 12 4.5zm0 12a4.5 4.5 0 1 1 0-9 4.5 4.5 0 0 1 0 9z'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5C21.27 7.61 17 4.5 12 4.5zm0 12a4.5 4.5 0 1 1 0-9 4.5 4.5 0 0 1 0 9z'/%3E%3C/svg%3E");
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+}
+
+/* eye with slash (hidden) */
+.hide-eye.is-off::before {
+  content: "";
+  width: 16px;
+  height: 16px;
+  display: block;
+  background: currentColor;
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M2.1 3.51 20.49 21.9l1.41-1.41L3.51 2.1 2.1 3.51zM12 6c4.42 0 8.19 2.55 10 6-1 2.22-2.76 4.07-4.94 5.16l-2.2-2.2A4.5 4.5 0 0 0 9.03 10l-2.1-2.1A12.7 12.7 0 0 1 12 6zm0 12c-4.42 0-8.19-2.55-10-6 .83-1.84 2.23-3.42 3.98-4.56l2.16 2.16A4.5 4.5 0 0 0 14.4 14.3l2.36 2.36A12.6 12.6 0 0 1 12 18z'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M2.1 3.51 20.49 21.9l1.41-1.41L3.51 2.1 2.1 3.51zM12 6c4.42 0 8.19 2.55 10 6-1 2.22-2.76 4.07-4.94 5.16l-2.2-2.2A4.5 4.5 0 0 0 9.03 10l-2.1-2.1A12.7 12.7 0 0 1 12 6zm0 12c-4.42 0-8.19-2.55-10-6 .83-1.84 2.23-3.42 3.98-4.56l2.16 2.16A4.5 4.5 0 0 0 14.4 14.3l2.36 2.36A12.6 12.6 0 0 1 12 18z'/%3E%3C/svg%3E");
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+}
+
+/* optional: dim hidden chips */
+.toggle-color.color-hidden {
+  filter: grayscale(0.6) brightness(0.8);
+}
+
+/* containers (renamed FREE from #colors to #colors-free, keeps #colors-paid) */
+#colors-free,
+#colors-paid {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 15px;
+  background: #1a1d22;
+  border-radius: 14px;
+  padding: 12px;
+  box-shadow: 0 2px 10px #0008;
+
+  /* equalize and keep cards neat even with long lists */
+  flex: 1;
+  min-height: 260px;
+  max-height: 360px;
+  overflow: auto;
+}
+
+/* Color list */
+#color-list {
+  background: linear-gradient(
+    160deg,
+    rgba(255, 255, 255, 0.06),
+    rgba(255, 255, 255, 0.02)
+  );
+  border-radius: 18px;
+  padding: 18px 12px;
+  box-shadow: 0 2px 12px #0008;
+
+  /* Manual column count mode */
+  grid-template-columns: var(--color-list-template, repeat(2, minmax(0, 1fr)));
+  display: grid;
+  gap: 6px 12px;
+  align-items: start;
+}
+
+/* Dynamic column count mode: responsive up to 4 cols */
+#color-list.dynamic {
+  /* 
+    minmax( max( 20%, 250px ), 1fr )
+    - min: the larger [max(..)] of 20% or 250px
+    - max: flexible, share remaining space (1fr) 
+  */
+  grid-template-columns: repeat(auto-fit, minmax(max(20%, 250px), 1fr));
+}
+
+#color-list:empty {
+  display: none;
+}

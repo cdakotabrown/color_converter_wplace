@@ -43,7 +43,7 @@
     for (let i = 0; i < buf.length; i++) {
       c ^= buf[i];
       for (let k = 0; k < 8; k++) {
-        c = (c >>> 1) ^ (0xEDB88320 & -(c & 1));
+        c = (c >>> 1) ^ (0xedb88320 & -(c & 1));
       }
     }
     return ~c >>> 0;
@@ -66,20 +66,20 @@
 
     const out = new Uint8Array(12 + len); // length(4) + type(4) + data(len) + crc(4)
     // write length
-    out[0] = (len >>> 24) & 0xFF;
-    out[1] = (len >>> 16) & 0xFF;
-    out[2] = (len >>> 8) & 0xFF;
-    out[3] = (len >>> 0) & 0xFF;
+    out[0] = (len >>> 24) & 0xff;
+    out[1] = (len >>> 16) & 0xff;
+    out[2] = (len >>> 8) & 0xff;
+    out[3] = (len >>> 0) & 0xff;
     // write type
     out.set(type, 4);
     // write data
     out.set(data, 8);
     // compute crc over type+data
     const crc = crc32(out.subarray(4, 8 + len));
-    out[8 + len] = (crc >>> 24) & 0xFF;
-    out[9 + len] = (crc >>> 16) & 0xFF;
-    out[10 + len] = (crc >>> 8) & 0xFF;
-    out[11 + len] = (crc >>> 0) & 0xFF;
+    out[8 + len] = (crc >>> 24) & 0xff;
+    out[9 + len] = (crc >>> 16) & 0xff;
+    out[10 + len] = (crc >>> 8) & 0xff;
+    out[11 + len] = (crc >>> 0) & 0xff;
 
     return out;
   }
@@ -92,21 +92,30 @@
     const bytes = new Uint8Array(ab);
 
     // PNG signature
-    const sig = [137,80,78,71,13,10,26,10];
+    const sig = [137, 80, 78, 71, 13, 10, 26, 10];
     for (let i = 0; i < 8; i++) if (bytes[i] !== sig[i]) return blob;
 
     // IHDR starts at offset 8; skip 8 (len+type) + length + 4 (crc)
     let off = 8;
-    const ihdrLen = (bytes[off]<<24) | (bytes[off+1]<<16) | (bytes[off+2]<<8) | bytes[off+3];
-    const ihdrType = String.fromCharCode(bytes[off+4], bytes[off+5], bytes[off+6], bytes[off+7]);
-    if (ihdrType !== 'IHDR') return blob;
+    const ihdrLen =
+      (bytes[off] << 24) |
+      (bytes[off + 1] << 16) |
+      (bytes[off + 2] << 8) |
+      bytes[off + 3];
+    const ihdrType = String.fromCharCode(
+      bytes[off + 4],
+      bytes[off + 5],
+      bytes[off + 6],
+      bytes[off + 7],
+    );
+    if (ihdrType !== "IHDR") return blob;
     const afterIHDR = off + 12 + ihdrLen; // 12 = length(4)+type(4)+crc(4)
 
     // Build tEXt chunk with JSON meta
     const meta = {
       ...metaObj,
       app: "Wplace Color Converter",
-      version: 1
+      version: 1,
     };
     const chunk = makeTextChunk("wplaceMeta", JSON.stringify(meta));
 
@@ -127,32 +136,43 @@
       const bytes = new Uint8Array(ab);
 
       // signature check
-      const sig = [137,80,78,71,13,10,26,10];
+      const sig = [137, 80, 78, 71, 13, 10, 26, 10];
       for (let i = 0; i < 8; i++) if (bytes[i] !== sig[i]) return null;
 
       let off = 8;
       while (off + 12 <= bytes.length) {
-        const len = (bytes[off]<<24) | (bytes[off+1]<<16) | (bytes[off+2]<<8) | bytes[off+3];
-        const type = String.fromCharCode(bytes[off+4],bytes[off+5],bytes[off+6],bytes[off+7]);
+        const len =
+          (bytes[off] << 24) |
+          (bytes[off + 1] << 16) |
+          (bytes[off + 2] << 8) |
+          bytes[off + 3];
+        const type = String.fromCharCode(
+          bytes[off + 4],
+          bytes[off + 5],
+          bytes[off + 6],
+          bytes[off + 7],
+        );
         const dataStart = off + 8;
         const dataEnd = dataStart + len;
         const next = dataEnd + 4; // skip CRC
 
         if (dataEnd > bytes.length) break;
 
-        if (type === 'tEXt') {
+        if (type === "tEXt") {
           // parse keyword\0value
           const data = bytes.subarray(dataStart, dataEnd);
           const zero = data.indexOf(0);
           if (zero > 0) {
             const key = new TextDecoder().decode(data.subarray(0, zero));
             const val = new TextDecoder().decode(data.subarray(zero + 1));
-            if (key === 'wplaceMeta') {
-              try { return JSON.parse(val); } catch {}
+            if (key === "wplaceMeta") {
+              try {
+                return JSON.parse(val);
+              } catch {}
             }
           }
         }
-        if (type === 'IEND') break;
+        if (type === "IEND") break;
         off = next;
       }
       return null;
@@ -165,7 +185,9 @@
     const modal = $("#confirmModal");
     if (!modal) {
       return Promise.resolve(
-        confirm(typeof i18nKeyOrText === "string" ? i18nKeyOrText : "Are you sure?")
+        confirm(
+          typeof i18nKeyOrText === "string" ? i18nKeyOrText : "Are you sure?",
+        ),
       );
     }
     const p = modal.querySelector("p[data-i18n]") || modal.querySelector("p");
@@ -181,8 +203,14 @@
         yes?.removeEventListener("click", onYes);
         no?.removeEventListener("click", onNo);
       };
-      const onYes = () => { cleanup(); resolve(true); };
-      const onNo = () => { cleanup(); resolve(false); };
+      const onYes = () => {
+        cleanup();
+        resolve(true);
+      };
+      const onNo = () => {
+        cleanup();
+        resolve(false);
+      };
 
       yes?.addEventListener("click", onYes);
       no?.addEventListener("click", onNo);
@@ -197,7 +225,7 @@
         if (!db.objectStoreNames.contains(STORE_NAME)) {
           const store = db.createObjectStore(STORE_NAME, {
             keyPath: "id",
-            autoIncrement: true
+            autoIncrement: true,
           });
           store.createIndex("created", "created", { unique: false });
           store.createIndex("name", "name", { unique: false });
@@ -238,7 +266,10 @@
       const getReq = store.get(id);
       getReq.onsuccess = () => {
         const rec = getReq.result;
-        if (!rec) { resolve(false); return; }
+        if (!rec) {
+          resolve(false);
+          return;
+        }
         Object.assign(rec, patch);
         const putReq = store.put(rec);
         putReq.onsuccess = () => resolve(true);
@@ -270,9 +301,12 @@
     });
   }
 
-  function isSelected(id) { return selectedIds.has(id); }
+  function isSelected(id) {
+    return selectedIds.has(id);
+  }
   function setSelected(id, on) {
-    if (on) selectedIds.add(id); else selectedIds.delete(id);
+    if (on) selectedIds.add(id);
+    else selectedIds.delete(id);
     refreshSelectionBar();
   }
 
@@ -288,12 +322,12 @@
 
     // counters that might exist in different layouts
     const countEl = $("#selectionCount");
-    if (countEl) countEl.textContent = `${n} ${t("selected","selected")}`;
+    if (countEl) countEl.textContent = `${n} ${t("selected", "selected")}`;
 
     const bulkCount = $("#bulkCount");
-    if (bulkCount) bulkCount.textContent = `${n} ${t("selected","selected")}`;
+    if (bulkCount) bulkCount.textContent = `${n} ${t("selected", "selected")}`;
 
-    $$.call(null, "[data-selected-count]").forEach(el => {
+    $$.call(null, "[data-selected-count]").forEach((el) => {
       el.textContent = String(n);
     });
 
@@ -320,7 +354,7 @@
       q: ($("#searchBox")?.value || "").trim().toLowerCase(),
       tag: ($("#tagFilter")?.value || "").trim().toLowerCase(),
       coll: $("#collectionFilter")?.value || "",
-      sort: $("#sortSelect")?.value || "newest"
+      sort: $("#sortSelect")?.value || "newest",
     };
   }
 
@@ -329,28 +363,40 @@
     let out = list.slice();
 
     if (q) {
-      out = out.filter(r =>
-        (r.name || "").toLowerCase().includes(q) ||
-        (r.collection || "").toLowerCase().includes(q) ||
-        (Array.isArray(r.tags) ? r.tags.join(",") : "").toLowerCase().includes(q)
+      out = out.filter(
+        (r) =>
+          (r.name || "").toLowerCase().includes(q) ||
+          (r.collection || "").toLowerCase().includes(q) ||
+          (Array.isArray(r.tags) ? r.tags.join(",") : "")
+            .toLowerCase()
+            .includes(q),
       );
     }
 
     if (tag) {
-      out = out.filter(r =>
-        Array.isArray(r.tags) ? r.tags.some(tg => (tg || "").toLowerCase().includes(tag)) : false
+      out = out.filter((r) =>
+        Array.isArray(r.tags)
+          ? r.tags.some((tg) => (tg || "").toLowerCase().includes(tag))
+          : false,
       );
     }
 
     if (coll && coll !== "__all__") {
-      out = out.filter(r => (r.collection || "") === coll);
+      out = out.filter((r) => (r.collection || "") === coll);
     }
 
     switch (sort) {
-      case "oldest": out.sort((a, b) => (a.created || 0) - (b.created || 0)); break;
-      case "nameAsc": out.sort((a, b) => (a.name || "").localeCompare(b.name || "")); break;
-      case "sizeDesc": out.sort((a, b) => (b.blob?.size || 0) - (a.blob?.size || 0)); break;
-      default: out.sort((a, b) => (b.created || 0) - (a.created || 0));
+      case "oldest":
+        out.sort((a, b) => (a.created || 0) - (b.created || 0));
+        break;
+      case "nameAsc":
+        out.sort((a, b) => (a.name || "").localeCompare(b.name || ""));
+        break;
+      case "sizeDesc":
+        out.sort((a, b) => (b.blob?.size || 0) - (a.blob?.size || 0));
+        break;
+      default:
+        out.sort((a, b) => (b.created || 0) - (a.created || 0));
     }
     return out;
   }
@@ -358,20 +404,30 @@
   function populateCollectionFilter(list) {
     const sel = $("#collectionFilter");
     if (!sel) return;
-    const set = new Set(list.map(r => r.collection).filter(Boolean));
+    const set = new Set(list.map((r) => r.collection).filter(Boolean));
     const current = sel.value || "__all__";
     sel.innerHTML =
       `<option value="__all__" data-i18n="allCollections">${t("allCollections", "All collections")}</option>` +
       Array.from(set)
         .sort()
-        .map(c => `<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`)
+        .map(
+          (c) => `<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`,
+        )
         .join("");
     sel.value = current;
   }
 
   function escapeHtml(s = "") {
-    return s.replace(/[&<>"']/g, c =>
-      ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c])
+    return s.replace(
+      /[&<>"']/g,
+      (c) =>
+        ({
+          "&": "&amp;",
+          "<": "&lt;",
+          ">": "&gt;",
+          '"': "&quot;",
+          "'": "&#39;",
+        })[c],
     );
   }
 
@@ -408,10 +464,10 @@
         </div>
         <img src="${url}" alt="${escapeHtml(item.name || "Saved Image")}">
         <div class="gallery-actions">
-          <a href="${url}" download="image_${item.id}.png" title="${t("download","Download")}" aria-label="${t("download","Download")}">
+          <a href="${url}" download="image_${item.id}.png" title="${t("download", "Download")}" aria-label="${t("download", "Download")}">
             <img src="https://www.svgrepo.com/show/520695/download.svg" alt="">
           </a>
-          <button class="delete-btn" title="${t("delete","Delete")}" aria-label="${t("delete","Delete")}">
+          <button class="delete-btn" title="${t("delete", "Delete")}" aria-label="${t("delete", "Delete")}">
             <img src="https://www.svgrepo.com/show/521000/trash-2.svg" alt="">
           </button>
         </div>
@@ -427,12 +483,19 @@
           const tags = Array.isArray(item.tags) ? item.tags : [];
           const collection = item.collection || "";
 
-          const metaBlob = await pngWithMeta(item.blob, { name, tags, collection });
+          const metaBlob = await pngWithMeta(item.blob, {
+            name,
+            tags,
+            collection,
+          });
           const url = URL.createObjectURL(metaBlob);
 
           const tmp = document.createElement("a");
           tmp.href = url;
-          tmp.download = buildDownloadName({ ...item, blob: metaBlob }, `image_${item.id}`);
+          tmp.download = buildDownloadName(
+            { ...item, blob: metaBlob },
+            `image_${item.id}`,
+          );
           document.body.appendChild(tmp);
           tmp.click();
           tmp.remove();
@@ -461,18 +524,23 @@
       if (del) {
         del.addEventListener("click", async (e) => {
           e.stopPropagation();
-          const ok = await showConfirmModal(t("deleteOnePrompt", "Delete this image?"));
+          const ok = await showConfirmModal(
+            t("deleteOnePrompt", "Delete this image?"),
+          );
           if (!ok) return;
           try {
             await deleteImage(item.id);
             selectedIds.delete(item.id);
-            allImagesCache = allImagesCache.filter(r => r.id !== item.id);
-            filteredImagesCache = filteredImagesCache.filter(r => r.id !== item.id);
+            allImagesCache = allImagesCache.filter((r) => r.id !== item.id);
+            filteredImagesCache = filteredImagesCache.filter(
+              (r) => r.id !== item.id,
+            );
             card.remove();
-            refreshSelectionBar();           // << ensure UI resets
+            refreshSelectionBar(); // << ensure UI resets
             updateStorageMeter();
             showToast(t("deleted", "Deleted"), "success");
-            if (!grid.children.length) $("#emptyState")?.classList.remove("hidden");
+            if (!grid.children.length)
+              $("#emptyState")?.classList.remove("hidden");
           } catch (err) {
             console.error(err);
             showToast(t("deleteFailed", "Failed to delete"), "error");
@@ -520,7 +588,7 @@
       return;
     }
     const list = await getAllImages();
-    const map = new Map(list.map(r => [r.id, r]));
+    const map = new Map(list.map((r) => [r.id, r]));
     const zip = new JSZip();
     let added = 0;
 
@@ -549,7 +617,7 @@
     a.click();
     URL.revokeObjectURL(url);
     showToast(t("exportedSelected", "Exported selected images"), "success");
-}
+  }
 
   async function importGallery(files) {
     if (!files.length) return;
@@ -558,9 +626,9 @@
     // small helper: infer proper MIME from filename
     const guessType = (name) => {
       const n = name.toLowerCase();
-      if (n.endsWith(".png"))  return "image/png";
+      if (n.endsWith(".png")) return "image/png";
       if (n.endsWith(".jpg") || n.endsWith(".jpeg")) return "image/jpeg";
-      if (n.endsWith(".gif"))  return "image/gif";
+      if (n.endsWith(".gif")) return "image/gif";
       if (n.endsWith(".webp")) return "image/webp";
       return "";
     };
@@ -568,7 +636,7 @@
     // small helper: safely read our embedded meta if available
     const tryReadMeta = async (blob) => {
       try {
-        if (typeof readPngMeta === "function" && (blob.type === "image/png"))
+        if (typeof readPngMeta === "function" && blob.type === "image/png")
           return await readPngMeta(blob);
       } catch {}
       return null;
@@ -585,7 +653,8 @@
           // Ensure the blob has the right MIME (JSZip often returns a generic Blob)
           const raw = await entry.async("blob");
           const type = guessType(name) || raw.type || "";
-          const blob = type && raw.type !== type ? new Blob([raw], { type }) : raw;
+          const blob =
+            type && raw.type !== type ? new Blob([raw], { type }) : raw;
 
           // Read embedded meta if PNG
           const meta = await tryReadMeta(blob);
@@ -617,7 +686,7 @@
 
     allImagesCache = await getAllImages();
     await renderGallery();
-    refreshSelectionBar();                  // << keep bar right
+    refreshSelectionBar(); // << keep bar right
     showToast(t("imported", "Imported images"), "success");
   }
 
@@ -626,27 +695,33 @@
       showToast(t("noSelected", "No images selected."), "error");
       return;
     }
-    const ok = await showConfirmModal(t("deleteSelectedPrompt", "Delete selected images?"));
+    const ok = await showConfirmModal(
+      t("deleteSelectedPrompt", "Delete selected images?"),
+    );
     if (!ok) return;
 
     for (const id of Array.from(selectedIds)) {
-      try { await deleteImage(id); } catch {}
+      try {
+        await deleteImage(id);
+      } catch {}
     }
     selectedIds.clear();
     allImagesCache = await getAllImages();
     await renderGallery();
-    refreshSelectionBar();                  // << force hide & reset counter
+    refreshSelectionBar(); // << force hide & reset counter
     showToast(t("deleted", "Deleted"), "success");
   }
 
   async function clearAllHandler() {
-    const ok = await showConfirmModal(t("clearAllPrompt", "Are you sure you want to delete all images?"));
+    const ok = await showConfirmModal(
+      t("clearAllPrompt", "Are you sure you want to delete all images?"),
+    );
     if (!ok) return;
     await clearAllImages();
     selectedIds.clear();
     allImagesCache = [];
     await renderGallery();
-    refreshSelectionBar();                  // << ensure bar hidden
+    refreshSelectionBar(); // << ensure bar hidden
     showToast(t("deleted", "Deleted"), "success");
   }
 
@@ -667,11 +742,12 @@
   }
 
   function buildDownloadName(item, fallbackBase) {
-    const base = stripImageExt((item && item.name) ? String(item.name) : String(fallbackBase || "image"));
+    const base = stripImageExt(
+      item && item.name ? String(item.name) : String(fallbackBase || "image"),
+    );
     const ext = mimeToExt(item?.blob?.type || "") || "png";
     return `${base}.${ext}`;
   }
-
 
   function openViewerById(id) {
     const viewer = $("#viewer");
@@ -682,21 +758,23 @@
     const dl = $("#viewerDownload");
     const selBtn = $("#viewerSelect");
 
-    const item = (filteredImagesCache.find(x => x.id === id) ||
-                  allImagesCache.find(x => x.id === id));
+    const item =
+      filteredImagesCache.find((x) => x.id === id) ||
+      allImagesCache.find((x) => x.id === id);
     if (!item || !viewer || !imgEl) return;
 
     currentViewerId = id;
     const url = URL.createObjectURL(item.blob);
     imgEl.src = url;
     nameEl && (nameEl.value = item.name || `image_${id}`);
-    tagsEl && (tagsEl.value = Array.isArray(item.tags) ? item.tags.join(", ") : "");
+    tagsEl &&
+      (tagsEl.value = Array.isArray(item.tags) ? item.tags.join(", ") : "");
     collEl && (collEl.value = item.collection || "");
 
-  if (dl) {
-    dl.href = url;
-    dl.download = buildDownloadName(item, `image_${id}`);
-  }
+    if (dl) {
+      dl.href = url;
+      dl.download = buildDownloadName(item, `image_${id}`);
+    }
 
     if (selBtn) {
       selBtn.setAttribute("aria-pressed", String(isSelected(id)));
@@ -714,21 +792,34 @@
     if (currentViewerId == null) return;
     const name = $("#viewerName")?.value || `image_${currentViewerId}`;
     const rawTags = $("#viewerTags")?.value || "";
-    const tags = rawTags.split(",").map(s => s.trim()).filter(Boolean);
+    const tags = rawTags
+      .split(",")
+      .map((s) => s.trim())
+      .filter(Boolean);
     const coll = $("#viewerCollection")?.value || "";
     await updateImageRecord(currentViewerId, { name, tags, collection: coll });
 
-    const it = allImagesCache.find(x => x.id === currentViewerId);
-    if (it) { it.name = name; it.tags = tags; it.collection = coll; }
-    const it2 = filteredImagesCache.find(x => x.id === currentViewerId);
-    if (it2) { it2.name = name; it2.tags = tags; it2.collection = coll; }
+    const it = allImagesCache.find((x) => x.id === currentViewerId);
+    if (it) {
+      it.name = name;
+      it.tags = tags;
+      it.collection = coll;
+    }
+    const it2 = filteredImagesCache.find((x) => x.id === currentViewerId);
+    if (it2) {
+      it2.name = name;
+      it2.tags = tags;
+      it2.collection = coll;
+    }
     showToast(t("saved", "Saved"), "success");
     renderGallery();
   }
 
   async function deleteFromViewer() {
     if (currentViewerId == null) return;
-    const ok = await showConfirmModal(t("deleteOnePrompt", "Delete this image?"));
+    const ok = await showConfirmModal(
+      t("deleteOnePrompt", "Delete this image?"),
+    );
     if (!ok) return;
     await deleteImage(currentViewerId);
     selectedIds.delete(currentViewerId);
@@ -754,10 +845,18 @@
   }
 
   function bindUI() {
-    $("#searchBox")?.addEventListener("input", () => { renderGallery(); });
-    $("#tagFilter")?.addEventListener("input", () => { renderGallery(); });
-    $("#collectionFilter")?.addEventListener("change", () => { renderGallery(); });
-    $("#sortSelect")?.addEventListener("change", () => { renderGallery(); });
+    $("#searchBox")?.addEventListener("input", () => {
+      renderGallery();
+    });
+    $("#tagFilter")?.addEventListener("input", () => {
+      renderGallery();
+    });
+    $("#collectionFilter")?.addEventListener("change", () => {
+      renderGallery();
+    });
+    $("#sortSelect")?.addEventListener("change", () => {
+      renderGallery();
+    });
 
     $("#exportGallery")?.addEventListener("click", exportGallery);
     $("#importGallery")?.addEventListener("change", (e) => {
@@ -784,22 +883,47 @@
         if (currentViewerId == null) return;
 
         const item =
-          (Array.isArray(filteredImagesCache) && filteredImagesCache.find(x => x.id === currentViewerId)) ||
-          (Array.isArray(allImagesCache) && allImagesCache.find(x => x.id === currentViewerId));
+          (Array.isArray(filteredImagesCache) &&
+            filteredImagesCache.find((x) => x.id === currentViewerId)) ||
+          (Array.isArray(allImagesCache) &&
+            allImagesCache.find((x) => x.id === currentViewerId));
         if (!item) return;
 
-        const name = ($("#viewerName")?.value || item.name || `image_${currentViewerId}`).trim();
-        const rawTags = ($("#viewerTags")?.value ?? (Array.isArray(item.tags) ? item.tags.join(", ") : "")).trim();
-        const tags = rawTags ? rawTags.split(",").map(s => s.trim()).filter(Boolean) : [];
-        const collection = ($("#viewerCollection")?.value || item.collection || "").trim();
+        const name = (
+          $("#viewerName")?.value ||
+          item.name ||
+          `image_${currentViewerId}`
+        ).trim();
+        const rawTags = (
+          $("#viewerTags")?.value ??
+          (Array.isArray(item.tags) ? item.tags.join(", ") : "")
+        ).trim();
+        const tags = rawTags
+          ? rawTags
+              .split(",")
+              .map((s) => s.trim())
+              .filter(Boolean)
+          : [];
+        const collection = (
+          $("#viewerCollection")?.value ||
+          item.collection ||
+          ""
+        ).trim();
 
-        const metaBlob = await pngWithMeta(item.blob, { name, tags, collection });
+        const metaBlob = await pngWithMeta(item.blob, {
+          name,
+          tags,
+          collection,
+        });
         const url = URL.createObjectURL(metaBlob);
 
         // Use a temporary anchor to avoid re-triggering this handler
         const tmp = document.createElement("a");
         tmp.href = url;
-        tmp.download = buildDownloadName({ ...item, name, blob: metaBlob }, `image_${currentViewerId}`);
+        tmp.download = buildDownloadName(
+          { ...item, name, blob: metaBlob },
+          `image_${currentViewerId}`,
+        );
         document.body.appendChild(tmp);
         tmp.click();
         tmp.remove();
@@ -815,7 +939,7 @@
 
   function navViewer(dir) {
     if (currentViewerId == null || !filteredImagesCache.length) return;
-    const idx = filteredImagesCache.findIndex(x => x.id === currentViewerId);
+    const idx = filteredImagesCache.findIndex((x) => x.id === currentViewerId);
     if (idx < 0) return;
     let next = idx + dir;
     if (next < 0) next = filteredImagesCache.length - 1;

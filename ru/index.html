@@ -1,322 +1,1011 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ru">
-<head>
-<meta charset="UTF-8">
-<meta property="og:title" content="Wplace Конвертер цветов">
-<meta property="og:description" content="Открытый и безопасный веб-сайт, который преобразует цвета ваших изображений и пиксель-арта в доступные в Wplace, с масштабированием, переводами и многим другим...">
-<meta name="description" content="Открытый и безопасный веб-сайт, который преобразует цвета ваших изображений и пиксель-арта в доступные в Wplace, с масштабированием, переводами и многим другим..." />
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://pepoafonso.github.io/color_converter_wplace/ru/">
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<meta name="theme-color" content="#D60270">
+  <head>
+    <meta charset="UTF-8" />
+    <meta property="og:title" content="Wplace Конвертер цветов" />
+    <meta
+      property="og:description"
+      content="Открытый и безопасный веб-сайт, который преобразует цвета ваших изображений и пиксель-арта в доступные в Wplace, с масштабированием, переводами и многим другим..."
+    />
+    <meta
+      name="description"
+      content="Открытый и безопасный веб-сайт, который преобразует цвета ваших изображений и пиксель-арта в доступные в Wplace, с масштабированием, переводами и многим другим..."
+    />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:url"
+      content="https://pepoafonso.github.io/color_converter_wplace/ru/"
+    />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#D60270" />
 
-<title>Wplace Конвертер цветов</title>
-<!-- Favicon -->
-<link rel="icon" href="../favicon.png" type="image/png" sizes="32x32">
-<link rel="icon" href="../favicon.ico" type="image/x-icon">
-<link rel="apple-touch-icon" href="../apple-touch-icon.png" sizes="180x180">
+    <title>Wplace Конвертер цветов</title>
+    <!-- Favicon -->
+    <link rel="icon" href="../favicon.png" type="image/png" sizes="32x32" />
+    <link rel="icon" href="../favicon.ico" type="image/x-icon" />
+    <link
+      rel="apple-touch-icon"
+      href="../apple-touch-icon.png"
+      sizes="180x180"
+    />
 
-<link rel="canonical" href="https://pepoafonso.github.io/color_converter_wplace/ru/">
+    <link
+      rel="canonical"
+      href="https://pepoafonso.github.io/color_converter_wplace/ru/"
+    />
 
-<!-- hreflang links -->
-<link rel="alternate" hreflang="en"    href="https://pepoafonso.github.io/color_converter_wplace/" />
-<link rel="alternate" hreflang="pt"    href="https://pepoafonso.github.io/color_converter_wplace/pt/" />
-<link rel="alternate" hreflang="de"    href="https://pepoafonso.github.io/color_converter_wplace/de/" />
-<link rel="alternate" hreflang="es"    href="https://pepoafonso.github.io/color_converter_wplace/es/" />
-<link rel="alternate" hreflang="fr"    href="https://pepoafonso.github.io/color_converter_wplace/fr/" />
-<link rel="alternate" hreflang="uk"    href="https://pepoafonso.github.io/color_converter_wplace/uk/" />
-<link rel="alternate" hreflang="vi"    href="https://pepoafonso.github.io/color_converter_wplace/vi/" />
-<link rel="alternate" hreflang="pl"    href="https://pepoafonso.github.io/color_converter_wplace/pl/" />
-<link rel="alternate" hreflang="ja"    href="https://pepoafonso.github.io/color_converter_wplace/ja/" />
-<link rel="alternate" hreflang="de-CH" href="https://pepoafonso.github.io/color_converter_wplace/de-CH/" />
-<link rel="alternate" hreflang="nl"    href="https://pepoafonso.github.io/color_converter_wplace/nl/" />
-<link rel="alternate" hreflang="ru"    href="https://pepoafonso.github.io/color_converter_wplace/ru/" />
-<link rel="alternate" hreflang="tr"    href="https://pepoafonso.github.io/color_converter_wplace/tr/" />
-<link rel="alternate" hreflang="it"    href="https://pepoafonso.github.io/color_converter_wplace/it/" />
-<link rel="alternate" hreflang="zh-CN"    href="https://pepoafonso.github.io/color_converter_wplace/zh-CN/" />
-<link rel="alternate" hreflang="x-default" href="https://pepoafonso.github.io/color_converter_wplace/" />
+    <!-- hreflang links -->
+    <link
+      rel="alternate"
+      hreflang="en"
+      href="https://pepoafonso.github.io/color_converter_wplace/"
+    />
+    <link
+      rel="alternate"
+      hreflang="pt"
+      href="https://pepoafonso.github.io/color_converter_wplace/pt/"
+    />
+    <link
+      rel="alternate"
+      hreflang="de"
+      href="https://pepoafonso.github.io/color_converter_wplace/de/"
+    />
+    <link
+      rel="alternate"
+      hreflang="es"
+      href="https://pepoafonso.github.io/color_converter_wplace/es/"
+    />
+    <link
+      rel="alternate"
+      hreflang="fr"
+      href="https://pepoafonso.github.io/color_converter_wplace/fr/"
+    />
+    <link
+      rel="alternate"
+      hreflang="uk"
+      href="https://pepoafonso.github.io/color_converter_wplace/uk/"
+    />
+    <link
+      rel="alternate"
+      hreflang="vi"
+      href="https://pepoafonso.github.io/color_converter_wplace/vi/"
+    />
+    <link
+      rel="alternate"
+      hreflang="pl"
+      href="https://pepoafonso.github.io/color_converter_wplace/pl/"
+    />
+    <link
+      rel="alternate"
+      hreflang="ja"
+      href="https://pepoafonso.github.io/color_converter_wplace/ja/"
+    />
+    <link
+      rel="alternate"
+      hreflang="de-CH"
+      href="https://pepoafonso.github.io/color_converter_wplace/de-CH/"
+    />
+    <link
+      rel="alternate"
+      hreflang="nl"
+      href="https://pepoafonso.github.io/color_converter_wplace/nl/"
+    />
+    <link
+      rel="alternate"
+      hreflang="ru"
+      href="https://pepoafonso.github.io/color_converter_wplace/ru/"
+    />
+    <link
+      rel="alternate"
+      hreflang="tr"
+      href="https://pepoafonso.github.io/color_converter_wplace/tr/"
+    />
+    <link
+      rel="alternate"
+      hreflang="it"
+      href="https://pepoafonso.github.io/color_converter_wplace/it/"
+    />
+    <link
+      rel="alternate"
+      hreflang="zh-CN"
+      href="https://pepoafonso.github.io/color_converter_wplace/zh-CN/"
+    />
+    <link
+      rel="alternate"
+      hreflang="x-default"
+      href="https://pepoafonso.github.io/color_converter_wplace/"
+    />
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../main.css" />
-</head>
-<body class="home">
-<div id="global-toast"></div>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../css/base.css" />
+    <link rel="stylesheet" href="../css/overlays-layout.css" />
+    <link rel="stylesheet" href="../css/controls-colors.css" />
+    <link rel="stylesheet" href="../css/canvas-footer.css" />
+    <link rel="stylesheet" href="../css/responsive.css" />
+    <link rel="stylesheet" href="../css/advanced-footer.css" />
+  </head>
+  <body class="home">
+    <div id="global-toast"></div>
 
-<header class="site-header">
-  <div class="container header-inner">
-    <div id="menuBackdrop" class="menu-backdrop" hidden></div>
-    <div id="mobileMenu" class="mobile-menu" aria-hidden="true">
-      <nav class="mobile-menu-inner" aria-label="Mobile">
-        <a class="menu-item" href="../studio.html" data-keep-lang>Студия</a>
-        <a class="menu-item" href="../gallery.html" data-keep-lang>Галерея</a>
-      </nav>
-    </div>
+    <header class="site-header">
+      <div class="container header-inner">
+        <div id="menuBackdrop" class="menu-backdrop" hidden></div>
+        <div id="mobileMenu" class="mobile-menu" aria-hidden="true">
+          <nav class="mobile-menu-inner" aria-label="Mobile">
+            <a class="menu-item" href="../studio.html" data-keep-lang>Студия</a>
+            <a class="menu-item" href="../gallery.html" data-keep-lang
+              >Галерея</a
+            >
+          </nav>
+        </div>
 
-    <a class="brand" href="../">
-      <img src="../favicon.png" alt="" class="brand-mark" />
-      <span class="brand-name">Wplace Конвертер цветов</span>
-    </a>
+        <a class="brand" href="../">
+          <img src="../favicon.png" alt="" class="brand-mark" />
+          <span class="brand-name">Wplace Конвертер цветов</span>
+        </a>
 
-    <nav class="primary-nav" aria-label="Primary">
-      <a class="nav-link" href="../studio.html" data-keep-lang>Студия</a>
-      <a class="nav-link" href="../gallery.html" data-keep-lang>Галерея</a>
-    </nav>
+        <nav class="primary-nav" aria-label="Primary">
+          <a class="nav-link" href="../studio.html" data-keep-lang>Студия</a>
+          <a class="nav-link" href="../gallery.html" data-keep-lang>Галерея</a>
+        </nav>
 
-    <div class="nav-tools">
-      <select id="lang-select">
-        <option value="en">🇺🇸 English</option>
-        <option value="pt">🇵🇹 Português 🇧🇷</option>
-        <option value="de">🇩🇪 Deutsch</option>
-        <option value="es">🇪🇸 Español</option>
-        <option value="fr">🇫🇷 Français</option>
-        <option value="he">🇮🇱 עברית</option>
-        <option value="uk">🇺🇦 Українська</option>
-        <option value="vi">🇻🇳 Tiếng Việt</option>
-        <option value="pl">🇵🇱 Polski</option>
-        <option value="ja">🇯🇵 日本語</option>
-        <option value="de-CH">🇨🇭 Deutsch (Schweiz)</option>
-        <option value="nl">🇳🇱 Nederlands</option>
-        <option value="ru" selected>🇷🇺 Русский</option>
-        <option value="tr">🇹🇷 Türkçe</option>
-        <option value="it">🇮🇹 Italiano</option>
-        <option value="zh-CN">🇨🇳 简体中文</option>
-      </select>
+        <div class="nav-tools">
+          <select id="lang-select">
+            <option value="en">🇺🇸 English</option>
+            <option value="pt">🇵🇹 Português 🇧🇷</option>
+            <option value="de">🇩🇪 Deutsch</option>
+            <option value="es">🇪🇸 Español</option>
+            <option value="fr">🇫🇷 Français</option>
+            <option value="he">🇮🇱 עברית</option>
+            <option value="uk">🇺🇦 Українська</option>
+            <option value="vi">🇻🇳 Tiếng Việt</option>
+            <option value="pl">🇵🇱 Polski</option>
+            <option value="ja">🇯🇵 日本語</option>
+            <option value="de-CH">🇨🇭 Deutsch (Schweiz)</option>
+            <option value="nl">🇳🇱 Nederlands</option>
+            <option value="ru" selected>🇷🇺 Русский</option>
+            <option value="tr">🇹🇷 Türkçe</option>
+            <option value="it">🇮🇹 Italiano</option>
+            <option value="zh-CN">🇨🇳 简体中文</option>
+          </select>
 
-      <button class="nav-burger" aria-label="Открыть меню" aria-expanded="false">
-        <span></span><span></span><span></span>
-      </button>
-    </div>
-  </div>
-</header>
+          <button
+            class="nav-burger"
+            aria-label="Открыть меню"
+            aria-expanded="false"
+          >
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </div>
+    </header>
 
-<main class="container app">
-  <section class="panel-left">
-    <div class="card">
-      <div class="custom-upload">
-        <input type="file" id="upload" accept="image/*">
-        <label for="upload" class="upload-box">
-          <div class="upload-icon">📤</div>
-          <div class="upload-text">
-            <strong>Загрузить изображение</strong>
-            <span>Кликните, вставьте или перетащите</span>
+    <main class="container app">
+      <section class="panel-left">
+        <div class="card">
+          <div class="custom-upload">
+            <input type="file" id="upload" accept="image/*" />
+            <label for="upload" class="upload-box">
+              <div class="upload-icon">📤</div>
+              <div class="upload-text">
+                <strong>Загрузить изображение</strong>
+                <span>Кликните, вставьте или перетащите</span>
+              </div>
+            </label>
           </div>
-        </label>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="scroll-bar">
-        <label for="scaleRange">Масштаб</label>
-        <input type="range" id="scaleRange" min="0.001" max="5" step="any" value="1">
-        <span id="scaleValue">1.00x</span>
-      </div>
-
-      <div class="dimensions">
-        <div class="dimension-input">
-          <label for="widthInput">Ширина</label>
-          <input type="number" id="widthInput">
         </div>
-        <div class="dimension-input">
-          <label for="heightInput">Высота</label>
-          <input type="number" id="heightInput">
+
+        <div class="card">
+          <div class="scroll-bar">
+            <label for="scaleRange">Масштаб</label>
+            <input
+              type="range"
+              id="scaleRange"
+              min="0.001"
+              max="5"
+              step="any"
+              value="1"
+            />
+            <span id="scaleValue">1.00x</span>
+          </div>
+
+          <div class="dimensions">
+            <div class="dimension-input">
+              <label for="widthInput">Ширина</label>
+              <input type="number" id="widthInput" />
+            </div>
+            <div class="dimension-input">
+              <label for="heightInput">Высота</label>
+              <input type="number" id="heightInput" />
+            </div>
+            <div class="dimension-input">
+              <label>Площадь</label>
+              <input type="number" id="area" readonly />
+            </div>
+          </div>
+
+          <div
+            style="
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              margin: 20px 0 10px 0;
+              flex-wrap: wrap;
+              width: 100%;
+            "
+          >
+            <button id="ditherButton" class="btn btn-toggle active">
+              Dithering (Рекомендуется)
+            </button>
+          </div>
+
+          <details id="adv-options" class="adv-card">
+            <summary>
+              <span>Дополнительные параметры</span>
+            </summary>
+
+            <div class="adv-content">
+              <button
+                id="transparentButton"
+                class="btn btn-toggle"
+                type="button"
+              >
+                Скрыть полупрозрачные пиксели
+              </button>
+
+              <button
+                id="opt-toggle-hide-ui"
+                class="btn btn-toggle"
+                type="button"
+              >
+                Показать/скрыть управление цветами (глаз)
+              </button>
+            </div>
+          </details>
         </div>
-        <div class="dimension-input">
-          <label>Площадь</label>
-          <input type="number" id="area" readonly>
+      </section>
+
+      <div class="canvas-wrap card">
+        <div class="canvas-viewport" id="canvasViewport">
+          <canvas id="canvas"></canvas>
+        </div>
+
+        <div class="scroll-bar">
+          <label for="zoomRange">Масштабирование</label>
+          <input
+            type="range"
+            id="zoomRange"
+            min="0.01"
+            max="5"
+            step="0.01"
+            value="1"
+          />
+          <span id="zoomValue">1.00x</span>
+        </div>
+        <div>
+          <small style="display: block; color: #888; font-size: 0.85em">
+            Ctrl + прокрутка для масштабирования
+          </small>
+        </div>
+
+        <div class="actions">
+          <a id="download" class="btn" href="#">Скачать изображение</a>
+          <button id="clipboard" class="btn">Копировать в буфер обмена</button>
+          <button id="addToGallery" class="btn">Добавить в галерею</button>
         </div>
       </div>
 
-      <div style="display:flex; justify-content:center; align-items:center;margin: 20px 0 10px 0; flex-wrap:wrap; width:100%;">
-        <button id="ditherButton" class="btn btn-toggle active">
-          Dithering (Рекомендуется)
-        </button>
-      </div>
+      <section class="panel panel-colors">
+        <div class="card">
+          <div class="colors-card-head">
+            <p class="section-title">Бесплатные цвета</p>
+            <button
+              id="hide-toggle-free"
+              class="btn-eye"
+              title="Скрыть все бесплатные цвета"
+            ></button>
+          </div>
 
-      <details id="adv-options" class="adv-card">
-        <summary>
-          <span>Дополнительные параметры</span>
-        </summary>
-
-        <div class="adv-content">
-          <button id="transparentButton" class="btn btn-toggle" type="button">
-            Скрыть полупрозрачные пиксели
+          <button
+            class="btn"
+            data-type="free"
+            id="unselect-all-free"
+            data-label-select="Выбрать все бесплатные цвета"
+            data-label-unselect="Отменить выбор всех бесплатных цветов"
+          >
+            Отменить выбор всех бесплатных цветов
           </button>
 
-          <button id="opt-toggle-hide-ui" class="btn btn-toggle" type="button">
-            Показать/скрыть управление цветами (глаз)
+          <div id="colors-free" class="chips">
+            <button
+              id="1"
+              class="toggle-color active"
+              data-type="free"
+              style="background: rgb(0, 0, 0); color: #fff"
+              title="Black: rgb(0, 0, 0)"
+            >
+              Black
+            </button>
+            <button
+              id="2"
+              class="toggle-color active"
+              data-type="free"
+              style="background: rgb(60, 60, 60); color: #fff"
+              title="Dark Gray: rgb(60, 60, 60)"
+            >
+              Dark Gray
+            </button>
+            <button
+              id="3"
+              class="toggle-color active"
+              data-type="free"
+              style="background: rgb(120, 120, 120)"
+              title="Gray: rgb(120, 120, 120)"
+            >
+              Gray
+            </button>
+            <button
+              id="4"
+              class="toggle-color active"
+              data-type="free"
+              style="background: rgb(210, 210, 210)"
+              title="Light Gray: rgb(210, 210, 210)"
+            >
+              Light Gray
+            </button>
+            <button
+              id="5"
+              class="toggle-color active"
+              data-type="free"
+              style="background: rgb(255, 255, 255)"
+              title="White: rgb(255, 255, 255)"
+            >
+              White
+            </button>
+            <button
+              id="6"
+              class="toggle-color active"
+              data-type="free"
+              style="background: rgb(96, 0, 24); color: #fff"
+              title="Deep Red: rgb(96, 0, 24)"
+            >
+              Deep Red
+            </button>
+            <button
+              id="7"
+              class="toggle-color active"
+              data-type="free"
+              style="background: rgb(237, 28, 36)"
+              title="Red: rgb(237, 28, 36)"
+            >
+              Red
+            </button>
+            <button
+              id="8"
+              class="toggle-color active"
+              data-type="free"
+              style="background: rgb(255, 127, 39)"
+              title="Orange: rgb(255, 127, 39)"
+            >
+              Orange
+            </button>
+            <button
+              id="9"
+              class="toggle-color active"
+              data-type="free"
+              style="background: rgb(246, 170, 9)"
+              title="Gold: rgb(246, 170, 9)"
+            >
+              Gold
+            </button>
+            <button
+              id="10"
+              class="toggle-color active"
+              data-type="free"
+              style="background: rgb(249, 221, 59)"
+              title="Yellow: rgb(249, 221, 59)"
+            >
+              Yellow
+            </button>
+            <button
+              id="11"
+              class="toggle-color active"
+              data-type="free"
+              style="background: rgb(255, 250, 188)"
+              title="Light Yellow: rgb(255, 250, 188)"
+            >
+              Light Yellow
+            </button>
+            <button
+              id="12"
+              class="toggle-color active"
+              data-type="free"
+              style="background: rgb(14, 185, 104)"
+              title="Dark Green: rgb(14, 185, 104)"
+            >
+              Dark Green
+            </button>
+            <button
+              id="13"
+              class="toggle-color active"
+              data-type="free"
+              style="background: rgb(19, 230, 123)"
+              title="Green: rgb(19, 230, 123)"
+            >
+              Green
+            </button>
+            <button
+              id="14"
+              class="toggle-color active"
+              data-type="free"
+              style="background: rgb(135, 255, 94)"
+              title="Light Green: rgb(135, 255, 94)"
+            >
+              Light Green
+            </button>
+            <button
+              id="15"
+              class="toggle-color active"
+              data-type="free"
+              style="background: rgb(12, 129, 110)"
+              title="Dark Teal: rgb(12, 129, 110)"
+            >
+              Dark Teal
+            </button>
+            <button
+              id="16"
+              class="toggle-color active"
+              data-type="free"
+              style="background: rgb(16, 174, 166)"
+              title="Teal: rgb(16, 174, 166)"
+            >
+              Teal
+            </button>
+            <button
+              id="17"
+              class="toggle-color active"
+              data-type="free"
+              style="background: rgb(19, 225, 190)"
+              title="Light Teal: rgb(19, 225, 190)"
+            >
+              Light Teal
+            </button>
+            <button
+              id="18"
+              class="toggle-color active"
+              data-type="free"
+              style="background: rgb(96, 247, 242)"
+              title="Cyan: rgb(96, 247, 242)"
+            >
+              Cyan
+            </button>
+            <button
+              id="19"
+              class="toggle-color active"
+              data-type="free"
+              style="background: rgb(40, 80, 158); color: #fff"
+              title="Dark Blue: rgb(40, 80, 158)"
+            >
+              Dark Blue
+            </button>
+            <button
+              id="20"
+              class="toggle-color active"
+              data-type="free"
+              style="background: rgb(64, 147, 228)"
+              title="Blue: rgb(64, 147, 228)"
+            >
+              Blue
+            </button>
+            <button
+              id="21"
+              class="toggle-color active"
+              data-type="free"
+              style="background: rgb(107, 80, 246); color: #fff"
+              title="Indigo: rgb(107, 80, 246)"
+            >
+              Indigo
+            </button>
+            <button
+              id="22"
+              class="toggle-color active"
+              data-type="free"
+              style="background: rgb(153, 177, 251)"
+              title="Light Indigo: rgb(153, 177, 251)"
+            >
+              Light Indigo
+            </button>
+            <button
+              id="23"
+              class="toggle-color active"
+              data-type="free"
+              style="background: rgb(120, 12, 153); color: #fff"
+              title="Dark Purple: rgb(120, 12, 153)"
+            >
+              Dark Purple
+            </button>
+            <button
+              id="24"
+              class="toggle-color active"
+              data-type="free"
+              style="background: rgb(170, 56, 185); color: #fff"
+              title="Purple: rgb(170, 56, 185)"
+            >
+              Purple
+            </button>
+            <button
+              id="25"
+              class="toggle-color active"
+              data-type="free"
+              style="background: rgb(224, 159, 249)"
+              title="Light Purple: rgb(224, 159, 249)"
+            >
+              Light Purple
+            </button>
+            <button
+              id="26"
+              class="toggle-color active"
+              data-type="free"
+              style="background: rgb(203, 0, 122)"
+              title="Dark Pink: rgb(203, 0, 122)"
+            >
+              Dark Pink
+            </button>
+            <button
+              id="27"
+              class="toggle-color active"
+              data-type="free"
+              style="background: rgb(236, 31, 128)"
+              title="Pink: rgb(236, 31, 128)"
+            >
+              Pink
+            </button>
+            <button
+              id="28"
+              class="toggle-color active"
+              data-type="free"
+              style="background: rgb(243, 141, 169)"
+              title="Light Pink: rgb(243, 141, 169)"
+            >
+              Light Pink
+            </button>
+            <button
+              id="29"
+              class="toggle-color active"
+              data-type="free"
+              style="background: rgb(104, 70, 52); color: #fff"
+              title="Dark Brown: rgb(104, 70, 52)"
+            >
+              Dark Brown
+            </button>
+            <button
+              id="30"
+              class="toggle-color active"
+              data-type="free"
+              style="background: rgb(149, 104, 42)"
+              title="Brown: rgb(149, 104, 42)"
+            >
+              Brown
+            </button>
+            <button
+              id="31"
+              class="toggle-color active"
+              data-type="free"
+              style="background: rgb(248, 178, 119)"
+              title="Beige: rgb(248, 178, 119)"
+            >
+              Beige
+            </button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="colors-card-head">
+            <div class="head-left">
+              <span class="section-title">Платные цвета</span>
+              <span class="section-title" id="paid-total-cost"></span>
+            </div>
+            <button
+              id="hide-toggle-paid"
+              class="btn-eye"
+              title="Скрыть все платные цвета"
+            ></button>
+          </div>
+          <button
+            class="btn"
+            data-type="paid"
+            id="select-all-paid"
+            data-label-select="Выбрать все 💧платные цвета"
+            data-label-unselect="Отменить выбор всех 💧платных цветов"
+          >
+            Выбрать все 💧платные цвета
           </button>
+          <div id="colors-paid" class="chips">
+            <button
+              id="32"
+              class="toggle-color"
+              data-type="paid"
+              style="background: rgb(170, 170, 170)"
+              title="Medium Gray: rgb(170, 170, 170)"
+            >
+              Medium Gray
+            </button>
+            <button
+              id="33"
+              class="toggle-color"
+              data-type="paid"
+              style="background: rgb(165, 14, 30); color: #fff"
+              title="Dark Red: rgb(165,14,30)"
+            >
+              Dark Red
+            </button>
+            <button
+              id="34"
+              class="toggle-color"
+              data-type="paid"
+              style="background: rgb(250, 128, 114)"
+              title="Light Red: rgb(250, 128, 114)"
+            >
+              Light Red
+            </button>
+            <button
+              id="35"
+              class="toggle-color"
+              data-type="paid"
+              style="background: rgb(228, 92, 26)"
+              title="Dark Orange: rgb(228, 92, 26)"
+            >
+              Dark Orange
+            </button>
+            <button
+              id="36"
+              class="toggle-color"
+              data-type="paid"
+              style="background: rgb(156, 132, 49)"
+              title="Dark Goldenrod: rgb(156, 132, 49)"
+            >
+              Dark Goldenrod
+            </button>
+            <button
+              id="37"
+              class="toggle-color"
+              data-type="paid"
+              style="background: rgb(197, 173, 49)"
+              title="Goldenrod: rgb(197, 173, 49)"
+            >
+              Goldenrod
+            </button>
+            <button
+              id="38"
+              class="toggle-color"
+              data-type="paid"
+              style="background: rgb(232, 212, 95)"
+              title="Light Goldenrod: rgb(232, 212, 95)"
+            >
+              Light Goldenrod
+            </button>
+            <button
+              id="39"
+              class="toggle-color"
+              data-type="paid"
+              style="background: rgb(74, 107, 58); color: #fff"
+              title="Dark Olive: rgb(74, 107, 58)"
+            >
+              Dark Olive
+            </button>
+            <button
+              id="40"
+              class="toggle-color"
+              data-type="paid"
+              style="background: rgb(90, 148, 74)"
+              title="Olive: rgb(90, 148, 74)"
+            >
+              Olive
+            </button>
+            <button
+              id="41"
+              class="toggle-color"
+              data-type="paid"
+              style="background: rgb(132, 197, 115)"
+              title="Light Olive: rgb(132, 197, 115)"
+            >
+              Light Olive
+            </button>
+            <button
+              id="42"
+              class="toggle-color"
+              data-type="paid"
+              style="background: rgb(15, 121, 159); color: #fff"
+              title="Dark Cyan: rgb(15, 121, 159)"
+            >
+              Dark Cyan
+            </button>
+            <button
+              id="43"
+              class="toggle-color"
+              data-type="paid"
+              style="background: rgb(187, 250, 242)"
+              title="Light Cyan: rgb(187, 250, 242)"
+            >
+              Light Cyan
+            </button>
+            <button
+              id="44"
+              class="toggle-color"
+              data-type="paid"
+              style="background: rgb(125, 199, 255)"
+              title="Light Blue: rgb(125, 199, 255)"
+            >
+              Light Blue
+            </button>
+            <button
+              id="45"
+              class="toggle-color"
+              data-type="paid"
+              style="background: rgb(77, 49, 184); color: #fff"
+              title="Dark Indigo: rgb(77, 49, 184)"
+            >
+              Dark Indigo
+            </button>
+            <button
+              id="46"
+              class="toggle-color"
+              data-type="paid"
+              style="background: rgb(74, 66, 132); color: #fff"
+              title="Dark Slate Blue: rgb(74, 66, 132)"
+            >
+              Dark Slate Blue
+            </button>
+            <button
+              id="47"
+              class="toggle-color"
+              data-type="paid"
+              style="background: rgb(122, 113, 196)"
+              title="Slate Blue: rgb(122, 113, 196)"
+            >
+              Slate Blue
+            </button>
+            <button
+              id="48"
+              class="toggle-color"
+              data-type="paid"
+              style="background: rgb(181, 174, 241)"
+              title="Light Slate Blue: rgb(181, 174, 241)"
+            >
+              Light Slate Blue
+            </button>
+            <button
+              id="49"
+              class="toggle-color"
+              data-type="paid"
+              style="background: rgb(155, 82, 73)"
+              title="Dark Peach: rgb(155, 82, 73)"
+            >
+              Dark Peach
+            </button>
+            <button
+              id="50"
+              class="toggle-color"
+              data-type="paid"
+              style="background: rgb(209, 128, 120)"
+              title="Peach: rgb(209, 128, 120)"
+            >
+              Peach
+            </button>
+            <button
+              id="51"
+              class="toggle-color"
+              data-type="paid"
+              style="background: rgb(250, 182, 164)"
+              title="Light Peach: rgb(250, 182, 164)"
+            >
+              Light Peach
+            </button>
+            <button
+              id="52"
+              class="toggle-color"
+              data-type="paid"
+              style="background: rgb(219, 164, 99)"
+              title="Light Brown: rgb(219, 164, 99)"
+            >
+              Light Brown
+            </button>
+            <button
+              id="53"
+              class="toggle-color"
+              data-type="paid"
+              style="background: rgb(123, 99, 82)"
+              title="Dark Tan: rgb(123, 99, 82)"
+            >
+              Dark Tan
+            </button>
+            <button
+              id="54"
+              class="toggle-color"
+              data-type="paid"
+              style="background: rgb(156, 132, 107)"
+              title="Tan: rgb(156, 132, 107)"
+            >
+              Tan
+            </button>
+            <button
+              id="55"
+              class="toggle-color"
+              data-type="paid"
+              style="background: rgb(214, 181, 148)"
+              title="Light Tan: rgb(214, 181, 148)"
+            >
+              Light Tan
+            </button>
+            <button
+              id="56"
+              class="toggle-color"
+              data-type="paid"
+              style="background: rgb(209, 128, 81)"
+              title="Dark Beige: rgb(209, 128, 81)"
+            >
+              Dark Beige
+            </button>
+            <button
+              id="57"
+              class="toggle-color"
+              data-type="paid"
+              style="background: rgb(255, 197, 165)"
+              title="Light Beige: rgb(255, 197, 165)"
+            >
+              Light Beige
+            </button>
+            <button
+              id="58"
+              class="toggle-color"
+              data-type="paid"
+              style="background: rgb(109, 100, 63)"
+              title="Dark Stone: rgb(109, 100, 63)"
+            >
+              Dark Stone
+            </button>
+            <button
+              id="59"
+              class="toggle-color"
+              data-type="paid"
+              style="background: rgb(148, 140, 107)"
+              title="Stone: rgb(148, 140, 107)"
+            >
+              Stone
+            </button>
+            <button
+              id="60"
+              class="toggle-color"
+              data-type="paid"
+              style="background: rgb(205, 197, 158)"
+              title="Light Stone: rgb(205, 197, 158)"
+            >
+              Light Stone
+            </button>
+            <button
+              id="61"
+              class="toggle-color"
+              data-type="paid"
+              style="background: rgb(51, 57, 65); color: #fff"
+              title="Dark Slate: rgb(51, 57, 65)"
+            >
+              Dark Slate
+            </button>
+            <button
+              id="62"
+              class="toggle-color"
+              data-type="paid"
+              style="background: rgb(109, 117, 141)"
+              title="Slate: rgb(109, 117, 141)"
+            >
+              Slate
+            </button>
+            <button
+              id="63"
+              class="toggle-color"
+              data-type="paid"
+              style="background: rgb(179, 185, 209)"
+              title="Light Slate: rgb(179, 185, 209)"
+            >
+              Light Slate
+            </button>
+          </div>
         </div>
-      </details>
-    </div>
-  </section>
 
-  <div class="canvas-wrap card">
-    <div class="canvas-viewport" id="canvasViewport">
-      <canvas id="canvas"></canvas>
-    </div>
+        <div>
+          <p class="section-title">Сортировать по</p>
+          <input
+            type="radio"
+            name="colors-list-order"
+            id="original"
+            value="original"
+            checked
+          />
+          <label for="original">Оригинал</label>
 
-    <div class="scroll-bar">
-      <label for="zoomRange">Масштабирование</label>
-      <input type="range" id="zoomRange" min="0.01" max="5" step="0.01" value="1">
-      <span id="zoomValue">1.00x</span>
-    </div>
-    <div>
-      <small style="display:block; color:#888; font-size:0.85em;">
-        Ctrl + прокрутка для масштабирования
-      </small>
-    </div>
-
-    <div class="actions">
-      <a id="download" class="btn" href="#">Скачать изображение</a>
-      <button id="clipboard" class="btn">Копировать в буфер обмена</button>
-      <button id="addToGallery" class="btn">Добавить в галерею</button>
-    </div>
-  </div>
-
-  <section class="panel panel-colors">
-    <div class="card">
-      <div class="colors-card-head">
-        <p class="section-title">Бесплатные цвета</p>
-        <button id="hide-toggle-free" class="btn-eye" title="Скрыть все бесплатные цвета"></button>
-      </div>
-
-      <button class="btn" data-type="free" id="unselect-all-free">
-        Отменить выбор всех бесплатных цветов
-      </button>
-
-      <div id="colors-free" class="chips">
-	<button id="1" class="toggle-color active" data-type=free style="background: rgb(0,0,0); color: #fff;" title="Black: rgb(0, 0, 0)">Black</button>
-    <button id="2" class="toggle-color active" data-type=free style="background: rgb(60,60,60); color: #fff;" title="Dark Gray: rgb(60, 60, 60)">Dark Gray</button>
-    <button id="3" class="toggle-color active" data-type=free style="background: rgb(120,120,120);" title="Gray: rgb(120, 120, 120)">Gray</button>
-    <button id="4" class="toggle-color active" data-type=free style="background: rgb(210,210,210);" title="Light Gray: rgb(210, 210, 210)">Light Gray</button>
-    <button id="5" class="toggle-color active" data-type=free style="background: rgb(255,255,255);" title="White: rgb(255, 255, 255)">White</button>
-    <button id="6" class="toggle-color active" data-type=free style="background: rgb(96,0,24); color: #fff;" title="Deep Red: rgb(96, 0, 24)">Deep Red</button>
-    <button id="7" class="toggle-color active" data-type=free style="background: rgb(237,28,36);" title="Red: rgb(237, 28, 36)">Red</button>
-    <button id="8" class="toggle-color active" data-type=free style="background: rgb(255,127,39);" title="Orange: rgb(255, 127, 39)">Orange</button>
-    <button id="9" class="toggle-color active" data-type=free style="background: rgb(246,170,9);" title="Gold: rgb(246, 170, 9)">Gold</button>
-    <button id="10" class="toggle-color active" data-type=free style="background: rgb(249,221,59);" title="Yellow: rgb(249, 221, 59)">Yellow</button>
-    <button id="11" class="toggle-color active" data-type=free style="background: rgb(255,250,188);" title="Light Yellow: rgb(255, 250, 188)">Light Yellow</button>
-    <button id="12" class="toggle-color active" data-type=free style="background: rgb(14,185,104);" title="Dark Green: rgb(14, 185, 104)">Dark Green</button>
-    <button id="13" class="toggle-color active" data-type=free style="background: rgb(19,230,123);" title="Green: rgb(19, 230, 123)">Green</button>
-    <button id="14" class="toggle-color active" data-type=free style="background: rgb(135, 255, 94);" title="Light Green: rgb(135, 255, 94)">Light Green</button>
-    <button id="15" class="toggle-color active" data-type=free style="background: rgb(12, 129, 110);" title="Dark Teal: rgb(12, 129, 110)">Dark Teal</button>
-    <button id="16" class="toggle-color active" data-type=free style="background: rgb(16,174,166);" title="Teal: rgb(16, 174, 166)">Teal</button>
-    <button id="17" class="toggle-color active" data-type=free style="background: rgb(19,225,190);" title="Light Teal: rgb(19, 225, 190)">Light Teal</button>
-    <button id="18" class="toggle-color active" data-type=free style="background: rgb(96,247,242);" title="Cyan: rgb(96, 247, 242)">Cyan</button>
-    <button id="19" class="toggle-color active" data-type=free style="background: rgb(40,80,158); color: #fff;" title="Dark Blue: rgb(40, 80, 158)">Dark Blue</button>
-    <button id="20" class="toggle-color active" data-type=free style="background: rgb(64,147,228);" title="Blue: rgb(64, 147, 228)">Blue</button>
-    <button id="21" class="toggle-color active" data-type=free style="background: rgb(107,80,246); color: #fff;" title="Indigo: rgb(107, 80, 246)">Indigo</button>
-    <button id="22" class="toggle-color active" data-type=free style="background: rgb(153,177,251);" title="Light Indigo: rgb(153, 177, 251)">Light Indigo</button>
-    <button id="23" class="toggle-color active" data-type=free style="background: rgb(120, 12, 153); color: #fff;" title="Dark Purple: rgb(120, 12, 153)">Dark Purple</button>
-    <button id="24" class="toggle-color active" data-type=free style="background: rgb(170,56,185); color: #fff;" title="Purple: rgb(170, 56, 185)">Purple</button>
-    <button id="25" class="toggle-color active" data-type=free style="background: rgb(224,159,249);" title="Light Purple: rgb(224, 159, 249)">Light Purple</button>
-    <button id="26" class="toggle-color active" data-type=free style="background: rgb(203,0,122);" title="Dark Pink: rgb(203, 0, 122)">Dark Pink</button>
-    <button id="27" class="toggle-color active" data-type=free style="background: rgb(236,31,128);" title="Pink: rgb(236, 31, 128)">Pink</button>
-    <button id="28" class="toggle-color active" data-type=free style="background: rgb(243,141,169);" title="Light Pink: rgb(243, 141, 169)">Light Pink</button>
-    <button id="29" class="toggle-color active" data-type=free style="background: rgb(104,70,52); color: #fff;" title="Dark Brown: rgb(104, 70, 52)">Dark Brown</button>
-    <button id="30" class="toggle-color active" data-type=free style="background: rgb(149,104,42);" title="Brown: rgb(149, 104, 42)">Brown</button>
-    <button id="31" class="toggle-color active" data-type=free style="background: rgb(248,178,119);" title="Beige: rgb(248, 178, 119)">Beige</button> 
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="colors-card-head">
-        <div class="head-left">
-          <span class="section-title">Платные цвета</span>
-          <span class="section-title" id="paid-total-cost"></span>
+          <input type="radio" name="colors-list-order" id="used" value="used" />
+          <label for="used">Чаще всего используемые</label>
         </div>
-        <button id="hide-toggle-paid" class="btn-eye" title="Скрыть все платные цвета"></button>
+
+        <!-- Columns chooser / mode -->
+        <div>
+          <p class="section-title">Столбцы</p>
+
+          <input
+            type="radio"
+            name="color-columns-mode"
+            id="color-columns-dynamic"
+            value="dynamic"
+            checked
+          />
+          <label for="color-columns-dynamic">Динамический</label>
+
+          <input
+            type="radio"
+            name="color-columns-mode"
+            id="color-columns-manual"
+            value="manual"
+          />
+          <label for="color-columns-manual">Вручную</label>
+
+          <select
+            style="margin-left: 8px"
+            id="color-columns-manual-count"
+            aria-label="Color list columns"
+          >
+            <option value="1">1</option>
+            <option value="2" selected>2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+          </select>
+        </div>
+
+        <div id="color-list" class="card span-2"></div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-content">
+        <small>
+          &copy; Wplace Конвертер цветов — Forked from
+          <a
+            href="https://github.com/PEPOAFONSO/color_converter_wplace"
+            target="_blank"
+            >PEPOAFONSO</a
+          >
+          by
+          <a
+            href="https://github.com/cdakotabrown/color_converter_wplace/blob/main/LICENSE"
+            target="_blank"
+          >
+            cdakotabrown
+          </a>
+          <span id="year"></span>
+        </small>
+
+        <div class="footer-links">
+          <a class="nav-link" target="_blank" href="https://wplace.live/"
+            >Wplace</a
+          >
+          <a
+            class="nav-link"
+            target="_blank"
+            href="https://github.com/cdakotabrown/color_converter_wplace"
+            >GitHub</a
+          >
+        </div>
       </div>
-      <button class="btn" data-type="paid" id="select-all-paid">
-        Выбрать все 💧платные цвета
-      </button>
-      <div id="colors-paid" class="chips">
-	<button id="32" class="toggle-color" data-type=paid style="background: rgb(170,170,170);" title="Medium Gray: rgb(170, 170, 170)">Medium Gray</button>
-    <button id="33" class="toggle-color" data-type=paid style="background: rgb(165,14,30); color: #fff;" title="Dark Red: rgb(165,14,30)">Dark Red</button>
-    <button id="34" class="toggle-color" data-type=paid style="background: rgb(250,128,114);" title="Light Red: rgb(250, 128, 114)">Light Red</button>
-    <button id="35" class="toggle-color" data-type=paid style="background: rgb(228,92,26);" title="Dark Orange: rgb(228, 92, 26)">Dark Orange</button>
-    <button id="36" class="toggle-color" data-type=paid style="background: rgb(156, 132, 49);" title="Dark Goldenrod: rgb(156, 132, 49)">Dark Goldenrod</button>
-    <button id="37" class="toggle-color" data-type=paid style="background: rgb(197, 173, 49);" title="Goldenrod: rgb(197, 173, 49)">Goldenrod</button>
-    <button id="38" class="toggle-color" data-type=paid style="background: rgb(232,212,95);" title="Light Goldenrod: rgb(232, 212, 95)">Light Goldenrod</button>
-    <button id="39" class="toggle-color" data-type=paid style="background: rgb(74,107,58); color: #fff;" title="Dark Olive: rgb(74, 107, 58)">Dark Olive</button>
-    <button id="40" class="toggle-color" data-type=paid style="background: rgb(90,148,74);" title="Olive: rgb(90, 148, 74)">Olive</button>
-    <button id="41" class="toggle-color" data-type=paid style="background: rgb(132,197,115);" title="Light Olive: rgb(132, 197, 115)">Light Olive</button>
-    <button id="42" class="toggle-color" data-type=paid style="background: rgb(15,121,159); color: #fff;" title="Dark Cyan: rgb(15, 121, 159)">Dark Cyan</button>
-    <button id="43" class="toggle-color" data-type=paid style="background: rgb(187,250,242);" title="Light Cyan: rgb(187, 250, 242)">Light Cyan</button>
-    <button id="44" class="toggle-color" data-type=paid style="background: rgb(125, 199, 255);" title="Light Blue: rgb(125, 199, 255)">Light Blue</button>
-    <button id="45" class="toggle-color" data-type=paid style="background: rgb(77,49,184); color: #fff;" title="Dark Indigo: rgb(77, 49, 184)">Dark Indigo</button>
-    <button id="46" class="toggle-color" data-type=paid style="background: rgb(74,66,132); color: #fff;" title="Dark Slate Blue: rgb(74, 66, 132)">Dark Slate Blue</button>
-    <button id="47" class="toggle-color" data-type=paid style="background: rgb(122,113,196);" title="Slate Blue: rgb(122, 113, 196)">Slate Blue</button>
-    <button id="48" class="toggle-color" data-type=paid style="background: rgb(181,174,241);" title="Light Slate Blue: rgb(181, 174, 241)">Light Slate Blue</button>
-    <button id="49" class="toggle-color" data-type=paid style="background: rgb(155,82,73);" title="Dark Peach: rgb(155, 82, 73)">Dark Peach</button>
-    <button id="50" class="toggle-color" data-type=paid style="background: rgb(209,128,120);" title="Peach: rgb(209, 128, 120)">Peach</button>
-    <button id="51" class="toggle-color" data-type=paid style="background: rgb(250,182,164);" title="Light Peach: rgb(250, 182, 164)">Light Peach</button>
-    <button id="52" class="toggle-color" data-type=paid style="background: rgb(219,164,99);" title="Light Brown: rgb(219, 164, 99)">Light Brown</button>
-    <button id="53" class="toggle-color" data-type=paid style="background: rgb(123,99,82);" title="Dark Tan: rgb(123, 99, 82)">Dark Tan</button>
-    <button id="54" class="toggle-color" data-type=paid style="background: rgb(156,132,107);" title="Tan: rgb(156, 132, 107)">Tan</button>
-    <button id="55" class="toggle-color" data-type=paid style="background: rgb(214,181,148);" title="Light Tan: rgb(214, 181, 148)">Light Tan</button>
-    <button id="56" class="toggle-color" data-type=paid style="background: rgb(209,128,81);" title="Dark Beige: rgb(209, 128, 81)">Dark Beige</button>
-    <button id="57" class="toggle-color" data-type=paid style="background: rgb(255,197,165);" title="Light Beige: rgb(255, 197, 165)">Light Beige</button>
-    <button id="58" class="toggle-color" data-type=paid style="background: rgb(109,100,63);" title="Dark Stone: rgb(109, 100, 63)">Dark Stone</button>
-    <button id="59" class="toggle-color" data-type=paid style="background: rgb(148,140,107);" title="Stone: rgb(148, 140, 107)">Stone</button>
-    <button id="60" class="toggle-color" data-type=paid style="background: rgb(205,197,158);" title="Light Stone: rgb(205, 197, 158)">Light Stone</button>
-    <button id="61" class="toggle-color" data-type=paid style="background: rgb(51,57,65); color: #fff;" title="Dark Slate: rgb(51, 57, 65)">Dark Slate</button>
-    <button id="62" class="toggle-color" data-type=paid style="background: rgb(109,117,141);" title="Slate: rgb(109, 117, 141)">Slate</button>
-    <button id="63" class="toggle-color" data-type=paid style="background: rgb(179,185,209);" title="Light Slate: rgb(179, 185, 209)">Light Slate</button> 
-      </div>
-    </div>
-
-    <div>
-      <p class="section-title">Сортировать по</p>
-      <input type="radio" name="colors-list-order" id="original" value="original" checked>
-      <label for="original">Оригинал</label>
-
-      <input type="radio" name="colors-list-order" id="used" value="used">
-      <label for="used">Чаще всего используемые</label>
-    </div>
-    
-    <!-- Columns chooser / mode -->
-    <div>
-      <p class="section-title">Столбцы</p>
-
-      <input type="radio" name="color-columns-mode" id="color-columns-dynamic" value="dynamic" checked>
-      <label for="color-columns-dynamic">Динамический</label>
-
-      <input type="radio" name="color-columns-mode" id="color-columns-manual" value="manual">
-      <label for="color-columns-manual">Вручную</label>
-      
-      <select style="margin-left: 8px;" id="color-columns-manual-count" aria-label="Color list columns">
-        <option value="1">1</option>
-        <option value="2" selected>2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-      </select>
-    </div>
-
-    <div id="color-list" class="card span-2"></div>
-  </section>
-</main>
-
-<footer class="site-footer">
-  <div class="container footer-content">
-    <small>
-      &copy; Wplace Конвертер цветов —
-      <a href="https://github.com/PEPOAFONSO/color_converter_wplace/blob/main/LICENSE" class="license">
-        Copyright (c) <span id="year"></span> PEPOAFONSO
-      </a>
-    </small>
-
-    <div class="footer-links">
-      <a class="nav-link" target="_blank" href="https://wplace.live/">Wplace</a>
-      <a class="nav-link" target="_blank" href="https://github.com/PEPOAFONSO/color_converter_wplace">GitHub</a>
-    </div>
-  </div>
-</footer>
-<script src="../translations.js"></script>
-<script src="../toast.js"></script>
-<script src="../main.js"></script>
-<script>
-  document.getElementById('year')?.appendChild(document.createTextNode(new Date().getFullYear()));
-</script>
-</body>
+    </footer>
+    <script src="../translations.js"></script>
+    <script src="../toast.js"></script>
+    <script src="../main.js"></script>
+    <script>
+      document
+        .getElementById("year")
+        ?.appendChild(document.createTextNode(new Date().getFullYear()));
+    </script>
+  </body>
 </html>

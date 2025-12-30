@@ -18,21 +18,71 @@
 // One canonical source of truth for all colors, in UI order:
 const MASTER_PALETTE = [
   // free
-  [0,0,0],[60,60,60],[120,120,120],[210,210,210],[255,255,255],
-  [96,0,24],[237,28,36],[255,127,39],[246,170,9],[249,221,59],[255,250,188],
-  [14,185,104],[19,230,123],[135,255,94],[12,129,110],[16,174,166],[19,225,190],
-  [96,247,242],[40,80,158],[64,147,228],[107,80,246],[153,177,251],
-  [120,12,153],[170,56,185],[224,159,249],[203,0,122],[236,31,128],[243,141,169],
-  [104,70,52],[149,104,42],[248,178,119],
+  [0, 0, 0],
+  [60, 60, 60],
+  [120, 120, 120],
+  [210, 210, 210],
+  [255, 255, 255],
+  [96, 0, 24],
+  [237, 28, 36],
+  [255, 127, 39],
+  [246, 170, 9],
+  [249, 221, 59],
+  [255, 250, 188],
+  [14, 185, 104],
+  [19, 230, 123],
+  [135, 255, 94],
+  [12, 129, 110],
+  [16, 174, 166],
+  [19, 225, 190],
+  [96, 247, 242],
+  [40, 80, 158],
+  [64, 147, 228],
+  [107, 80, 246],
+  [153, 177, 251],
+  [120, 12, 153],
+  [170, 56, 185],
+  [224, 159, 249],
+  [203, 0, 122],
+  [236, 31, 128],
+  [243, 141, 169],
+  [104, 70, 52],
+  [149, 104, 42],
+  [248, 178, 119],
   // paid
-  [170,170,170],[165,14,30],[250,128,114],[228,92,26],[156,132,49],[197,173,49],
-  [232,212,95],[74,107,58],[90,148,74],[132,197,115],[15,121,159],[187,250,242],
-  [125,199,255],[77,49,184],[74,66,132],[122,113,196],[181,174,241],
-  [155,82,73],[209,128,120],[250,182,164],[219,164,99],[123,99,82],
-  [156,132,107],[214,181,148],[209,128,81],[255,197,165],[109,100,63],
-  [148,140,107],[205,197,158],[51,57,65],[109,117,141],[179,185,209]
+  [170, 170, 170],
+  [165, 14, 30],
+  [250, 128, 114],
+  [228, 92, 26],
+  [156, 132, 49],
+  [197, 173, 49],
+  [232, 212, 95],
+  [74, 107, 58],
+  [90, 148, 74],
+  [132, 197, 115],
+  [15, 121, 159],
+  [187, 250, 242],
+  [125, 199, 255],
+  [77, 49, 184],
+  [74, 66, 132],
+  [122, 113, 196],
+  [181, 174, 241],
+  [155, 82, 73],
+  [209, 128, 120],
+  [250, 182, 164],
+  [219, 164, 99],
+  [123, 99, 82],
+  [156, 132, 107],
+  [214, 181, 148],
+  [209, 128, 81],
+  [255, 197, 165],
+  [109, 100, 63],
+  [148, 140, 107],
+  [205, 197, 158],
+  [51, 57, 65],
+  [109, 117, 141],
+  [179, 185, 209],
 ];
-
 
 // --- Color name mapping ---
 const colorNames = {
@@ -103,71 +153,76 @@ const colorNames = {
 
 // Used for displaying different colors in color list
 const paidColors = new Set([
-  "170,170,170",    // Medium Gray
-  "165,14,30",      // Dark Red
-  "250,128,114",    // Light Red
-  "228,92,26",      // Dark Orange
-  "156,132,49",     // Dark Goldenrod
-  "197,173,49",     // Goldenrod
-  "232,212,95",     // Light Goldenrod
-  "74,107,58",      // Dark Olive
-  "90,148,74",      // Olive
-  "132,197,115",    // Light Olive
-  "15,121,159",     // Dark Cyan
-  "187,250,242",    // Light Cyan
-  "125,199,255",    // Light Blue
-  "77,49,184",      // Dark Indigo
-  "74,66,132",      // Dark Slate Blue
-  "122,113,196",    // Slate Blue
-  "181,174,241",    // Light Slate Blue
-  "155,82,73",      // Dark Peach
-  "209,128,120",    // Peach
-  "250,182,164",    // Light Peach
-  "219,164,99",     // Light Brown
-  "123,99,82",      // Dark Tan
-  "156,132,107",    // Tan
-  "214,181,148",    // Light Tan
-  "209,128,81",     // Dark Beige
-  "255,197,165",    // Light Beige
-  "109,100,63",     // Dark Stone
-  "148,140,107",    // Stone
-  "205,197,158",    // Light Stone
-  "51,57,65",       // Dark Slate
-  "109,117,141",    // Slate
-  "179,185,209",    // Light Slate
+  "170,170,170", // Medium Gray
+  "165,14,30", // Dark Red
+  "250,128,114", // Light Red
+  "228,92,26", // Dark Orange
+  "156,132,49", // Dark Goldenrod
+  "197,173,49", // Goldenrod
+  "232,212,95", // Light Goldenrod
+  "74,107,58", // Dark Olive
+  "90,148,74", // Olive
+  "132,197,115", // Light Olive
+  "15,121,159", // Dark Cyan
+  "187,250,242", // Light Cyan
+  "125,199,255", // Light Blue
+  "77,49,184", // Dark Indigo
+  "74,66,132", // Dark Slate Blue
+  "122,113,196", // Slate Blue
+  "181,174,241", // Light Slate Blue
+  "155,82,73", // Dark Peach
+  "209,128,120", // Peach
+  "250,182,164", // Light Peach
+  "219,164,99", // Light Brown
+  "123,99,82", // Dark Tan
+  "156,132,107", // Tan
+  "214,181,148", // Light Tan
+  "209,128,81", // Dark Beige
+  "255,197,165", // Light Beige
+  "109,100,63", // Dark Stone
+  "148,140,107", // Stone
+  "205,197,158", // Light Stone
+  "51,57,65", // Dark Slate
+  "109,117,141", // Slate
+  "179,185,209", // Light Slate
 ]);
 
 function bindChipsToPalette() {
-  const chips = Array.from(document.querySelectorAll('#colors-free .toggle-color, #colors-paid .toggle-color'));
+  const chips = Array.from(
+    document.querySelectorAll(
+      "#colors-free .toggle-color, #colors-paid .toggle-color",
+    ),
+  );
   chips.forEach((btn, i) => {
     const rgb = MASTER_PALETTE[i];
     if (!rgb) return;
     btn.dataset.key = `${rgb[0]},${rgb[1]},${rgb[2]}`;
   });
 }
-if (document.readyState !== 'loading') bindChipsToPalette();
-else document.addEventListener('DOMContentLoaded', bindChipsToPalette);
+if (document.readyState !== "loading") bindChipsToPalette();
+else document.addEventListener("DOMContentLoaded", bindChipsToPalette);
 
 // Utility: clamp zoom to a reasonable range
-const widthInput  = document.getElementById('widthInput');
-const heightInput = document.getElementById('heightInput');
+const widthInput = document.getElementById("widthInput");
+const heightInput = document.getElementById("heightInput");
+const areaInput = document.getElementById("area");
 
 let padrao = [];
 
 function rgbFromChip(btn) {
   const key = btn?.dataset?.key;
   if (!key) return null;
-  const parts = key.split(',').map(n => +n);
-  return (parts.length === 3 && parts.every(Number.isFinite)) ? parts : null;
+  const parts = key.split(",").map((n) => +n);
+  return parts.length === 3 && parts.every(Number.isFinite) ? parts : null;
 }
 
 function updatePadraoFromActiveButtons() {
   padrao = [];
   const activeButtons = document.querySelectorAll(
-    '#colors-free .toggle-color.active, #colors-paid .toggle-color.active'
+    "#colors-free .toggle-color.active, #colors-paid .toggle-color.active",
   );
 
-  activeButtons.forEach(btn => {
+  activeButtons.forEach((btn) => {
     const rgb = rgbFromChip(btn);
     if (rgb) padrao.push(rgb);
   });
@@ -182,81 +237,93 @@ function updatePadraoFromActiveButtons() {
 
 // Update paid colors total cost
 function updatePaidColorsTotalCost() {
-  const activePaidButtons = document.querySelectorAll('#colors-paid .toggle-color.active');
+  const activePaidButtons = document.querySelectorAll(
+    "#colors-paid .toggle-color.active",
+  );
   const totalPaidColors = activePaidButtons.length;
   const costPerColor = 2000;
   const totalCost = totalPaidColors * costPerColor;
 
-  const costElement = document.getElementById('paid-total-cost');
+  const costElement = document.getElementById("paid-total-cost");
   if (costElement) {
     if (totalPaidColors > 0) {
       costElement.textContent = `(${totalCost.toLocaleString()}💧)`;
     } else {
-      costElement.textContent = '';
+      costElement.textContent = "";
     }
   }
 }
 
-const upload = document.getElementById('upload');
-const canvas = document.getElementById('canvas');
-const ctx = canvas.getContext('2d', { willReadFrequently: true });
-const downloadLink = document.getElementById('download');
+const upload = document.getElementById("upload");
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d", { willReadFrequently: true });
+const downloadLink = document.getElementById("download");
 
 // Clipboard
-document.getElementById('clipboard').addEventListener('click', async function () {
-  // Prefer processedCanvas; fallback to main canvas if needed
-  const c = finalizeToPalette();
+document
+  .getElementById("clipboard")
+  .addEventListener("click", async function () {
+    // Prefer processedCanvas; fallback to main canvas if needed
+    const c = finalizeToPalette();
 
+    const lang = typeof getCurrentLang === "function" ? getCurrentLang() : "en";
+    const t = (typeof translations !== "undefined" && translations[lang]) || {};
 
-  const lang = (typeof getCurrentLang === 'function' ? getCurrentLang() : 'en');
-  const t = (typeof translations !== 'undefined' && translations[lang]) || {};
+    if (!c || !c.width || !c.height) {
+      showToast(t.imageNotFound || "No image loaded.", "error");
+      return;
+    }
 
-  if (!c || !c.width || !c.height) {
-    showToast(t.imageNotFound || "No image loaded.", "error");
-    return;
-  }
+    // Don't copy if fully transparent
+    const empty =
+      typeof canvasIsEmpty === "function"
+        ? canvasIsEmpty(c)
+        : (() => {
+            const ctx = c.getContext("2d");
+            const data = ctx.getImageData(0, 0, c.width, c.height).data;
+            for (let i = 3; i < data.length; i += 4)
+              if (data[i] !== 0) return false;
+            return true;
+          })();
 
-  // Don't copy if fully transparent
-  const empty = (typeof canvasIsEmpty === 'function')
-    ? canvasIsEmpty(c)
-    : (() => {
-        const ctx = c.getContext('2d');
-        const data = ctx.getImageData(0, 0, c.width, c.height).data;
-        for (let i = 3; i < data.length; i += 4) if (data[i] !== 0) return false;
-        return true;
-      })();
+    if (empty) {
+      showToast(t.imageNotFound || "No image loaded.", "error");
+      return;
+    }
 
-  if (empty) {
-    showToast(t.imageNotFound || "No image loaded.", "error");
-    return;
-  }
+    const doCopy = (blob) => {
+      if (!blob) {
+        showToast(t.copyFailed || "Copy failed.", "error");
+        return;
+      }
+      navigator.clipboard
+        .write([new ClipboardItem({ "image/png": blob })])
+        .then(() =>
+          showToast(t.copiedClipboard || "Copied to clipboard!", "success"),
+        )
+        .catch(() => showToast(t.copyFailed || "Copy failed.", "error"));
+    };
 
-  const doCopy = (blob) => {
-    if (!blob) { showToast(t.copyFailed || "Copy failed.", "error"); return; }
-    navigator.clipboard.write([ new ClipboardItem({ 'image/png': blob }) ])
-      .then(() => showToast(t.copiedClipboard || "Copied to clipboard!", "success"))
-      .catch(() => showToast(t.copyFailed || "Copy failed.", "error"));
-  };
-
-  if (c.toBlob) {
-    c.toBlob(doCopy, 'image/png');
-  } else {
-    // Fallback for older browsers
-    const dataURL = c.toDataURL('image/png');
-    const b64 = dataURL.split(',')[1] || "";
-    const bin = atob(b64);
-    const u8  = new Uint8Array(bin.length);
-    for (let i = 0; i < bin.length; i++) u8[i] = bin.charCodeAt(i);
-    doCopy(new Blob([u8], { type: 'image/png' }));
-  }
-});
+    if (c.toBlob) {
+      c.toBlob(doCopy, "image/png");
+    } else {
+      // Fallback for older browsers
+      const dataURL = c.toDataURL("image/png");
+      const b64 = dataURL.split(",")[1] || "";
+      const bin = atob(b64);
+      const u8 = new Uint8Array(bin.length);
+      for (let i = 0; i < bin.length; i++) u8[i] = bin.charCodeAt(i);
+      doCopy(new Blob([u8], { type: "image/png" }));
+    }
+  });
 
 // Draw the *processed* image into the already-sized visible canvas,
 // without changing canvas width/height or reading layout.
 function repaintPreviewSameSize() {
-  const src = processedCanvas || canvas;
+  const src = getPreviewSource();
   if (!src || !canvas) return;
-  const w = canvas.width, h = canvas.height;
+  const w = canvas.width,
+    h = canvas.height;
   ctx.clearRect(0, 0, w, h);
   ctx.imageSmoothingEnabled = false;
   ctx.drawImage(src, 0, 0, src.width, src.height, 0, 0, w, h);
@@ -264,18 +331,18 @@ function repaintPreviewSameSize() {
 
 function resetVisibleToScaled() {
   if (!scaledCanvas) return;
-  canvas.width  = scaledCanvas.width;
+  canvas.width = scaledCanvas.width;
   canvas.height = scaledCanvas.height;
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.drawImage(scaledCanvas, 0, 0);
 }
 
 // Handle paste events to allow image pasting
-document.addEventListener('paste', function (event) {
+document.addEventListener("paste", function (event) {
   if (!event.clipboardData) return;
   const items = event.clipboardData.items;
   for (let i = 0; i < items.length; i++) {
-    if (items[i].type.indexOf('image') !== -1) {
+    if (items[i].type.indexOf("image") !== -1) {
       const file = items[i].getAsFile();
       if (file) {
         const reader = new FileReader();
@@ -313,9 +380,9 @@ function corMaisProxima(r, g, b) {
     const rdiff = pr - r;
     const gdiff = pg - g;
     const bdiff = pb - b;
-    const x = (512 + rmean) * rdiff * rdiff >> 8;
+    const x = ((512 + rmean) * rdiff * rdiff) >> 8;
     const y = 4 * gdiff * gdiff;
-    const z = (767 - rmean) * bdiff * bdiff >> 8;
+    const z = ((767 - rmean) * bdiff * bdiff) >> 8;
     const dist = Math.sqrt(x + y + z);
     if (dist < menorDist) {
       menorDist = dist;
@@ -327,13 +394,16 @@ function corMaisProxima(r, g, b) {
 
 function hardClampToPalette(c, palette) {
   if (!c) return;
-  const ctx = c.getContext('2d');
+  const ctx = c.getContext("2d");
   const img = ctx.getImageData(0, 0, c.width, c.height);
   const d = img.data;
   for (let i = 0; i < d.length; i += 4) {
-    if (d[i+3] === 0) continue; // skip transparent
-    const [nr, ng, nb] = corMaisProxima(d[i], d[i+1], d[i+2]);
-    d[i] = nr; d[i+1] = ng; d[i+2] = nb; d[i+3] = 255;
+    if (d[i + 3] === 0) continue; // skip transparent
+    const [nr, ng, nb] = corMaisProxima(d[i], d[i + 1], d[i + 2]);
+    d[i] = nr;
+    d[i + 1] = ng;
+    d[i + 2] = nb;
+    d[i + 3] = 255;
   }
   ctx.putImageData(img, 0, 0);
 }
@@ -341,28 +411,36 @@ function hardClampToPalette(c, palette) {
 function finalizeToPalette() {
   // ensure processedCanvas exists
   if (!processedCanvas) {
-    processedCanvas = document.createElement('canvas');
-    processedCtx = processedCanvas.getContext('2d', { willReadFrequently: true });
-    processedCanvas.width  = canvas.width;
+    processedCanvas = document.createElement("canvas");
+    processedCtx = processedCanvas.getContext("2d", {
+      willReadFrequently: true,
+    });
+    processedCanvas.width = canvas.width;
     processedCanvas.height = canvas.height;
     processedCtx.drawImage(canvas, 0, 0);
   }
 
   // clamp everything to palette and zero RGB for transparent pixels
-  const pctx = processedCanvas.getContext('2d');
-  const img  = pctx.getImageData(0, 0, processedCanvas.width, processedCanvas.height);
-  const d    = img.data;
+  const pctx = processedCanvas.getContext("2d");
+  const img = pctx.getImageData(
+    0,
+    0,
+    processedCanvas.width,
+    processedCanvas.height,
+  );
+  const d = img.data;
 
   for (let i = 0; i < d.length; i += 4) {
-    if (d[i+3] === 0) {          // fully transparent -> zero RGB
-      d[i] = d[i+1] = d[i+2] = 0;
+    if (d[i + 3] === 0) {
+      // fully transparent -> zero RGB
+      d[i] = d[i + 1] = d[i + 2] = 0;
       continue;
     }
-    const [nr, ng, nb] = corMaisProxima(d[i], d[i+1], d[i+2]);
-    d[i]   = nr;
-    d[i+1] = ng;
-    d[i+2] = nb;
-    d[i+3] = 255;
+    const [nr, ng, nb] = corMaisProxima(d[i], d[i + 1], d[i + 2]);
+    d[i] = nr;
+    d[i + 1] = ng;
+    d[i + 2] = nb;
+    d[i + 3] = 255;
   }
 
   pctx.putImageData(img, 0, 0);
@@ -389,7 +467,7 @@ let fileName = "";
 
   // sync both selectors to the active lang
   const lang = (window.getCurrentLang && window.getCurrentLang()) || "en";
-  ["lang-select", "lang-select-menu"].forEach(id => {
+  ["lang-select", "lang-select-menu"].forEach((id) => {
     const el = document.getElementById(id);
     if (el) el.value = lang;
     el?.addEventListener("change", (e) => {
@@ -400,12 +478,15 @@ let fileName = "";
 })();
 
 // Dithering helper function
-function clampByte(v){ return v < 0 ? 0 : v > 255 ? 255 : v; }
+function clampByte(v) {
+  return v < 0 ? 0 : v > 255 ? 255 : v;
+}
 
 function processWithFloydSteinberg(ctx, palette, transparentHideActive) {
-  const w = canvas.width, h = canvas.height;
+  const w = canvas.width,
+    h = canvas.height;
   const img = ctx.getImageData(0, 0, w, h);
-  const d  = img.data;
+  const d = img.data;
 
   // float buffer to carry diffusion error
   const buf = new Float32Array(d.length);
@@ -417,14 +498,17 @@ function processWithFloydSteinberg(ctx, palette, transparentHideActive) {
     for (let x = 0; x < w; x++) {
       const idx = (y * w + x) * 4;
 
-      let r = buf[idx], g = buf[idx+1], b = buf[idx+2], a = buf[idx+3];
+      let r = buf[idx],
+        g = buf[idx + 1],
+        b = buf[idx + 2],
+        a = buf[idx + 3];
 
       // Handle semi‑transparent input pixels
       if (a < 255 && a > 0) {
         if (transparentHideActive) {
           // hide and skip diffusion
-          d[idx] = d[idx+1] = d[idx+2] = 0;
-          d[idx+3] = 0;
+          d[idx] = d[idx + 1] = d[idx + 2] = 0;
+          d[idx + 3] = 0;
           continue;
         } else {
           a = 255; // treat as opaque for processing
@@ -432,24 +516,24 @@ function processWithFloydSteinberg(ctx, palette, transparentHideActive) {
       }
 
       // Quantize to nearest palette color
-      const [nr, ng, nb] = corMaisProxima(r|0, g|0, b|0);
+      const [nr, ng, nb] = corMaisProxima(r | 0, g | 0, b | 0);
       const key = `${nr},${ng},${nb}`;
 
       // --- Per‑color hide: make transparent and skip diffusion/count ---
-      if (typeof hiddenColors !== 'undefined' && hiddenColors.has(key)) {
-        d[idx] = d[idx+1] = d[idx+2] = 0;
-        d[idx+3] = 0;
+      if (typeof hiddenColors !== "undefined" && hiddenColors.has(key)) {
+        d[idx] = d[idx + 1] = d[idx + 2] = 0;
+        d[idx + 3] = 0;
         continue; // do NOT diffuse error from hidden pixels
       }
 
       // Write quantized color
-      d[idx]   = nr;
-      d[idx+1] = ng;
-      d[idx+2] = nb;
-      d[idx+3] = (a === 0) ? 0 : 255;
+      d[idx] = nr;
+      d[idx + 1] = ng;
+      d[idx + 2] = nb;
+      d[idx + 3] = a === 0 ? 0 : 255;
 
       // Count only visible pixels
-      if (d[idx+3] !== 0) {
+      if (d[idx + 3] !== 0) {
         colorCounts[key] = (colorCounts[key] || 0) + 1;
       }
 
@@ -462,15 +546,15 @@ function processWithFloydSteinberg(ctx, palette, transparentHideActive) {
       const push = (xx, yy, fr) => {
         if (xx < 0 || xx >= w || yy < 0 || yy >= h) return;
         const j = (yy * w + xx) * 4;
-        buf[j  ] = clampByte(buf[j  ] + er * fr);
-        buf[j+1] = clampByte(buf[j+1] + eg * fr);
-        buf[j+2] = clampByte(buf[j+2] + eb * fr);
+        buf[j] = clampByte(buf[j] + er * fr);
+        buf[j + 1] = clampByte(buf[j + 1] + eg * fr);
+        buf[j + 2] = clampByte(buf[j + 2] + eb * fr);
       };
 
-      push(x+1, y  , 7/16);
-      push(x-1, y+1, 3/16);
-      push(x  , y+1, 5/16);
-      push(x+1, y+1, 1/16);
+      push(x + 1, y, 7 / 16);
+      push(x - 1, y + 1, 3 / 16);
+      push(x, y + 1, 5 / 16);
+      push(x + 1, y + 1, 1 / 16);
     }
   }
 
@@ -478,29 +562,32 @@ function processWithFloydSteinberg(ctx, palette, transparentHideActive) {
   return colorCounts;
 }
 
-
 //Zoom helper
 function fitZoomToViewport() {
-  const vp = document.getElementById('canvasViewport');
+  const vp = document.getElementById("canvasViewport");
   if (!processedCanvas || !vp) return 1;
-  const w = processedCanvas.width, h = processedCanvas.height;
+  const w = processedCanvas.width,
+    h = processedCanvas.height;
   const fit = Math.min(vp.clientWidth / w, vp.clientHeight / h, 1);
-  return (fit > 0 && isFinite(fit)) ? fit : 1;
+  return fit > 0 && isFinite(fit) ? fit : 1;
 }
 
 function getColorsListOrder() {
-  const fromInput = document.querySelector('input[name="colors-list-order"]:checked')?.value
-  return fromInput || 'original'
+  const fromInput = document.querySelector(
+    'input[name="colors-list-order"]:checked',
+  )?.value;
+  return fromInput || "original";
 }
 
 // Image processing
-let _colorCounts
+let _colorCounts;
 
 function processarImagem() {
   if (!canvas || !ctx) return;
 
-  const transparentHideActive =
-    document.getElementById('transparentButton').classList.contains('active');
+  const transparentHideActive = document
+    .getElementById("transparentButton")
+    .classList.contains("active");
 
   let colorCounts;
 
@@ -514,7 +601,10 @@ function processarImagem() {
     colorCounts = {};
 
     for (let i = 0; i < data.length; i += 4) {
-      const r = data[i], g = data[i + 1], b = data[i + 2], a = data[i + 3];
+      const r = data[i],
+        g = data[i + 1],
+        b = data[i + 2],
+        a = data[i + 3];
 
       const [nr, ng, nb] = corMaisProxima(r, g, b);
       const key = `${nr},${ng},${nb}`;
@@ -527,7 +617,9 @@ function processarImagem() {
       }
 
       // Write quantized color
-      data[i] = nr; data[i + 1] = ng; data[i + 2] = nb;
+      data[i] = nr;
+      data[i + 1] = ng;
+      data[i + 2] = nb;
 
       // Alpha handling
       if (a === 0) {
@@ -546,73 +638,75 @@ function processarImagem() {
     ctx.putImageData(imgData, 0, 0);
   }
 
-// --- keep processedCanvas/UI in sync right here ---
-processedCanvas = document.createElement('canvas');
-processedCtx = processedCanvas.getContext('2d', { willReadFrequently: true });
-processedCanvas.width  = canvas.width;
-processedCanvas.height = canvas.height;
-processedCtx.clearRect(0, 0, processedCanvas.width, processedCanvas.height);
-processedCtx.drawImage(canvas, 0, 0);
+  // --- keep processedCanvas/UI in sync right here ---
+  processedCanvas = document.createElement("canvas");
+  processedCtx = processedCanvas.getContext("2d", { willReadFrequently: true });
+  processedCanvas.width = canvas.width;
+  processedCanvas.height = canvas.height;
+  processedCtx.clearRect(0, 0, processedCanvas.width, processedCanvas.height);
+  processedCtx.drawImage(canvas, 0, 0);
 
-// Final authoritative palette pass + export
-const exportCanvas = finalizeToPalette();
-downloadLink.href = exportCanvas.toDataURL('image/png');
+  // Final authoritative palette pass + export
+  const exportCanvas = finalizeToPalette();
+  downloadLink.href = exportCanvas.toDataURL("image/png");
 
-// Normalize filename to .png (handles svg/jpg/etc.)
-const base = (fileName || 'image').replace(/\.[^.]+$/,'').trim() || 'image';
-downloadLink.download = `converted_${base}.png`;
+  // Normalize filename to .png (handles svg/jpg/etc.)
+  const base = (fileName || "image").replace(/\.[^.]+$/, "").trim() || "image";
+  downloadLink.download = `converted_${base}.png`;
 
-showImageInfo(canvas.width, canvas.height);
-if (colorCounts) showColorUsage(colorCounts, getColorsListOrder());
+  showImageInfo(canvas.width, canvas.height);
+  if (colorCounts) showColorUsage(colorCounts, getColorsListOrder());
 
-_colorCounts = colorCounts;
+  _colorCounts = colorCounts;
 
-return colorCounts;
+  return colorCounts;
 }
 
 let _lastAppliedScale = 1;
-(function wrapApplyScale(){
-  const _orig = applyScale;
-  applyScale = function() {
-    _orig();
-    _lastAppliedScale = parseFloat(scaleRange.value) || 1;
-  };
-})();
 
 function reprocessWithCurrentPalette() {
   if (!originalImage) return;
+  if (scalePromise) {
+    if (!pendingReprocess) {
+      pendingReprocess = true;
+      scalePromise.finally(() => {
+        if (!pendingReprocess) return;
+        pendingReprocess = false;
+        reprocessWithCurrentPalette();
+      });
+    }
+    return;
+  }
 
   const targetScale = parseFloat(scaleRange.value) || 1;
-  const needRescale = (targetScale !== _lastAppliedScale);
+  const needRescale = targetScale !== _lastAppliedScale;
 
   if (needRescale) {
-    // Slow path: scale changed — normal/full pipeline keeps layout correct
-    applyScale();
-    applyPreview();
+    // Slow path: scale changed - normal/full pipeline keeps layout correct
+    queueScaleAndPreview({ resetScroll: true });
     return;
   }
 
   // Fast path: only palette/visibility changed
-  const vp = document.getElementById('canvasViewport');
+  const vp = document.getElementById("canvasViewport");
 
   // 1) remember absolute scroll (cheap)
   const keepSL = vp ? vp.scrollLeft : 0;
-  const keepST = vp ? vp.scrollTop  : 0;
+  const keepST = vp ? vp.scrollTop : 0;
 
   // 2) if we don't have a base image, fall back to slow path once
   if (!scaledCanvas) {
-    applyScale();
-    applyPreview();
+    queueScaleAndPreview({ resetScroll: true });
     return;
   }
 
   // 3) temporarily switch the visible canvas to base resolution
-  const prevW   = canvas.width;
-  const prevH   = canvas.height;
+  const prevW = canvas.width;
+  const prevH = canvas.height;
   const prevCSSW = canvas.style.width;
   const prevCSSH = canvas.style.height;
 
-  canvas.width  = scaledCanvas.width;
+  canvas.width = scaledCanvas.width;
   canvas.height = scaledCanvas.height;
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.drawImage(scaledCanvas, 0, 0);
@@ -621,9 +715,9 @@ function reprocessWithCurrentPalette() {
   processarImagem();
 
   // 5) restore visible canvas size (don’t recompute layout/center)
-  canvas.width  = prevW;
+  canvas.width = prevW;
   canvas.height = prevH;
-  canvas.style.width  = prevCSSW;
+  canvas.style.width = prevCSSW;
   canvas.style.height = prevCSSH;
 
   // 6) repaint processed image into the current visible size (no resize/center math)
@@ -632,7 +726,7 @@ function reprocessWithCurrentPalette() {
   // 7) restore the same scroll offsets
   if (vp) {
     vp.scrollLeft = keepSL;
-    vp.scrollTop  = keepST;
+    vp.scrollTop = keepST;
   }
 }
 
@@ -658,91 +752,131 @@ function showImageInfo(width, height) {
 function getColorColumnCount() {
   const defaultColumns = 3;
   const maxColumns = 4;
-  const columnCount = document.getElementById('color-columns-manual-count');
+  const columnCount = document.getElementById("color-columns-manual-count");
   const value = columnCount ? parseInt(columnCount.value, 10) : defaultColumns;
-  return Number.isFinite(value) && value > 0 ? Math.min(maxColumns, value) : defaultColumns;
+  return Number.isFinite(value) && value > 0
+    ? Math.min(maxColumns, value)
+    : defaultColumns;
 }
 
 // Read chosen mode: 'dynamic' or 'manual'
 function getColumnMode() {
-  const dynamic = document.getElementById('color-columns-dynamic');
-  return (dynamic && dynamic.checked) ? 'dynamic' : 'manual';
+  const dynamic = document.getElementById("color-columns-dynamic");
+  return dynamic && dynamic.checked ? "dynamic" : "manual";
 }
 
 // Enable/Disable the select based on the current mode
 function syncColumnCountSelectState() {
-  const columnCount = document.getElementById('color-columns-manual-count');
+  const columnCount = document.getElementById("color-columns-manual-count");
   if (!columnCount) return;
   const mode = getColumnMode();
-  columnCount.disabled = (mode === 'dynamic');
-  columnCount.setAttribute('aria-disabled', String(columnCount.disabled));
+  columnCount.disabled = mode === "dynamic";
+  columnCount.setAttribute("aria-disabled", String(columnCount.disabled));
+}
+
+function toggleColorChipByKey(key) {
+  if (!key) return;
+  const btn = document.querySelector(`.toggle-color[data-key="${key}"]`);
+  if (btn) btn.click();
+}
+
+function bindColorListInteractions() {
+  const list = document.getElementById("color-list");
+  if (!list || list.dataset.bound === "true") return;
+  list.dataset.bound = "true";
+
+  list.addEventListener("click", (event) => {
+    const row = event.target.closest(".usage-item");
+    if (!row || !list.contains(row)) return;
+    toggleColorChipByKey(row.dataset.key);
+  });
+
+  list.addEventListener("keydown", (event) => {
+    if (event.key !== "Enter" && event.key !== " ") return;
+    const row = event.target.closest(".usage-item");
+    if (!row || !list.contains(row)) return;
+    event.preventDefault();
+    toggleColorChipByKey(row.dataset.key);
+  });
 }
 
 // Color usage display
-function showColorUsage(colorCounts = {}, order = 'original') {
-  const colorListDiv = document.getElementById('color-list');
+function showColorUsage(colorCounts = {}, order = "original") {
+  const colorListDiv = document.getElementById("color-list");
   if (!colorListDiv) return;
+
+  bindColorListInteractions();
 
   // Persist for re-renders triggered by column controls
   window._colorCounts = colorCounts;
 
   // --- Column layout (dynamic/manual) ---
-  const mode = (typeof getColumnMode === 'function' && getColumnMode()) || 'manual';
-  const cols = (typeof getColorColumnCount === 'function' && getColorColumnCount()) || 3;
+  const mode =
+    (typeof getColumnMode === "function" && getColumnMode()) || "manual";
+  const cols =
+    (typeof getColorColumnCount === "function" && getColorColumnCount()) || 3;
 
   // Toggle dynamic class and manual template var
-  if (mode === 'dynamic') {
-    colorListDiv.classList.add('dynamic');
+  if (mode === "dynamic") {
+    colorListDiv.classList.add("dynamic");
     // ensure manual var doesn't interfere
-    colorListDiv.style.removeProperty('--color-list-template');
+    colorListDiv.style.removeProperty("--color-list-template");
   } else {
-    colorListDiv.classList.remove('dynamic');
-    colorListDiv.style.setProperty('--color-list-template', `repeat(${cols}, minmax(0, 1fr))`);
+    colorListDiv.classList.remove("dynamic");
+    colorListDiv.style.setProperty(
+      "--color-list-template",
+      `repeat(${cols}, minmax(0, 1fr))`,
+    );
   }
 
   // Keep palette order, show if count > 0 or hidden
-  const rows = padrao.map(([r, g, b]) => {
-    const key    = `${r},${g},${b}`;
-    const name   = colorNames[key] || `rgb(${r}, ${g}, ${b})`;
-    const count  = colorCounts[key] || 0;
-    const hidden = typeof hiddenColors !== 'undefined' && hiddenColors.has(key);
-    return { r, g, b, key, name, count, hidden };
-  }).filter(item => item.count > 0 || item.hidden);
+  const rows = padrao
+    .map(([r, g, b]) => {
+      const key = `${r},${g},${b}`;
+      const name = colorNames[key] || `rgb(${r}, ${g}, ${b})`;
+      const count = colorCounts[key] || 0;
+      const hidden =
+        typeof hiddenColors !== "undefined" && hiddenColors.has(key);
+      return { r, g, b, key, name, count, hidden };
+    })
+    .filter((item) => item.count > 0 || item.hidden);
 
-  colorListDiv.innerHTML = '';
+  colorListDiv.innerHTML = "";
 
-  const rowsSorted = order === 'original'
-    ? rows
-    : rows.toSorted((a, b) => b.count - a.count);
+  const rowsSorted =
+    order === "original" ? rows : rows.toSorted((a, b) => b.count - a.count);
 
   rowsSorted.forEach(({ r, g, b, key, name, count, hidden }) => {
-    const row = document.createElement('div');
-    row.className = 'usage-item' + (hidden ? ' hidden' : '');
-    row.style.display = 'flex';
-    row.style.alignItems = 'center';
-    row.style.gap = '10px';
-    row.style.marginBottom = '6px';
+    const row = document.createElement("div");
+    row.className = "usage-item" + (hidden ? " hidden" : "");
+    row.style.display = "flex";
+    row.style.alignItems = "center";
+    row.style.gap = "10px";
+    row.style.marginBottom = "6px";
+    row.style.cursor = "pointer";
+    row.dataset.key = key;
+    row.setAttribute("role", "button");
+    row.tabIndex = 0;
 
-    const swatch = document.createElement('span');
-    swatch.style.display = 'inline-block';
-    swatch.style.width = '20px';
-    swatch.style.height = '20px';
-    swatch.style.border = '1px solid #ccc';
+    const swatch = document.createElement("span");
+    swatch.style.display = "inline-block";
+    swatch.style.width = "20px";
+    swatch.style.height = "20px";
+    swatch.style.border = "1px solid #ccc";
     swatch.style.background = `rgb(${r},${g},${b})`;
 
-    const label = document.createElement('span');
+    const label = document.createElement("span");
     if (hidden && count === 0) {
       label.textContent = `${name}: `;
-      const eyeIcon = document.createElement('span');
-      eyeIcon.className = 'usage-hide-icon';
+      const eyeIcon = document.createElement("span");
+      eyeIcon.className = "usage-hide-icon";
       label.appendChild(eyeIcon);
     } else {
       label.textContent = `${name}: ${count} px`;
 
-      
       // Differentiate Paid colors
-      const isPaid = (typeof paidColors !== 'undefined') && paidColors.has(key);
-      if (isPaid) label.style.color = 'gold';
+      const isPaid = typeof paidColors !== "undefined" && paidColors.has(key);
+      if (isPaid) label.style.color = "gold";
     }
 
     row.appendChild(swatch);
@@ -750,7 +884,6 @@ function showColorUsage(colorCounts = {}, order = 'original') {
     colorListDiv.appendChild(row);
   });
 }
-
 
 // --- Script for Select All buttons (translation-free, label via data-attrs) ---
 
@@ -761,45 +894,59 @@ function showColorUsage(colorCounts = {}, order = 'original') {
   storageKey,
   defaultOn = false, // free: true (on first visit), paid: false
   fallbackSelect,
-  fallbackUnselect
+  fallbackUnselect,
 }) {
   document.addEventListener("DOMContentLoaded", () => {
-    const masterBtn   = document.getElementById(masterId);
-    const colorBtns   = Array.from(document.querySelectorAll(`${scopeSelector} .toggle-color[data-type="${dataType}"]`));
+    const masterBtn = document.getElementById(masterId);
+    const colorBtns = Array.from(
+      document.querySelectorAll(
+        `${scopeSelector} .toggle-color[data-type="${dataType}"]`,
+      ),
+    );
     if (!masterBtn || !colorBtns.length) return;
 
     // ---- helpers ----
     function getExportCanvas() {
-      return (typeof processedCanvas !== "undefined" && processedCanvas) ? processedCanvas : canvas;
+      return typeof processedCanvas !== "undefined" && processedCanvas
+        ? processedCanvas
+        : canvas;
     }
 
     const getLabels = () => {
-      const select   = masterBtn.getAttribute("data-label-select")   || fallbackSelect;
-      const unselect = masterBtn.getAttribute("data-label-unselect") || fallbackUnselect;
+      const select =
+        masterBtn.getAttribute("data-label-select") || fallbackSelect;
+      const unselect =
+        masterBtn.getAttribute("data-label-unselect") || fallbackUnselect;
       return { select, unselect };
     };
 
     function updateMasterLabel() {
       const { select, unselect } = getLabels();
-      const allActive = colorBtns.every(b => b.classList.contains("active"));
+      const allActive = colorBtns.every((b) => b.classList.contains("active"));
       masterBtn.textContent = allActive ? unselect : select;
     }
 
     function saveState() {
-      const activeIds = colorBtns.filter(b => b.classList.contains("active")).map(b => b.id);
+      const activeIds = colorBtns
+        .filter((b) => b.classList.contains("active"))
+        .map((b) => b.id);
       localStorage.setItem(storageKey, JSON.stringify(activeIds));
     }
 
     // ---- load state ----
-    const raw   = localStorage.getItem(storageKey);
+    const raw = localStorage.getItem(storageKey);
     const firstVisit = raw === null;
     let savedIds = [];
     if (!firstVisit) {
-      try { savedIds = JSON.parse(raw); } catch { /* ignore parse errors */ }
+      try {
+        savedIds = JSON.parse(raw);
+      } catch {
+        /* ignore parse errors */
+      }
     }
 
     // apply state
-    colorBtns.forEach(b => {
+    colorBtns.forEach((b) => {
       const shouldBeActive = firstVisit ? defaultOn : savedIds.includes(b.id);
       b.classList.toggle("active", shouldBeActive);
     });
@@ -809,7 +956,7 @@ function showColorUsage(colorCounts = {}, order = 'original') {
     if (!firstVisit) updatePadraoFromActiveButtons();
 
     // single-button toggle
-    colorBtns.forEach(b => {
+    colorBtns.forEach((b) => {
       b.addEventListener("click", () => {
         b.classList.toggle("active");
         // microtask to let layout settle before expensive work
@@ -826,8 +973,8 @@ function showColorUsage(colorCounts = {}, order = 'original') {
 
     // master toggle
     masterBtn.addEventListener("click", () => {
-      const allActive = colorBtns.every(b => b.classList.contains("active"));
-      colorBtns.forEach(b => b.classList.toggle("active", !allActive));
+      const allActive = colorBtns.every((b) => b.classList.contains("active"));
+      colorBtns.forEach((b) => b.classList.toggle("active", !allActive));
 
       updateMasterLabel();
       saveState();
@@ -842,40 +989,55 @@ function showColorUsage(colorCounts = {}, order = 'original') {
   storageKey: "activeColors",
   defaultOn: true,
   fallbackSelect: "Select All Free Colors",
-  fallbackUnselect: "Unselect All Free Colors"
+  fallbackUnselect: "Unselect All Free Colors",
 });
 
 (function selectAllSectionPaid() {
   // Paid Colors
   (function selectAllSection(config) {
     document.addEventListener("DOMContentLoaded", () => {
-      const masterBtn   = document.getElementById(config.masterId);
-      const colorBtns   = Array.from(document.querySelectorAll(`${config.scopeSelector} .toggle-color[data-type="${config.dataType}"]`));
+      const masterBtn = document.getElementById(config.masterId);
+      const colorBtns = Array.from(
+        document.querySelectorAll(
+          `${config.scopeSelector} .toggle-color[data-type="${config.dataType}"]`,
+        ),
+      );
       if (!masterBtn || !colorBtns.length) return;
 
       const getLabels = () => {
-        const select   = masterBtn.getAttribute("data-label-select")   || config.fallbackSelect;
-        const unselect = masterBtn.getAttribute("data-label-unselect") || config.fallbackUnselect;
+        const select =
+          masterBtn.getAttribute("data-label-select") || config.fallbackSelect;
+        const unselect =
+          masterBtn.getAttribute("data-label-unselect") ||
+          config.fallbackUnselect;
         return { select, unselect };
       };
 
       function updateMasterLabel() {
         const { select, unselect } = getLabels();
-        const allActive = colorBtns.every(b => b.classList.contains("active"));
+        const allActive = colorBtns.every((b) =>
+          b.classList.contains("active"),
+        );
         masterBtn.textContent = allActive ? unselect : select;
       }
 
       function saveState() {
-        const activeIds = colorBtns.filter(b => b.classList.contains("active")).map(b => b.id);
+        const activeIds = colorBtns
+          .filter((b) => b.classList.contains("active"))
+          .map((b) => b.id);
         localStorage.setItem(config.storageKey, JSON.stringify(activeIds));
       }
 
       const raw = localStorage.getItem(config.storageKey);
       let savedIds = [];
-      if (raw !== null) { try { savedIds = JSON.parse(raw); } catch {} }
+      if (raw !== null) {
+        try {
+          savedIds = JSON.parse(raw);
+        } catch {}
+      }
 
       // default OFF for paid if nothing saved
-      colorBtns.forEach(b => {
+      colorBtns.forEach((b) => {
         const shouldBeActive = raw !== null ? savedIds.includes(b.id) : false;
         b.classList.toggle("active", shouldBeActive);
       });
@@ -883,7 +1045,7 @@ function showColorUsage(colorCounts = {}, order = 'original') {
       window.addEventListener("load", updateMasterLabel);
       updatePadraoFromActiveButtons();
 
-      colorBtns.forEach(b => {
+      colorBtns.forEach((b) => {
         b.addEventListener("click", () => {
           b.classList.toggle("active");
           setTimeout(() => {
@@ -895,8 +1057,10 @@ function showColorUsage(colorCounts = {}, order = 'original') {
       });
 
       masterBtn.addEventListener("click", () => {
-        const allActive = colorBtns.every(b => b.classList.contains("active"));
-        colorBtns.forEach(b => b.classList.toggle("active", !allActive));
+        const allActive = colorBtns.every((b) =>
+          b.classList.contains("active"),
+        );
+        colorBtns.forEach((b) => b.classList.toggle("active", !allActive));
 
         updateMasterLabel();
         saveState();
@@ -912,13 +1076,11 @@ function showColorUsage(colorCounts = {}, order = 'original') {
     dataType: "paid",
     storageKey: "activeColorsPaid",
     fallbackSelect: "Select All Paid Colors",
-    fallbackUnselect: "Unselect All Paid Colors"
+    fallbackUnselect: "Unselect All Paid Colors",
   });
 })();
 
 // --End of Script for buttons--
-
-
 
 // --- Hidden colors (per-chip eye toggle) -------------------------------
 const hiddenColors = new Set();
@@ -933,22 +1095,24 @@ function rgbKeyFromButton(btn) {
 
 function updateEyeForButton(btn) {
   const key = rgbKeyFromButton(btn);
-  const eye = btn.querySelector('.hide-eye');
+  const eye = btn.querySelector(".hide-eye");
   const hidden = key ? hiddenColors.has(key) : false;
   if (eye) {
-    eye.classList.toggle('is-off', hidden);
+    eye.classList.toggle("is-off", hidden);
   }
-  btn.classList.toggle('color-hidden', hidden);
+  btn.classList.toggle("color-hidden", hidden);
 }
 
 function augmentColorChipsWithEye() {
-  const nodeList = document.querySelectorAll('#colors-free .toggle-color, #colors-paid .toggle-color');
-  Array.from(nodeList).forEach(btn => {
-    if (!btn.querySelector('.hide-eye')) {
-      const eye = document.createElement('button');
-      eye.type = 'button';
-      eye.className = 'hide-eye';
-      eye.addEventListener('click', (e) => {
+  const nodeList = document.querySelectorAll(
+    "#colors-free .toggle-color, #colors-paid .toggle-color",
+  );
+  Array.from(nodeList).forEach((btn) => {
+    if (!btn.querySelector(".hide-eye")) {
+      const eye = document.createElement("button");
+      eye.type = "button";
+      eye.className = "hide-eye";
+      eye.addEventListener("click", (e) => {
         e.stopPropagation();
         const key = rgbKeyFromButton(btn);
         if (!key) return;
@@ -956,7 +1120,10 @@ function augmentColorChipsWithEye() {
         else hiddenColors.add(key);
         updateEyeForButton(btn);
         refreshMasterEyes();
-        if (originalImage) { applyScale?.(); applyPreview?.(); }
+        if (originalImage) {
+          applyScale?.();
+          applyPreview?.();
+        }
       });
       btn.appendChild(eye);
     }
@@ -964,14 +1131,15 @@ function augmentColorChipsWithEye() {
   });
 }
 
-
 // Run once and re-run if the lists are rebuilt
-document.addEventListener('DOMContentLoaded', augmentColorChipsWithEye);
-const rootsToWatch = ['colors-free','colors-paid']
-  .map(id => document.getElementById(id))
+document.addEventListener("DOMContentLoaded", augmentColorChipsWithEye);
+const rootsToWatch = ["colors-free", "colors-paid"]
+  .map((id) => document.getElementById(id))
   .filter(Boolean);
 const mo = new MutationObserver(augmentColorChipsWithEye);
-rootsToWatch.forEach(root => mo.observe(root, { childList: true, subtree: true }));
+rootsToWatch.forEach((root) =>
+  mo.observe(root, { childList: true, subtree: true }),
+);
 
 // --- Master eye (hide/show all in a section) -----------------------------
 function sectionChips(selector) {
@@ -980,10 +1148,11 @@ function sectionChips(selector) {
 
 function hideShowAllInSection(selector, hide) {
   const chips = sectionChips(selector);
-  chips.forEach(btn => {
+  chips.forEach((btn) => {
     const key = rgbKeyFromButton(btn);
     if (!key) return;
-    if (hide) hiddenColors.add(key); else hiddenColors.delete(key);
+    if (hide) hiddenColors.add(key);
+    else hiddenColors.delete(key);
     updateEyeForButton(btn);
   });
   if (originalImage) {
@@ -993,88 +1162,243 @@ function hideShowAllInSection(selector, hide) {
 
 function updateMasterEye(selector, btn) {
   const chips = sectionChips(selector);
-  if (!chips.length) { btn.classList.remove('active'); return; }
-  const allHidden = chips.every(b => {
+  if (!chips.length) {
+    btn.classList.remove("active");
+    return;
+  }
+  const allHidden = chips.every((b) => {
     const key = rgbKeyFromButton(b);
     return key && hiddenColors.has(key);
   });
-  btn.classList.toggle('active', allHidden);
-  btn.title = allHidden ? 'Show all colors' : 'Hide all colors';
+  btn.classList.toggle("active", allHidden);
+  btn.title = allHidden ? "Show all colors" : "Hide all colors";
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  const freeBtn = document.getElementById('hide-toggle-free');
-  const paidBtn = document.getElementById('hide-toggle-paid');
+document.addEventListener("DOMContentLoaded", () => {
+  const freeBtn = document.getElementById("hide-toggle-free");
+  const paidBtn = document.getElementById("hide-toggle-paid");
 
   if (freeBtn) {
-    updateMasterEye('#colors-free', freeBtn);
-    freeBtn.addEventListener('click', () => {
-      const makeHide = !freeBtn.classList.contains('active');
-      hideShowAllInSection('#colors-free', makeHide);
-      updateMasterEye('#colors-free', freeBtn);
+    updateMasterEye("#colors-free", freeBtn);
+    freeBtn.addEventListener("click", () => {
+      const makeHide = !freeBtn.classList.contains("active");
+      hideShowAllInSection("#colors-free", makeHide);
+      updateMasterEye("#colors-free", freeBtn);
     });
   }
 
   if (paidBtn) {
-    updateMasterEye('#colors-paid', paidBtn);
-    paidBtn.addEventListener('click', () => {
-      const makeHide = !paidBtn.classList.contains('active');
-      hideShowAllInSection('#colors-paid', makeHide);
-      updateMasterEye('#colors-paid', paidBtn);
+    updateMasterEye("#colors-paid", paidBtn);
+    paidBtn.addEventListener("click", () => {
+      const makeHide = !paidBtn.classList.contains("active");
+      hideShowAllInSection("#colors-paid", makeHide);
+      updateMasterEye("#colors-paid", paidBtn);
     });
   }
 });
 
 function refreshMasterEyes() {
-  const freeBtn = document.getElementById('hide-toggle-free');
-  const paidBtn = document.getElementById('hide-toggle-paid');
-  if (freeBtn) updateMasterEye('#colors-free', freeBtn);
-  if (paidBtn) updateMasterEye('#colors-paid', paidBtn);
+  const freeBtn = document.getElementById("hide-toggle-free");
+  const paidBtn = document.getElementById("hide-toggle-paid");
+  if (freeBtn) updateMasterEye("#colors-free", freeBtn);
+  if (paidBtn) updateMasterEye("#colors-paid", paidBtn);
 }
 
 // Scale, Zoom, and Dimension functionality
-const scaleRange   = document.getElementById('scaleRange');
-const scaleValue   = document.getElementById('scaleValue');
-const zoomRange    = document.getElementById('zoomRange');
-const zoomValue    = document.getElementById('zoomValue');
+const scaleRange = document.getElementById("scaleRange");
+const scaleInput = document.getElementById("scaleInput");
+const zoomRange = document.getElementById("zoomRange");
+const zoomInput = document.getElementById("zoomInput");
+const zoomReset = document.getElementById("zoomReset");
 
-let originalImage     = null;
-let scaledCanvas      = null;
-let scaledCtx         = null;
-let processedCanvas   = null;
-let processedCtx      = null;
+let originalImage = null;
+let scaledCanvas = null;
+let scaledCtx = null;
+let processedCanvas = null;
+let processedCtx = null;
+let showOriginalPreview = false;
+let originalScaledCanvas = null;
+let originalScaledCtx = null;
+
+function setZoomControlsEnabled(enabled) {
+  if (zoomRange) zoomRange.disabled = !enabled;
+  if (zoomInput) zoomInput.disabled = !enabled;
+  if (zoomReset) zoomReset.disabled = !enabled;
+}
+
+setZoomControlsEnabled(false);
+
+const DEFAULT_SAMPLER_SETTINGS = (() => {
+  const tmp = document.createElement("canvas");
+  const tmpCtx = tmp.getContext("2d");
+  return {
+    enabled: tmpCtx?.imageSmoothingEnabled ?? true,
+    quality: tmpCtx?.imageSmoothingQuality || "low",
+  };
+})();
+
+const SAMPLER_SETTINGS = {
+  nearest: {
+    canvas: {
+      enabled: false,
+      quality: DEFAULT_SAMPLER_SETTINGS.quality,
+    },
+    gpu: "nearest",
+  },
+  bilinear: {
+    canvas: { enabled: true, quality: "low" },
+    gpu: "bilinear",
+  },
+  mitchell: {
+    canvas: { enabled: true, quality: "medium" },
+    gpu: "mitchell",
+  },
+  lanczos3: {
+    canvas: { enabled: true, quality: "high" },
+    gpu: "lanczos3",
+  },
+};
+
+let currentSampler = "bilinear";
+
+function getSamplerSettings(name) {
+  return SAMPLER_SETTINGS[name] || SAMPLER_SETTINGS.mitchell;
+}
+
+function applySamplerSettings(targetCtx) {
+  if (!targetCtx) return;
+  const settings = getSamplerSettings(currentSampler).canvas;
+  targetCtx.imageSmoothingEnabled = settings.enabled;
+  if (settings.quality) targetCtx.imageSmoothingQuality = settings.quality;
+}
+
+function getPreviewSource() {
+  if (showOriginalPreview && originalScaledCanvas) return originalScaledCanvas;
+  return processedCanvas || canvas;
+}
+
+function setSampler(next, options = {}) {
+  const { silent = false, force = false } = options;
+  const nextValue = SAMPLER_SETTINGS[next] ? next : "mitchell";
+  if (nextValue === currentSampler && !force) return;
+  currentSampler = nextValue;
+
+  document.querySelectorAll("[data-sampler]").forEach((btn) => {
+    const isActive = btn.dataset.sampler === currentSampler;
+    btn.classList.toggle("active", isActive);
+  });
+
+    if (!silent && originalImage) {
+      queueScaleAndPreview({ preserveScroll: true });
+    }
+}
+
+function initSamplerControls() {
+  const buttons = Array.from(document.querySelectorAll("[data-sampler]"));
+  if (!buttons.length) return;
+
+  buttons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      setSampler(btn.dataset.sampler);
+    });
+  });
+
+  setSampler(currentSampler, { silent: true, force: true });
+}
+
+if (document.readyState !== "loading") initSamplerControls();
+else document.addEventListener("DOMContentLoaded", initSamplerControls);
+
+let scalePromise = null;
+let scaleToken = 0;
+let pendingPreview = false;
+let pendingReprocess = false;
+let pendingPreviewOptions = null;
+
+function queueScaleAndPreview(options = {}) {
+  const nextOptions = { ...options };
+  if (nextOptions.preserveScroll && !nextOptions.keepScroll) {
+    const vp = document.getElementById("canvasViewport");
+    if (vp) {
+      nextOptions.keepScroll = {
+        left: vp.scrollLeft,
+        top: vp.scrollTop,
+      };
+    }
+  }
+  const p = applyScale();
+  if (p && typeof p.then === "function") {
+    p.then(() => applyPreview(nextOptions));
+  } else {
+    applyPreview(nextOptions);
+  }
+}
+
+function updateOriginalToggleLabel(btn) {
+  const lang = typeof getCurrentLang === "function" ? getCurrentLang() : "en";
+  const t =
+    (typeof window.translations !== "undefined" &&
+      window.translations[lang]) ||
+    {};
+  const labelOriginal = t.viewOriginal || "Show Original";
+  const labelConverted = t.viewConverted || "Show Converted";
+  btn.textContent = showOriginalPreview ? labelConverted : labelOriginal;
+}
+
+function initOriginalToggle() {
+  const btn = document.getElementById("toggleOriginal");
+  if (!btn) return;
+  updateOriginalToggleLabel(btn);
+  btn.addEventListener("click", () => {
+    showOriginalPreview = !showOriginalPreview;
+    btn.classList.toggle("active", showOriginalPreview);
+    updateOriginalToggleLabel(btn);
+    if (originalImage && !scaledCanvas) {
+      queueScaleAndPreview();
+      return;
+    }
+    applyPreview();
+  });
+}
+
+if (document.readyState !== "loading") initOriginalToggle();
+else document.addEventListener("DOMContentLoaded", initOriginalToggle);
 
 // Utility: initialize width/height fields when a new image loads
 function initDimensions() {
   if (!originalImage) return;
-  widthInput.value  = originalImage.width;
+  widthInput.value = originalImage.width;
   heightInput.value = originalImage.height;
 }
 
 // Update only the display text of scale/zoom sliders
-scaleRange.addEventListener('input', () => {
-  scaleValue.textContent = parseFloat(scaleRange.value).toFixed(2) + 'x';
+scaleRange.addEventListener("input", () => {
+  if (scaleInput) {
+    scaleInput.value = parseFloat(scaleRange.value).toFixed(2);
+  }
 });
-zoomRange.addEventListener('input', () => {
-  // update the label
-  zoomValue.textContent = parseFloat(zoomRange.value).toFixed(2) + 'x';
-  // and call the preview
+zoomRange.addEventListener("input", () => {
+  if (!originalImage) return;
+  if (zoomInput) {
+    zoomInput.value = parseFloat(zoomRange.value).toFixed(2);
+  }
   applyPreview();
 });
-
 
 // ---------- Deferred validation for width/height ----------
 
 const TYPE_PAUSE_MS = 500; // commit after short pause
-let widthDebounce  = null;
+let widthDebounce = null;
 let heightDebounce = null;
+let scaleDebounce = null;
+let areaDebounce = null;
 
 // Helpers to safely parse and clamp against max scale
 function commitFromWidth() {
   if (!originalImage) return;
 
   const raw = widthInput.value.trim();
-  if (raw === '') return;               // allow empty while typing
+  if (raw === "") return; // allow empty while typing
 
   const reqW = parseInt(raw, 10);
   if (!Number.isFinite(reqW)) return;
@@ -1084,23 +1408,22 @@ function commitFromWidth() {
   const newW = Math.min(Math.max(reqW, 1), maxW);
 
   const scale = newW / originalImage.width;
-  const newH  = Math.round(originalImage.height * scale);
+  const newH = Math.round(originalImage.height * scale);
 
   // sync UI once
-  widthInput.value        = newW;
-  heightInput.value       = newH;
-  scaleRange.value        = scale.toFixed(2);
-  scaleValue.textContent  = scale.toFixed(2) + 'x';
+  widthInput.value = newW;
+  heightInput.value = newH;
+  scaleRange.value = scale.toFixed(2);
+  if (scaleInput) scaleInput.value = scale.toFixed(2);
 
-  applyScale();
-  applyPreview();
+  queueScaleAndPreview({ resetScroll: true });
 }
 
 function commitFromHeight() {
   if (!originalImage) return;
 
   const raw = heightInput.value.trim();
-  if (raw === '') return;
+  if (raw === "") return;
 
   const reqH = parseInt(raw, 10);
   if (!Number.isFinite(reqH)) return;
@@ -1110,92 +1433,271 @@ function commitFromHeight() {
   const newH = Math.min(Math.max(reqH, 1), maxH);
 
   const scale = newH / originalImage.height;
-  const newW  = Math.round(originalImage.width * scale);
+  const newW = Math.round(originalImage.width * scale);
 
-  heightInput.value       = newH;
-  widthInput.value        = newW;
-  scaleRange.value        = scale.toFixed(2);
-  scaleValue.textContent  = scale.toFixed(2) + 'x';
+  heightInput.value = newH;
+  widthInput.value = newW;
+  scaleRange.value = scale.toFixed(2);
+  if (scaleInput) scaleInput.value = scale.toFixed(2);
 
-  applyScale();
-  applyPreview();
+  queueScaleAndPreview({ resetScroll: true });
 }
 
 // Ignore commits mid‑composition (IME)
-function cancelWidthDebounce(){ if (widthDebounce)  { clearTimeout(widthDebounce);  widthDebounce  = null; } }
-function cancelHeightDebounce(){ if (heightDebounce){ clearTimeout(heightDebounce); heightDebounce = null; } }
+function cancelWidthDebounce() {
+  if (widthDebounce) {
+    clearTimeout(widthDebounce);
+    widthDebounce = null;
+  }
+}
+function cancelHeightDebounce() {
+  if (heightDebounce) {
+    clearTimeout(heightDebounce);
+    heightDebounce = null;
+  }
+}
+function cancelScaleDebounce() {
+  if (scaleDebounce) {
+    clearTimeout(scaleDebounce);
+    scaleDebounce = null;
+  }
+}
 
-widthInput.addEventListener('compositionstart', cancelWidthDebounce);
-heightInput.addEventListener('compositionstart', cancelHeightDebounce);
-widthInput.addEventListener('compositionend',   () => { commitFromWidth();  });
-heightInput.addEventListener('compositionend',  () => { commitFromHeight(); });
+widthInput.addEventListener("compositionstart", cancelWidthDebounce);
+heightInput.addEventListener("compositionstart", cancelHeightDebounce);
+widthInput.addEventListener("compositionend", () => {
+  commitFromWidth();
+});
+heightInput.addEventListener("compositionend", () => {
+  commitFromHeight();
+});
+
+function commitFromArea() {
+  if (!originalImage || !areaInput) return;
+  const raw = areaInput.value.trim();
+  if (raw === "") return;
+  const reqArea = parseInt(raw, 10);
+  if (!Number.isFinite(reqArea) || reqArea <= 0) return;
+
+  const minScale = parseFloat(scaleRange.min) || 0.001;
+  const maxScale = parseFloat(scaleRange.max) || 5;
+  const baseArea = originalImage.width * originalImage.height;
+  const targetScale = Math.sqrt(reqArea / baseArea);
+  const clampedScale = Math.min(Math.max(targetScale, minScale), maxScale);
+  const scale = parseFloat(clampedScale.toFixed(2));
+
+  scaleRange.value = scale.toFixed(2);
+  if (scaleInput) scaleInput.value = scale.toFixed(2);
+  queueScaleAndPreview({ resetScroll: true });
+}
+
+function commitFromScaleInput() {
+  if (!originalImage || !scaleInput) return;
+  const raw = scaleInput.value.trim();
+  if (raw === "") return;
+  const req = parseFloat(raw);
+  if (!Number.isFinite(req)) return;
+  const minScale = parseFloat(scaleRange.min) || 0.001;
+  const maxScale = parseFloat(scaleRange.max) || 5;
+  const scale = Math.min(Math.max(req, minScale), maxScale);
+  scaleRange.value = scale.toFixed(2);
+  scaleInput.value = scale.toFixed(2);
+  queueScaleAndPreview({ resetScroll: true });
+}
+
+function commitFromZoomInput() {
+  if (!zoomInput || !originalImage) return;
+  const raw = zoomInput.value.trim();
+  if (raw === "") return;
+  const req = parseFloat(raw);
+  if (!Number.isFinite(req)) return;
+  const minZoom = parseFloat(zoomRange.min) || 0.01;
+  const maxZoom = parseFloat(zoomRange.max) || 10;
+  const zoom = Math.min(Math.max(req, minZoom), maxZoom);
+  zoomRange.value = zoom.toFixed(2);
+  zoomInput.value = zoom.toFixed(2);
+  applyPreview();
+}
 
 // When user types a new width
-widthInput.addEventListener('input', () => {
+widthInput.addEventListener("input", () => {
   cancelWidthDebounce();
   widthDebounce = setTimeout(commitFromWidth, TYPE_PAUSE_MS);
 });
-widthInput.addEventListener('blur', commitFromWidth);
-widthInput.addEventListener('keydown', (e) => {
-  if (e.key === 'Enter') commitFromWidth();
+widthInput.addEventListener("blur", commitFromWidth);
+widthInput.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") commitFromWidth();
 });
 
 // When user types a new height
-heightInput.addEventListener('input', () => {
+heightInput.addEventListener("input", () => {
   cancelHeightDebounce();
   heightDebounce = setTimeout(commitFromHeight, TYPE_PAUSE_MS);
 });
-heightInput.addEventListener('blur', commitFromHeight);
-heightInput.addEventListener('keydown', (e) => {
-  if (e.key === 'Enter') commitFromHeight();
+heightInput.addEventListener("blur", commitFromHeight);
+heightInput.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") commitFromHeight();
 });
 
+if (areaInput) {
+  areaInput.addEventListener("blur", commitFromArea);
+}
+
+if (scaleInput) {
+  scaleInput.addEventListener("compositionstart", cancelScaleDebounce);
+  scaleInput.addEventListener("compositionend", () => {
+    commitFromScaleInput();
+  });
+  scaleInput.addEventListener("input", () => {
+    cancelScaleDebounce();
+    scaleDebounce = setTimeout(commitFromScaleInput, TYPE_PAUSE_MS);
+  });
+  scaleInput.addEventListener("blur", commitFromScaleInput);
+  scaleInput.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") commitFromScaleInput();
+  });
+}
+
+if (zoomInput) {
+  zoomInput.addEventListener("blur", commitFromZoomInput);
+  zoomInput.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") commitFromZoomInput();
+  });
+}
+
+if (zoomReset) {
+  zoomReset.addEventListener("click", () => {
+    if (!originalImage) return;
+    zoomRange.value = "1.00";
+    if (zoomInput) zoomInput.value = "1.00";
+    applyPreview();
+  });
+}
 
 // Core: scale the original image into a temp canvas and draw it
 function applyScale() {
-  const scale = parseFloat(scaleRange.value);
-  if (!originalImage) return;
+  if (!originalImage) return Promise.resolve();
 
-  const newWidth  = Math.round(originalImage.width * scale);
+  const token = ++scaleToken;
+  const scale = parseFloat(scaleRange.value);
+  const newWidth = Math.round(originalImage.width * scale);
   const newHeight = Math.round(originalImage.height * scale);
 
   // update dimension fields
-  widthInput.value  = newWidth;
+  widthInput.value = newWidth;
   heightInput.value = newHeight;
 
   // prepare off-screen canvas
   if (!scaledCanvas) {
-    scaledCanvas = document.createElement('canvas');
-    scaledCtx    = scaledCanvas.getContext('2d');
+    scaledCanvas = document.createElement("canvas");
   }
-  scaledCanvas.width  = newWidth;
-  scaledCanvas.height = newHeight;
-  scaledCtx.clearRect(0, 0, newWidth, newHeight);
-  scaledCtx.drawImage(
-    originalImage,
-    0, 0,
-    originalImage.width,
-    originalImage.height,
-    0, 0,
-    newWidth,
-    newHeight
-  );
+  scaledCtx = scaledCanvas.getContext("2d");
+  if (!originalScaledCanvas) {
+    originalScaledCanvas = document.createElement("canvas");
+  }
+  originalScaledCtx = originalScaledCanvas.getContext("2d");
 
-  // draw onto main canvas & process
-  canvas.width  = newWidth;
-  canvas.height = newHeight;
-  ctx.clearRect(0, 0, newWidth, newHeight);
-  ctx.drawImage(scaledCanvas, 0, 0);
+  const promise = (async () => {
+    const settings = getSamplerSettings(currentSampler);
+    const gpuMode = settings.gpu;
+    const canGpu =
+      gpuMode &&
+      window.webgpuResampler &&
+      typeof window.webgpuResampler.scaleImageToCanvas === "function" &&
+      window.webgpuResampler.isSupported?.();
 
-  processarImagem();
+    let usedGpu = false;
+    if (canGpu) {
+      try {
+        usedGpu = await window.webgpuResampler.scaleImageToCanvas(
+          originalImage,
+          scaledCanvas,
+          newWidth,
+          newHeight,
+          gpuMode,
+        );
+      } catch (err) {
+        console.warn("WebGPU resample failed, falling back.", err);
+      }
+    }
+
+    if (!usedGpu) {
+      scaledCanvas.width = newWidth;
+      scaledCanvas.height = newHeight;
+      scaledCtx.clearRect(0, 0, newWidth, newHeight);
+      applySamplerSettings(scaledCtx);
+      scaledCtx.drawImage(
+        originalImage,
+        0,
+        0,
+        originalImage.width,
+        originalImage.height,
+        0,
+        0,
+        newWidth,
+        newHeight,
+      );
+    }
+
+    originalScaledCanvas.width = newWidth;
+    originalScaledCanvas.height = newHeight;
+    originalScaledCtx.clearRect(0, 0, newWidth, newHeight);
+    originalScaledCtx.imageSmoothingEnabled = false;
+    originalScaledCtx.drawImage(
+      originalImage,
+      0,
+      0,
+      originalImage.width,
+      originalImage.height,
+      0,
+      0,
+      newWidth,
+      newHeight,
+    );
+
+    if (token !== scaleToken) return;
+
+    // draw onto main canvas & process
+    canvas.width = newWidth;
+    canvas.height = newHeight;
+    ctx.clearRect(0, 0, newWidth, newHeight);
+    ctx.drawImage(scaledCanvas, 0, 0);
+
+    processarImagem();
+    _lastAppliedScale = parseFloat(scaleRange.value) || 1;
+  })();
+
+  scalePromise = promise;
+  promise.finally(() => {
+    if (scalePromise === promise) scalePromise = null;
+    if (pendingPreview) {
+      pendingPreview = false;
+      const nextOptions = pendingPreviewOptions;
+      pendingPreviewOptions = null;
+      applyPreview(nextOptions || {});
+    }
+  });
+
+  return promise;
 }
 
 // Core: zoom the processed image into the visible canvas
-function applyPreview() {
-  const src = processedCanvas || canvas;
-  if (!src) { 
-    console.warn('No source for preview'); 
-    return; 
+function applyPreview(options = {}) {
+  if (!originalImage) return;
+  const {
+    preserveScroll = false,
+    resetScroll = false,
+    keepScroll = null,
+  } = options;
+  if (scalePromise) {
+    pendingPreview = true;
+    pendingPreviewOptions = { preserveScroll, resetScroll, keepScroll };
+    return;
+  }
+  const src = getPreviewSource();
+  if (!src) {
+    console.warn("No source for preview");
+    return;
   }
 
   let zoom = parseFloat(zoomRange?.value);
@@ -1204,15 +1706,31 @@ function applyPreview() {
   // no longer clamp zoom to fit — let user zoom out freely
   const effectiveZoom = zoom;
 
-  const vp = document.getElementById('canvasViewport');
+  const vp = document.getElementById("canvasViewport");
   const baseW = src.width;
   const baseH = src.height;
 
-  // keep viewport center while zooming
-  let cx = 0.5, cy = 0.5;
-  if (vp && canvas.offsetWidth && canvas.offsetHeight) {
-    cx = (vp.scrollLeft + vp.clientWidth  / 2) / Math.max(1, canvas.offsetWidth);
-    cy = (vp.scrollTop  + vp.clientHeight / 2) / Math.max(1, canvas.offsetHeight);
+  let cx = 0.5,
+    cy = 0.5;
+  let keepSL = 0,
+    keepST = 0;
+  if (vp) {
+    if (preserveScroll) {
+      keepSL =
+        keepScroll && Number.isFinite(keepScroll.left)
+          ? keepScroll.left
+          : vp.scrollLeft;
+      keepST =
+        keepScroll && Number.isFinite(keepScroll.top)
+          ? keepScroll.top
+          : vp.scrollTop;
+    } else if (!resetScroll && canvas.offsetWidth && canvas.offsetHeight) {
+      // keep viewport center while updating the preview
+      cx =
+        (vp.scrollLeft + vp.clientWidth / 2) / Math.max(1, canvas.offsetWidth);
+      cy =
+        (vp.scrollTop + vp.clientHeight / 2) / Math.max(1, canvas.offsetHeight);
+    }
   }
 
   // target draw size
@@ -1220,15 +1738,15 @@ function applyPreview() {
   let ph = Math.max(1, Math.round(baseH * effectiveZoom));
 
   // draw (crisp pixels)
-  canvas.width  = pw;
+  canvas.width = pw;
   canvas.height = ph;
   ctx.clearRect(0, 0, pw, ph);
   ctx.imageSmoothingEnabled = false;
   ctx.drawImage(src, 0, 0, baseW, baseH, 0, 0, pw, ph);
 
   // element size so viewport can scroll/pan
-  canvas.style.width  = pw + 'px';
-  canvas.style.height = ph + 'px';
+  canvas.style.width = pw + "px";
+  canvas.style.height = ph + "px";
 
   if (vp) {
     const smallerThanViewport = pw <= vp.clientWidth && ph <= vp.clientHeight;
@@ -1236,42 +1754,70 @@ function applyPreview() {
     if (smallerThanViewport) {
       // center image if smaller than viewport
       vp.scrollLeft = 0;
-      vp.scrollTop  = 0;
-      vp.style.display = 'grid';
-      vp.style.placeContent = 'center';
+      vp.scrollTop = 0;
+      vp.style.display = "grid";
+      vp.style.placeContent = "center";
     } else {
       // restore normal layout for panning
-      vp.style.display = '';
-      vp.style.placeContent = '';
-      vp.scrollLeft = Math.max(0, canvas.offsetWidth  * cx - vp.clientWidth  / 2);
-      vp.scrollTop  = Math.max(0, canvas.offsetHeight * cy - vp.clientHeight / 2);
+      vp.style.display = "";
+      vp.style.placeContent = "";
+      if (resetScroll) {
+        vp.scrollLeft = 0;
+        vp.scrollTop = 0;
+      } else if (preserveScroll) {
+        vp.scrollLeft = keepSL;
+        vp.scrollTop = keepST;
+      } else {
+        vp.scrollLeft = Math.max(
+          0,
+          canvas.offsetWidth * cx - vp.clientWidth / 2,
+        );
+        vp.scrollTop = Math.max(
+          0,
+          canvas.offsetHeight * cy - vp.clientHeight / 2,
+        );
+      }
     }
   }
 
-  // update label
-  zoomValue.textContent = effectiveZoom.toFixed(2) + 'x';
+  if (zoomInput) {
+    zoomInput.value = effectiveZoom.toFixed(2);
+  }
 }
 
-
-
-
 // When slider stops (or on change), actually re-scale & re-preview
-scaleRange.addEventListener('change', () => {
-  applyScale();
-  applyPreview();
+scaleRange.addEventListener("change", () => {
+  queueScaleAndPreview({ resetScroll: true });
 });
 
 // ---- Upload handler: fit-to-viewport + center on load ----
-upload.addEventListener('change', e => {
+upload.addEventListener("change", (e) => {
   const file = e.target.files?.[0];
   if (!file) return;
   fileName = file.name;
 
   const img = new Image();
   img.onload = () => {
-    originalImage       = img;
-    currentImageWidth   = img.width;
-    currentImageHeight  = img.height;
+    originalImage = img;
+    currentImageWidth = img.width;
+    currentImageHeight = img.height;
+    setZoomControlsEnabled(true);
+    scaledCanvas = null;
+    scaledCtx = null;
+    processedCanvas = null;
+    processedCtx = null;
+    originalScaledCanvas = null;
+    originalScaledCtx = null;
+    scalePromise = null;
+    pendingPreview = false;
+    pendingReprocess = false;
+    scaleToken += 1;
+    showOriginalPreview = false;
+    const toggleBtn = document.getElementById("toggleOriginal");
+    if (toggleBtn) {
+      toggleBtn.classList.remove("active");
+      updateOriginalToggleLabel(toggleBtn);
+    }
 
     // seed canvas
     canvas.width = img.width;
@@ -1281,8 +1827,8 @@ upload.addEventListener('change', e => {
 
     // controls + info
     scaleRange.value = 1.0;
-    scaleValue.textContent = '1.00x';
-    _lastAppliedScale = parseFloat(scaleRange.value) || 1
+    if (scaleInput) scaleInput.value = "1.00";
+    _lastAppliedScale = parseFloat(scaleRange.value) || 1;
     initDimensions?.();
     showImageInfo(currentImageWidth, currentImageHeight);
 
@@ -1290,18 +1836,21 @@ upload.addEventListener('change', e => {
     processarImagem?.();
 
     // reset viewport scroll
-    const vp = document.getElementById('canvasViewport');
-    if (vp) { vp.scrollLeft = 0; vp.scrollTop = 0; }
+    const vp = document.getElementById("canvasViewport");
+    if (vp) {
+      vp.scrollLeft = 0;
+      vp.scrollTop = 0;
+    }
 
     // fit AFTER layout so vp sizes are correct
     requestAnimationFrame(() => {
       const MIN = 0.05;
-      const fit = fitZoomToViewport?.() ?? 1;   // contain
-      const z   = Math.max(fit, MIN);
+      const fit = fitZoomToViewport?.() ?? 1; // contain
+      const z = Math.max(fit, MIN);
 
-      zoomRange.min = '0.05';
+      zoomRange.min = "0.05";
       zoomRange.value = z.toFixed(3);
-      zoomValue.textContent = z.toFixed(2) + 'x';
+      if (zoomInput) zoomInput.value = z.toFixed(2);
 
       applyPreview?.(); // this will center if smaller than viewport
     });
@@ -1311,65 +1860,62 @@ upload.addEventListener('change', e => {
   img.src = URL.createObjectURL(file);
 });
 
-
-
 // --- Drag & Drop Support ---
 (function () {
-  const dropTarget = document.querySelector('.custom-upload');
-  const fileInput = document.getElementById('upload');
+  const dropTarget = document.querySelector(".custom-upload");
+  const fileInput = document.getElementById("upload");
   if (!dropTarget || !fileInput) return;
 
   // Highlight on dragover
-  ['dragenter', 'dragover'].forEach(evt => {
-    dropTarget.addEventListener(evt, e => {
+  ["dragenter", "dragover"].forEach((evt) => {
+    dropTarget.addEventListener(evt, (e) => {
       e.preventDefault();
       e.stopPropagation();
-      dropTarget.classList.add('dragover');
+      dropTarget.classList.add("dragover");
     });
   });
 
   // Remove highlight on dragleave/drop
-  ['dragleave', 'dragend', 'drop'].forEach(evt => {
-    dropTarget.addEventListener(evt, e => {
+  ["dragleave", "dragend", "drop"].forEach((evt) => {
+    dropTarget.addEventListener(evt, (e) => {
       e.preventDefault();
       e.stopPropagation();
-      dropTarget.classList.remove('dragover');
+      dropTarget.classList.remove("dragover");
     });
   });
 
   // Handle file drop
-  dropTarget.addEventListener('drop', e => {
+  dropTarget.addEventListener("drop", (e) => {
     const files = e.dataTransfer?.files;
     if (!files?.length) return;
     fileInput.files = files;
-    fileInput.dispatchEvent(new Event('change', { bubbles: true }));
+    fileInput.dispatchEvent(new Event("change", { bubbles: true }));
   });
 })();
 
-
 // Reset controls on unload (optional)
-window.addEventListener('beforeunload', () => {
+window.addEventListener("beforeunload", () => {
   scaleRange.value = 1.0;
-  scaleValue.textContent = '1.00x';
-  zoomRange.value  = 1.0;
-  zoomValue.textContent  = '1.00x';
+  if (scaleInput) scaleInput.value = "1.00";
+  zoomRange.value = 1.0;
+  if (zoomInput) zoomInput.value = "1.00";
 });
-
 
 // Initial refresh
 showImageInfo(currentImageWidth, currentImageHeight);
 
 // Transparent button
-document.getElementById('transparentButton').addEventListener('click', function () {
-  this.classList.toggle('active');
-  localStorage.setItem('transparentHide', this.classList.contains('active'));
-  updatePadraoFromActiveButtons();
+document
+  .getElementById("transparentButton")
+  .addEventListener("click", function () {
+    this.classList.toggle("active");
+    localStorage.setItem("transparentHide", this.classList.contains("active"));
+    updatePadraoFromActiveButtons();
 
-if (originalImage) {
-  reprocessWithCurrentPalette();
-}
-
-});
+    if (originalImage) {
+      reprocessWithCurrentPalette();
+    }
+  });
 
 // Only keep for dynamic info (no static translations here)
 function applyTranslations(lang) {
@@ -1378,141 +1924,149 @@ function applyTranslations(lang) {
   }
 }
 
-
 // --- Extra viewport interactions: drag-to-pan + Ctrl/Meta + wheel zoom ---
 (function enhanceViewport() {
-  const vp = document.getElementById('canvasViewport');
-  const cv = document.getElementById('canvas');
+  const vp = document.getElementById("canvasViewport");
+  const cv = document.getElementById("canvas");
   if (!vp || !cv) return;
 
   // ---- Drag-to-pan ----
-  let down = false, sx = 0, sy = 0, sl = 0, st = 0;
-  vp.addEventListener('mousedown', e => {
+  let down = false,
+    sx = 0,
+    sy = 0,
+    sl = 0,
+    st = 0;
+  vp.addEventListener("mousedown", (e) => {
     if (e.button !== 0) return;
     down = true;
-    sx = e.clientX; sy = e.clientY;
-    sl = vp.scrollLeft; st = vp.scrollTop;
+    sx = e.clientX;
+    sy = e.clientY;
+    sl = vp.scrollLeft;
+    st = vp.scrollTop;
     e.preventDefault();
   });
-  window.addEventListener('mousemove', e => {
+  window.addEventListener("mousemove", (e) => {
     if (!down) return;
     vp.scrollLeft = sl - (e.clientX - sx);
-    vp.scrollTop  = st - (e.clientY - sy);
+    vp.scrollTop = st - (e.clientY - sy);
   });
-  window.addEventListener('mouseup', () => { down = false; });
+  window.addEventListener("mouseup", () => {
+    down = false;
+  });
 
   // ---- Robust Ctrl/Meta + wheel zoom (log-scale, min 0.05) ----
   const WHEEL_OPTS = { passive: false };
   const handleZoomWheel = (e) => {
+    if (!originalImage) return;
     const wantsZoom = e.ctrlKey || e.metaKey; // Ctrl on Win/Linux, ⌘ on macOS
     if (!wantsZoom) return;
 
     // Stop browser page zoom
     e.preventDefault();
 
-    const slider = document.getElementById('zoomRange');
+    const slider = document.getElementById("zoomRange");
     if (!slider) return;
 
     const MIN = 0.05;
     const MAX = parseFloat(slider.max) || 10;
-    let cur    = parseFloat(slider.value) || 1;
+    let cur = parseFloat(slider.value) || 1;
 
     // log-scale step (smooth & never stuck at tiny values)
     const STEP = 0.05;
-    let logZ = Math.log(Math.max(cur, MIN));   // floor at MIN so recovery works
-    logZ += (e.deltaY < 0 ? +STEP : -STEP);
+    let logZ = Math.log(Math.max(cur, MIN)); // floor at MIN so recovery works
+    logZ += e.deltaY < 0 ? +STEP : -STEP;
     let next = Math.exp(logZ);
 
     if (next < MIN) next = MIN;
     if (next > MAX) next = MAX;
 
     slider.value = next.toFixed(3);
+    if (zoomInput) zoomInput.value = next.toFixed(2);
     applyPreview();
   };
 
   // Attach to BOTH viewport and canvas so it works wherever the cursor is
-  vp.addEventListener('wheel', handleZoomWheel, WHEEL_OPTS);
-  cv.addEventListener('wheel', handleZoomWheel, WHEEL_OPTS);
+  vp.addEventListener("wheel", handleZoomWheel, WHEEL_OPTS);
+  cv.addEventListener("wheel", handleZoomWheel, WHEEL_OPTS);
 
   // Also enforce MIN on manual slider moves
-  const slider = document.getElementById('zoomRange');
+  const slider = document.getElementById("zoomRange");
   if (slider) {
-    slider.min = '0.05'; // ensure HTML min matches the logic
-    slider.addEventListener('input', () => {
+    slider.min = "0.05"; // ensure HTML min matches the logic
+    slider.addEventListener("input", () => {
+      if (!originalImage) return;
       const MIN = 0.05;
       const MAX = parseFloat(slider.max) || 10;
       let z = parseFloat(slider.value) || 1;
       if (z < MIN) z = MIN;
       if (z > MAX) z = MAX;
       slider.value = z.toFixed(3);
+      if (zoomInput) zoomInput.value = z.toFixed(2);
       applyPreview();
     });
   }
 })();
 
 // --- Dithering toggle ---
-const DITHER_KEY = 'ditherOn';
+const DITHER_KEY = "ditherOn";
 
 function isDitheringOn() {
   const v = localStorage.getItem(DITHER_KEY);
-  return v === null ? false : v === 'true';   // default OFF
+  return v === null ? false : v === "true"; // default OFF
 }
 
-(function initDitherButton(){
-  const btn = document.getElementById('ditherButton');
+(function initDitherButton() {
+  const btn = document.getElementById("ditherButton");
   if (!btn) return;
 
   // Determine initial state (default OFF first time)
   const saved = localStorage.getItem(DITHER_KEY);
-  const on = saved === null ? false : saved === 'true';
-  if (saved === null) localStorage.setItem(DITHER_KEY, 'false');
+  const on = saved === null ? false : saved === "true";
+  if (saved === null) localStorage.setItem(DITHER_KEY, "false");
 
   // Sync UI
-  btn.classList.toggle('active', on);
-
+  btn.classList.toggle("active", on);
 
   // Click handler
-  btn.addEventListener('click', () => {
-    const next = !btn.classList.contains('active');
-    btn.classList.toggle('active', next);
+  btn.addEventListener("click", () => {
+    const next = !btn.classList.contains("active");
+    btn.classList.toggle("active", next);
     localStorage.setItem(DITHER_KEY, String(next));
 
     if (originalImage) {
-      applyScale();
-      applyPreview();
+      queueScaleAndPreview({ preserveScroll: true });
     }
   });
 })();
 
-
 // Advanced options: toggle visibility of all "hide color" controls
-document.addEventListener('DOMContentLoaded', () => {
-  const btn = document.getElementById('opt-toggle-hide-ui');
+document.addEventListener("DOMContentLoaded", () => {
+  const btn = document.getElementById("opt-toggle-hide-ui");
   if (!btn) return;
 
   const apply = () => {
-    const on = btn.classList.contains('active');
+    const on = btn.classList.contains("active");
     // on = show eyes; off = hide them
-    document.body.classList.toggle('hide-ui-off', !on);
+    document.body.classList.toggle("hide-ui-off", !on);
     // keep master eye visual state in sync
-    if (typeof refreshMasterEyes === 'function') refreshMasterEyes();
+    if (typeof refreshMasterEyes === "function") refreshMasterEyes();
   };
 
-  btn.addEventListener('click', () => {
-    btn.classList.toggle('active');
+  btn.addEventListener("click", () => {
+    btn.classList.toggle("active");
     apply();
   });
 
   apply(); // set initial state
 });
 
-Array.from(document.querySelectorAll('input[name="colors-list-order"]'))
-  .forEach(radio => {
-    radio.addEventListener('change', (event) => {
-      if (_colorCounts) showColorUsage(_colorCounts, event.target.value);
-    });
+Array.from(
+  document.querySelectorAll('input[name="colors-list-order"]'),
+).forEach((radio) => {
+  radio.addEventListener("change", (event) => {
+    if (_colorCounts) showColorUsage(_colorCounts, event.target.value);
   });
-
+});
 
 // Utility: check if a canvas has only transparent pixels
 function canvasIsEmpty(c) {
@@ -1527,7 +2081,9 @@ function canvasIsEmpty(c) {
 
 // Utility: pick the right canvas (processed if exists, else main)
 function getTargetCanvas() {
-  return (typeof processedCanvas !== "undefined" && processedCanvas) ? processedCanvas : canvas;
+  return typeof processedCanvas !== "undefined" && processedCanvas
+    ? processedCanvas
+    : canvas;
 }
 
 // ===============================
@@ -1540,8 +2096,10 @@ async function saveImageToGallery(blob) {
     req.onupgradeneeded = () => {
       const db = req.result;
       if (!db.objectStoreNames.contains("images")) {
-        db.createObjectStore("images", { keyPath: "id", autoIncrement: true })
-          .createIndex("created", "created", { unique: false });
+        db.createObjectStore("images", {
+          keyPath: "id",
+          autoIncrement: true,
+        }).createIndex("created", "created", { unique: false });
       }
     };
     req.onsuccess = () => {
@@ -1557,14 +2115,15 @@ async function saveImageToGallery(blob) {
   });
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  const dynamic     = document.getElementById('color-columns-dynamic');
-  const manual      = document.getElementById('color-columns-manual');
-  const columnCount = document.getElementById('color-columns-manual-count');
+document.addEventListener("DOMContentLoaded", () => {
+  const dynamic = document.getElementById("color-columns-dynamic");
+  const manual = document.getElementById("color-columns-manual");
+  const columnCount = document.getElementById("color-columns-manual-count");
 
   const triggerRerender = () => {
     syncColumnCountSelectState();
-    if (window._colorCounts) showColorUsage(window._colorCounts, getColorsListOrder());
+    if (window._colorCounts)
+      showColorUsage(window._colorCounts, getColorsListOrder());
   };
 
   // Restore saved prefs
@@ -1584,26 +2143,26 @@ document.addEventListener('DOMContentLoaded', () => {
   triggerRerender();
 
   // Persist changes and re-render
-  dynamic?.addEventListener('change', () => {
+  dynamic?.addEventListener("change", () => {
     localStorage.setItem("colorColumnMode", getColumnMode());
     triggerRerender();
   });
-  manual?.addEventListener('change', () => {
+  manual?.addEventListener("change", () => {
     localStorage.setItem("colorColumnMode", getColumnMode());
     triggerRerender();
   });
-  columnCount?.addEventListener('change', () => {
+  columnCount?.addEventListener("change", () => {
     localStorage.setItem("columnCount", getColorColumnCount());
     triggerRerender();
   });
 
-  document.querySelectorAll('input[name="colors-list-order"]').forEach(r => {
-    r.addEventListener('change', () => {
-      if (window._colorCounts) showColorUsage(window._colorCounts, getColorsListOrder());
+  document.querySelectorAll('input[name="colors-list-order"]').forEach((r) => {
+    r.addEventListener("change", () => {
+      if (window._colorCounts)
+        showColorUsage(window._colorCounts, getColorsListOrder());
     });
   });
 });
-
 
 // ===============================
 // Add to Gallery
@@ -1616,12 +2175,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
   btn.addEventListener("click", () => {
     // Always use the clamped/processed canvas
-    const c = (typeof finalizeToPalette === "function")
-      ? finalizeToPalette()
-      : (typeof getTargetCanvas === "function" ? getTargetCanvas() : document.getElementById("canvas"));
+    const c =
+      typeof finalizeToPalette === "function"
+        ? finalizeToPalette()
+        : typeof getTargetCanvas === "function"
+          ? getTargetCanvas()
+          : document.getElementById("canvas");
 
-    const lang = (typeof getCurrentLang === "function" ? getCurrentLang() : "en");
-    const t = (typeof window.translations !== "undefined" && window.translations[lang]) || {};
+    const lang = typeof getCurrentLang === "function" ? getCurrentLang() : "en";
+    const t =
+      (typeof window.translations !== "undefined" &&
+        window.translations[lang]) ||
+      {};
 
     if (!c || !c.width || !c.height) {
       showToast(t.imageNotFound || "No image to add.", "error");
@@ -1629,7 +2194,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // Don’t add fully transparent canvases
-    const isEmpty = (function isCanvasEmpty(canvasEl){
+    const isEmpty = (function isCanvasEmpty(canvasEl) {
       const _ctx = canvasEl.getContext("2d");
       const d = _ctx.getImageData(0, 0, canvasEl.width, canvasEl.height).data;
       for (let i = 3; i < d.length; i += 4) if (d[i] !== 0) return false;
@@ -1663,13 +2228,14 @@ document.addEventListener("DOMContentLoaded", () => {
         localStorage.setItem("gallery:lastAddedAt", String(Date.now()));
 
         showToast(t.imageSaved || "Added to gallery!", "success");
-
       } catch (err) {
         console.error(err);
         let msg = t.saveFailed || "Failed to save image.";
         // Surface quota issues nicely
         if (String(err).toLowerCase().includes("quota")) {
-          msg = t.storageFull || "Your browser storage is full. Remove some items from the gallery and try again.";
+          msg =
+            t.storageFull ||
+            "Your browser storage is full. Remove some items from the gallery and try again.";
         }
         showToast(msg, "error");
         btn.disabled = false;
@@ -1684,13 +2250,13 @@ document.addEventListener("DOMContentLoaded", () => {
       const dataURL = c.toDataURL("image/png");
       const b64 = dataURL.split(",")[1] || "";
       const bin = atob(b64);
-      const u8  = new Uint8Array(bin.length);
+      const u8 = new Uint8Array(bin.length);
       for (let i = 0; i < bin.length; i++) u8[i] = bin.charCodeAt(i);
       finish(new Blob([u8], { type: "image/png" }));
     }
   });
 });
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener("DOMContentLoaded", () => {
   requestAnimationFrame(() => updatePadraoFromActiveButtons());
 });

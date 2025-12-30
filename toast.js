@@ -1,6 +1,8 @@
 // ===== Global Toast System =====
 function showToast(message, type = "info") {
-  let toast = document.getElementById("globalToast") || document.getElementById("global-toast");
+  let toast =
+    document.getElementById("globalToast") ||
+    document.getElementById("global-toast");
   if (!toast) {
     toast = document.createElement("div");
     toast.id = "globalToast";
@@ -23,13 +25,13 @@ function showToast(message, type = "info") {
 }
 
 // ===== Mobile Burger =====
-(function initMobileMenuOnce(){
+(function initMobileMenuOnce() {
   if (window.__mobileMenuInit) return; // guard
   window.__mobileMenuInit = true;
 
   document.addEventListener("DOMContentLoaded", () => {
-    const burger   = document.querySelector(".nav-burger");
-    const menu     = document.getElementById("mobileMenu");
+    const burger = document.querySelector(".nav-burger");
+    const menu = document.getElementById("mobileMenu");
     const backdrop = document.getElementById("menuBackdrop");
     if (!burger || !menu || !backdrop) return; // page without mobile menu
 
@@ -51,7 +53,11 @@ function showToast(message, type = "info") {
     menu.addEventListener("click", (e) => {
       if (e.target.closest("a,button")) setOpen(false);
     });
-    window.addEventListener("keydown", (e) => { if (e.key === "Escape") setOpen(false); });
-    window.addEventListener("resize", () => { if (window.innerWidth >= 981) setOpen(false); });
+    window.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") setOpen(false);
+    });
+    window.addEventListener("resize", () => {
+      if (window.innerWidth >= 981) setOpen(false);
+    });
   });
 })();

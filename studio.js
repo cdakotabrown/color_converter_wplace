@@ -1,44 +1,44 @@
 (() => {
   // ====== DOM helpers ======
-  const $ = (s, r=document) => r.querySelector(s);
-  const $$ = (s, r=document) => Array.from(r.querySelectorAll(s));
-  const clamp = (v,a,b) => Math.max(a, Math.min(b, v));
+  const $ = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
 
   // ====== Elements ======
-  const paint = $('#paintCanvas');
-  const grid  = $('#gridCanvas');
-  const pctx  = paint.getContext('2d', { willReadFrequently: true });
-  const gctx  = grid.getContext('2d');
+  const paint = $("#paintCanvas");
+  const grid = $("#gridCanvas");
+  const pctx = paint.getContext("2d", { willReadFrequently: true });
+  const gctx = grid.getContext("2d");
 
-  const gridSel  = $('#gridSize');
-  const GRID_PREF_KEY = 'gridOn';
-  const zoomSel  = $('#zoom');
-  const zoomLbl  = $('#zoomLabel');
-  const stage    = $('#stage');
-  const gridBtn  = $('#toggleGrid');
-  const clearBtn = $('#clearAll');
-  const dlBtn    = $('#downloadPng');
+  const gridSel = $("#gridSize");
+  const GRID_PREF_KEY = "gridOn";
+  const zoomSel = $("#zoom");
+  const zoomLbl = $("#zoomLabel");
+  const stage = $("#stage");
+  const gridBtn = $("#toggleGrid");
+  const clearBtn = $("#clearAll");
+  const dlBtn = $("#downloadPng");
 
   // tool buttons (square grid)
-  const toolCursor = $('#toolCursor');
-  const toolPencil = $('#toolPencil');
-  const toolBrush     = $('#toolBrush');
-  const brushPopover  = $('#brushSizePopover');
-  const toolEraser = $('#toolEraser');
-  const toolPicker = $('#toolPicker');
-  const toolFill   = $('#toolFill');
-  const toolLine   = $('#toolLine');
-  const toolRect   = $('#toolRect');
-  const toolRectF  = $('#toolRectF');
-  const toolCirc   = $('#toolCirc');
-  const toolCircF  = $('#toolCircF');
-  const toolUndo   = $('#toolUndo');
-  const toolRedo   = $('#toolRedo');
+  const toolCursor = $("#toolCursor");
+  const toolPencil = $("#toolPencil");
+  const toolBrush = $("#toolBrush");
+  const brushPopover = $("#brushSizePopover");
+  const toolEraser = $("#toolEraser");
+  const toolPicker = $("#toolPicker");
+  const toolFill = $("#toolFill");
+  const toolLine = $("#toolLine");
+  const toolRect = $("#toolRect");
+  const toolRectF = $("#toolRectF");
+  const toolCirc = $("#toolCirc");
+  const toolCircF = $("#toolCircF");
+  const toolUndo = $("#toolUndo");
+  const toolRedo = $("#toolRedo");
 
   // import + generate
-  const upInput = $('#uploader');
-  const genBtn  = $('#genBtn');
-  const genHint = $('#genHint');
+  const upInput = $("#uploader");
+  const genBtn = $("#genBtn");
+  const genHint = $("#genHint");
 
   // ====== State ======
   let lastImage = null;
@@ -48,14 +48,14 @@
   let brushSize = 3;
   let eraserSize = 3;
   let zoom = 12;
-  let showGrid = JSON.parse(localStorage.getItem(GRID_PREF_KEY) ?? 'true');
+  let showGrid = JSON.parse(localStorage.getItem(GRID_PREF_KEY) ?? "true");
 
-  const BRUSH_SIZES = [1,2,3,4,6,8,12];
+  const BRUSH_SIZES = [1, 2, 3, 4, 6, 8, 12];
   const ERASER_SIZES = BRUSH_SIZES;
 
   const state = {
-    tool: 'pencil', // pencil | eraser | picker | fill | line | rect | rectf | circ | circf
-    color: '#000000',
+    tool: "pencil", // pencil | eraser | picker | fill | line | rect | rectf | circ | circf
+    color: "#000000",
     down: false,
     last: null,
     quickErase: false,
@@ -66,9 +66,9 @@
   const redoStack = [];
   const MAX_STACK = 50;
 
-    // --- Tool cursors (inline SVG -> data URI)
-  function makeCursor(svg, hotX, hotY, fallback = 'crosshair'){
-    const uri = 'data:image/svg+xml;utf8,' + encodeURIComponent(svg);
+  // --- Tool cursors (inline SVG -> data URI)
+  function makeCursor(svg, hotX, hotY, fallback = "crosshair") {
+    const uri = "data:image/svg+xml;utf8," + encodeURIComponent(svg);
     return `url("${uri}") ${hotX} ${hotY}, ${fallback}`;
   }
 
@@ -177,514 +177,586 @@
 </svg>`;
 
   const CURSORS = {
-    cursor: 'default', 
+    cursor: "default",
     pencil: () => PENCIL_CURSOR_URI,
-    brush:  makeCursor(SVG_BRUSH,   6, 40),
+    brush: makeCursor(SVG_BRUSH, 6, 40),
     eraser: makeCursor(SVG_ERASER, 10, 512),
-    picker: makeCursor(SVG_PICKER,  1, 512),
-    fill:   makeCursor(SVG_BUCKET,  512, 16),
-    line:   makeCursor(SVG_CROSSHAIR, 12, 12),
-    rect:   makeCursor(SVG_RECT,    0, 0),
-    rectf:  makeCursor(SVG_RECT,    0, 0),
-    circ:   makeCursor(SVG_CIRC,    0, 0),
-    circf:  makeCursor(SVG_CIRC,    0, 0),
-    default: 'crosshair'
+    picker: makeCursor(SVG_PICKER, 1, 512),
+    fill: makeCursor(SVG_BUCKET, 512, 16),
+    line: makeCursor(SVG_CROSSHAIR, 12, 12),
+    rect: makeCursor(SVG_RECT, 0, 0),
+    rectf: makeCursor(SVG_RECT, 0, 0),
+    circ: makeCursor(SVG_CIRC, 0, 0),
+    circf: makeCursor(SVG_CIRC, 0, 0),
+    default: "crosshair",
   };
 
-  function applyCursor(){
-    if (state.tool === 'cursor') { 
-      paint.style.cursor = 'grab';   // idle
-      return; 
+  function applyCursor() {
+    if (state.tool === "cursor") {
+      paint.style.cursor = "grab"; // idle
+      return;
     }
-    if (!state.customCursors){
-      paint.style.cursor = 'crosshair';
+    if (!state.customCursors) {
+      paint.style.cursor = "crosshair";
       return;
     }
     const entry = CURSORS[state.tool] ?? CURSORS.default;
-    paint.style.cursor = (typeof entry === 'function') ? entry() : entry;
+    paint.style.cursor = typeof entry === "function" ? entry() : entry;
   }
-
 
   // ====== Translations ======
   window.applyTranslations?.(document);
 
   // ====== Canvas helpers ======
-  function isCanvasEmpty(c){
+  function isCanvasEmpty(c) {
     if (!c || !c.width || !c.height) return true;
-    const ctx = c.getContext('2d', { willReadFrequently: true });
+    const ctx = c.getContext("2d", { willReadFrequently: true });
     const data = ctx.getImageData(0, 0, c.width, c.height).data;
-    for (let i = 3; i < data.length; i += 4){
+    for (let i = 3; i < data.length; i += 4) {
       if (data[i] !== 0) return false; // found a non-transparent pixel
     }
     return true;
   }
 
   // ====== Canvas sizing ======
-  function resizeLogical(){
+  function resizeLogical() {
     // keep current bitmap
-    const tmp = document.createElement('canvas');
-    tmp.width = paint.width; tmp.height = paint.height;
-    tmp.getContext('2d').drawImage(paint,0,0);
+    const tmp = document.createElement("canvas");
+    tmp.width = paint.width;
+    tmp.height = paint.height;
+    tmp.getContext("2d").drawImage(paint, 0, 0);
 
     // true image pixels
-    paint.width = gridN; paint.height = gridN;
+    paint.width = gridN;
+    paint.height = gridN;
     pctx.imageSmoothingEnabled = false;
-    pctx.clearRect(0,0,gridN,gridN);
-    if (tmp.width && tmp.height) pctx.drawImage(tmp,0,0,gridN,gridN);
+    pctx.clearRect(0, 0, gridN, gridN);
+    if (tmp.width && tmp.height) pctx.drawImage(tmp, 0, 0, gridN, gridN);
 
-    grid.width  = gridN; grid.height = gridN;
+    grid.width = gridN;
+    grid.height = gridN;
     // stage is exactly the image pixel size in CSS pixels (pre-zoom)
-    stage.style.width  = gridN + 'px';
-    stage.style.height = gridN + 'px';
+    stage.style.width = gridN + "px";
+    stage.style.height = gridN + "px";
 
     drawGrid();
     applyZoom();
   }
 
   // nothing to do here anymore; width/height are fixed to gridN px
-  function applyZoom(){
+  function applyZoom() {
     stage.style.transform = `scale(${zoom})`;
     zoomLbl.textContent = `${zoom}×`;
   }
 
   (function enhanceViewport() {
-    const vp = document.getElementById('viewport');
+    const vp = document.getElementById("viewport");
     if (!vp) return;
 
-  // ---- Drag-to-pan ----
-  let panDown = false, sx = 0, sy = 0, sl = 0, st = 0;
+    // ---- Drag-to-pan ----
+    let panDown = false,
+      sx = 0,
+      sy = 0,
+      sl = 0,
+      st = 0;
 
-  function setPanIdleCursor(){
-    // show grab only when Cursor tool is active
-    vp.style.cursor = (state.tool === 'cursor') ? 'grab' : '';
-    // canvas cursor is handled by applyCursor(); leave it alone here
-  }
+    function setPanIdleCursor() {
+      // show grab only when Cursor tool is active
+      vp.style.cursor = state.tool === "cursor" ? "grab" : "";
+      // canvas cursor is handled by applyCursor(); leave it alone here
+    }
 
-  // keep cursor updated whenever tool changes
-  const __origSetToolForPan = setTool;
-  setTool = function(t){
-    __origSetToolForPan(t);
-    // abort any ongoing pan when leaving Cursor
-    if (t !== 'cursor' && panDown){
+    // keep cursor updated whenever tool changes
+    const __origSetToolForPan = setTool;
+    setTool = function (t) {
+      __origSetToolForPan(t);
+      // abort any ongoing pan when leaving Cursor
+      if (t !== "cursor" && panDown) {
+        panDown = false;
+      }
+      setPanIdleCursor();
+    };
+
+    vp.addEventListener("mousedown", (e) => {
+      if (e.button !== 0) return; // only left button
+      if (state.tool !== "cursor") return; // only with cursor tool
+      panDown = true;
+      sx = e.clientX;
+      sy = e.clientY;
+      sl = vp.scrollLeft;
+      st = vp.scrollTop;
+
+      // change cursor on the canvas, not the viewport
+      paint.style.cursor = "grabbing";
+
+      e.preventDefault();
+    });
+
+    window.addEventListener("mouseup", () => {
+      if (!panDown) return;
       panDown = false;
-    }
+
+      // back to idle grab
+      if (state.tool === "cursor") {
+        paint.style.cursor = "grab";
+      }
+    });
+
+    window.addEventListener("mousemove", (e) => {
+      if (!panDown) return;
+      vp.scrollLeft = sl - (e.clientX - sx);
+      vp.scrollTop = st - (e.clientY - sy);
+    });
+
+    window.addEventListener("mouseup", () => {
+      if (!panDown) return;
+      panDown = false;
+      setPanIdleCursor();
+    });
+
+    window.addEventListener("blur", () => {
+      if (!panDown) return;
+      panDown = false;
+      setPanIdleCursor();
+    });
+
+    // initialize cursor appearance for current tool
     setPanIdleCursor();
-  };
 
-  vp.addEventListener('mousedown', e => {
-    if (e.button !== 0) return;          // only left button
-    if (state.tool !== 'cursor') return; // only with cursor tool
-    panDown = true;
-    sx = e.clientX; sy = e.clientY;
-    sl = vp.scrollLeft; st = vp.scrollTop;
+    // ---- Ctrl + wheel zoom ----
+    vp.addEventListener(
+      "wheel",
+      (e) => {
+        if (!(e.ctrlKey || e.metaKey)) return;
+        e.preventDefault();
 
-    // change cursor on the canvas, not the viewport
-    paint.style.cursor = 'grabbing';
+        const delta = Math.sign(e.deltaY);
+        let newZoom = zoom - delta; // scroll up = zoom in
+        newZoom = clamp(
+          newZoom,
+          parseInt(zoomSel.min, 10),
+          parseInt(zoomSel.max, 10),
+        );
 
-    e.preventDefault();
-  });
+        if (newZoom === zoom) return;
+        zoom = newZoom;
+        zoomSel.value = String(zoom);
+        applyZoom();
+        if (showGrid) drawGrid();
 
-  window.addEventListener('mouseup', () => {
-    if (!panDown) return;
-    panDown = false;
+        // keep cursor position stable during zoom
+        const rect = vp.getBoundingClientRect();
+        const cx = e.clientX - rect.left + vp.scrollLeft;
+        const cy = e.clientY - rect.top + vp.scrollTop;
+        const ratio = zoom / (zoom - delta);
+        vp.scrollLeft = cx * ratio - (e.clientX - rect.left);
+        vp.scrollTop = cy * ratio - (e.clientY - rect.top);
+      },
+      { passive: false },
+    );
+  })();
 
-    // back to idle grab
-    if (state.tool === 'cursor') {
-      paint.style.cursor = 'grab';
-    }
-  });
-
-  window.addEventListener('mousemove', e => {
-    if (!panDown) return;
-    vp.scrollLeft = sl - (e.clientX - sx);
-    vp.scrollTop  = st - (e.clientY - sy);
-  });
-
-  window.addEventListener('mouseup', () => {
-    if (!panDown) return;
-    panDown = false;
-    setPanIdleCursor();
-  });
-
-  window.addEventListener('blur', () => {
-    if (!panDown) return;
-    panDown = false;
-    setPanIdleCursor();
-  });
-
-  // initialize cursor appearance for current tool
-  setPanIdleCursor();
-
-
-  // ---- Ctrl + wheel zoom ----
-  vp.addEventListener('wheel', e => {
-    if (!(e.ctrlKey || e.metaKey)) return;
-    e.preventDefault();
-
-    const delta = Math.sign(e.deltaY);
-    let newZoom = zoom - delta; // scroll up = zoom in
-    newZoom = clamp(newZoom, parseInt(zoomSel.min,10), parseInt(zoomSel.max,10));
-
-    if (newZoom === zoom) return;
-    zoom = newZoom;
-    zoomSel.value = String(zoom);
-    applyZoom();
-    if (showGrid) drawGrid();
-
-    // keep cursor position stable during zoom
-    const rect = vp.getBoundingClientRect();
-    const cx = e.clientX - rect.left + vp.scrollLeft;
-    const cy = e.clientY - rect.top  + vp.scrollTop;
-    const ratio = zoom / (zoom - (delta));
-    vp.scrollLeft = cx * ratio - (e.clientX - rect.left);
-    vp.scrollTop  = cy * ratio - (e.clientY - rect.top);
-  }, { passive: false });
-})();
-
-
-  function syncGridButton(){
+  function syncGridButton() {
     if (!gridBtn) return;
-    const t = (k, f) => (window.translations?.[window.getCurrentLang?.()||'en']?.[k] ?? f);
-    gridBtn.textContent = showGrid ? t('hideGrid','Hide grid') : t('showGrid','Show grid');
-    gridBtn.setAttribute('aria-pressed', String(showGrid));
-    gridBtn.classList.toggle('active', showGrid);
+    const t = (k, f) =>
+      window.translations?.[window.getCurrentLang?.() || "en"]?.[k] ?? f;
+    gridBtn.textContent = showGrid
+      ? t("hideGrid", "Hide grid")
+      : t("showGrid", "Show grid");
+    gridBtn.setAttribute("aria-pressed", String(showGrid));
+    gridBtn.classList.toggle("active", showGrid);
   }
 
-  function buildGridPattern(ctx, tint = [30,40,60], a1 = 18, a2 = 36){
-    const [R,G,B] = tint;
+  function buildGridPattern(ctx, tint = [30, 40, 60], a1 = 18, a2 = 36) {
+    const [R, G, B] = tint;
 
-    const tile = document.createElement('canvas');
-    tile.width = 2; tile.height = 2;
-    const tctx = tile.getContext('2d', {alpha:true});
+    const tile = document.createElement("canvas");
+    tile.width = 2;
+    tile.height = 2;
+    const tctx = tile.getContext("2d", { alpha: true });
 
-    const img = tctx.createImageData(2,2);
+    const img = tctx.createImageData(2, 2);
     const d = img.data;
 
-    const set = (i,a)=>{ d[i]=R; d[i+1]=G; d[i+2]=B; d[i+3]=a; };
-    set(0, a2);  // top-left
-    set(4, a1);  // top-right
-    set(8, a1);  // bottom-left
-    set(12,a2);  // bottom-right
-    tctx.putImageData(img,0,0);
+    const set = (i, a) => {
+      d[i] = R;
+      d[i + 1] = G;
+      d[i + 2] = B;
+      d[i + 3] = a;
+    };
+    set(0, a2); // top-left
+    set(4, a1); // top-right
+    set(8, a1); // bottom-left
+    set(12, a2); // bottom-right
+    tctx.putImageData(img, 0, 0);
 
-    return ctx.createPattern(tile, 'repeat');
+    return ctx.createPattern(tile, "repeat");
   }
 
-  function drawGrid(){
+  function drawGrid() {
     const N = gridN;
 
     // 1 canvas px == 1 drawable pixel
-    grid.width  = N;
+    grid.width = N;
     grid.height = N;
 
-    grid.style.display = showGrid ? 'block' : 'none';
+    grid.style.display = showGrid ? "block" : "none";
     if (!showGrid) return;
 
     gctx.imageSmoothingEnabled = false;
-    grid.style.imageRendering = 'pixelated';
+    grid.style.imageRendering = "pixelated";
 
     // canvas resize resets context state, so (re)set the pattern each call
     if (!_gridPattern) _gridPattern = buildGridPattern(gctx);
 
-    gctx.clearRect(0,0,N,N);
+    gctx.clearRect(0, 0, N, N);
     gctx.fillStyle = _gridPattern;
-    gctx.fillRect(0,0,N,N);
+    gctx.fillRect(0, 0, N, N);
   }
-
 
   // ====== Undo/Redo ======
-  function pushUndo(){
-    undoStack.push(pctx.getImageData(0,0,gridN,gridN));
-    if (undoStack.length>MAX_STACK) undoStack.shift();
+  function pushUndo() {
+    undoStack.push(pctx.getImageData(0, 0, gridN, gridN));
+    if (undoStack.length > MAX_STACK) undoStack.shift();
     redoStack.length = 0;
   }
-  function doUndo(){
+  function doUndo() {
     if (!undoStack.length) return;
-    const cur = pctx.getImageData(0,0,gridN,gridN);
+    const cur = pctx.getImageData(0, 0, gridN, gridN);
     redoStack.push(cur);
-    pctx.putImageData(undoStack.pop(),0,0);
+    pctx.putImageData(undoStack.pop(), 0, 0);
   }
-  function doRedo(){
+  function doRedo() {
     if (!redoStack.length) return;
-    const cur = pctx.getImageData(0,0,gridN,gridN);
+    const cur = pctx.getImageData(0, 0, gridN, gridN);
     undoStack.push(cur);
-    pctx.putImageData(redoStack.pop(),0,0);
+    pctx.putImageData(redoStack.pop(), 0, 0);
   }
 
   // ====== Tools ======
-  function setTool(t){
+  function setTool(t) {
     state.tool = t;
     state.quickErase = false;
-    $$('.toolbtn').forEach(b=>b.setAttribute('aria-pressed','false'));
-    ({
-      cursor: toolCursor,
-      pencil: toolPencil, brush:  toolBrush, eraser: toolEraser, picker: toolPicker, fill: toolFill,
-      line: toolLine, rect: toolRect, rectf: toolRectF, circ: toolCirc, circf: toolCircF
-    }[t] || toolPencil).setAttribute('aria-pressed','true');
-     applyCursor();
+    $$(".toolbtn").forEach((b) => b.setAttribute("aria-pressed", "false"));
+    (
+      ({
+        cursor: toolCursor,
+        pencil: toolPencil,
+        brush: toolBrush,
+        eraser: toolEraser,
+        picker: toolPicker,
+        fill: toolFill,
+        line: toolLine,
+        rect: toolRect,
+        rectf: toolRectF,
+        circ: toolCirc,
+        circf: toolCircF,
+      })[t] || toolPencil
+    ).setAttribute("aria-pressed", "true");
+    applyCursor();
   }
-  toolCursor.onclick = () => setTool('cursor');
-  toolPencil.onclick=()=>setTool('pencil');
-  toolEraser.onclick=()=>setTool('eraser');
-  toolPicker.onclick=()=>setTool('picker');
-  toolFill.onclick  =()=>setTool('fill');
-  toolLine.onclick  =()=>setTool('line');
-  toolRect.onclick  =()=>setTool('rect');
-  toolRectF.onclick =()=>setTool('rectf');
-  toolCirc.onclick  =()=>setTool('circ');
-  toolCircF.onclick =()=>setTool('circf');
-  toolUndo.onclick  =doUndo;
-  toolRedo.onclick  =doRedo;
+  toolCursor.onclick = () => setTool("cursor");
+  toolPencil.onclick = () => setTool("pencil");
+  toolEraser.onclick = () => setTool("eraser");
+  toolPicker.onclick = () => setTool("picker");
+  toolFill.onclick = () => setTool("fill");
+  toolLine.onclick = () => setTool("line");
+  toolRect.onclick = () => setTool("rect");
+  toolRectF.onclick = () => setTool("rectf");
+  toolCirc.onclick = () => setTool("circ");
+  toolCircF.onclick = () => setTool("circf");
+  toolUndo.onclick = doUndo;
+  toolRedo.onclick = doRedo;
 
-  window.addEventListener('keydown', (e) => {
+  window.addEventListener("keydown", (e) => {
     // Ignore shortcuts while typing
     const a = document.activeElement;
-    const typing = a &&
-      (a.tagName === 'INPUT' || a.tagName === 'TEXTAREA' || a.isContentEditable);
+    const typing =
+      a &&
+      (a.tagName === "INPUT" ||
+        a.tagName === "TEXTAREA" ||
+        a.isContentEditable);
     if (typing) return;
 
-    if (e.ctrlKey && e.key.toLowerCase() === 'z'){ e.preventDefault(); doUndo(); }
-    if (e.ctrlKey && e.key.toLowerCase() === 'y'){ e.preventDefault(); doRedo(); }
+    if (e.ctrlKey && e.key.toLowerCase() === "z") {
+      e.preventDefault();
+      doUndo();
+    }
+    if (e.ctrlKey && e.key.toLowerCase() === "y") {
+      e.preventDefault();
+      doRedo();
+    }
 
     const k = e.key.toLowerCase();
-    if (k === 'p') setTool('pencil');
-    else if (k === 'v') setTool('cursor');
-    else if (k === 'h') setTool('brush');
-    else if (k === 'e') setTool('eraser');
-    else if (k === 'i') setTool('picker');
-    else if (k === 'b') setTool('fill');
-    else if (k === 'l') setTool('line');
-    else if (k === 'r') setTool(e.shiftKey ? 'rectf' : 'rect');
-    else if (k === 'o') setTool(e.shiftKey ? 'circf' : 'circ');
-    else if (k === 'g') gridBtn.click();
+    if (k === "p") setTool("pencil");
+    else if (k === "v") setTool("cursor");
+    else if (k === "h") setTool("brush");
+    else if (k === "e") setTool("eraser");
+    else if (k === "i") setTool("picker");
+    else if (k === "b") setTool("fill");
+    else if (k === "l") setTool("line");
+    else if (k === "r") setTool(e.shiftKey ? "rectf" : "rect");
+    else if (k === "o") setTool(e.shiftKey ? "circf" : "circ");
+    else if (k === "g") gridBtn.click();
   });
 
-// ====== Color / palette ======
-function setColor(hex, name){
-  state.color = hex;
+  // ====== Color / palette ======
+  function setColor(hex, name) {
+    state.color = hex;
 
-  // prefer a  name; fall back to hex
-  const label = name || COLOR_NAME_BY_HEX[hex] || hex;
-}
+    // prefer a  name; fall back to hex
+    const label = name || COLOR_NAME_BY_HEX[hex] || hex;
+  }
 
-const STUDIO_FREE = {
-  "0,0,0": "Black",
-  "60,60,60": "Dark Gray",
-  "120,120,120": "Gray",
-  "210,210,210": "Light Gray",
-  "255,255,255": "White",
-  "96,0,24": "Deep Red",
-  "237,28,36": "Red",
-  "255,127,39": "Orange",
-  "246,170,9": "Gold",
-  "249,221,59": "Yellow",
-  "255,250,188": "Light Yellow",
-  "14,185,104": "Dark Green",
-  "19,230,123": "Green",
-  "135,255,94": "Light Green",
-  "12,129,110": "Dark Teal",
-  "16,174,166": "Teal",
-  "19,225,190": "Light Teal",
-  "96,247,242": "Cyan",
-  "40,80,158": "Dark Blue",
-  "64,147,228": "Blue",
-  "107,80,246": "Indigo",
-  "153,177,251": "Light Indigo",
-  "120,12,153": "Dark Purple",
-  "170,56,185": "Purple",
-  "224,159,249": "Light Purple",
-  "203,0,122": "Dark Pink",
-  "236,31,128": "Pink",
-  "243,141,169": "Light Pink",
-  "104,70,52": "Dark Brown",
-  "149,104,42": "Brown",
-  "248,178,119": "Beige"
-};
+  const STUDIO_FREE = {
+    "0,0,0": "Black",
+    "60,60,60": "Dark Gray",
+    "120,120,120": "Gray",
+    "210,210,210": "Light Gray",
+    "255,255,255": "White",
+    "96,0,24": "Deep Red",
+    "237,28,36": "Red",
+    "255,127,39": "Orange",
+    "246,170,9": "Gold",
+    "249,221,59": "Yellow",
+    "255,250,188": "Light Yellow",
+    "14,185,104": "Dark Green",
+    "19,230,123": "Green",
+    "135,255,94": "Light Green",
+    "12,129,110": "Dark Teal",
+    "16,174,166": "Teal",
+    "19,225,190": "Light Teal",
+    "96,247,242": "Cyan",
+    "40,80,158": "Dark Blue",
+    "64,147,228": "Blue",
+    "107,80,246": "Indigo",
+    "153,177,251": "Light Indigo",
+    "120,12,153": "Dark Purple",
+    "170,56,185": "Purple",
+    "224,159,249": "Light Purple",
+    "203,0,122": "Dark Pink",
+    "236,31,128": "Pink",
+    "243,141,169": "Light Pink",
+    "104,70,52": "Dark Brown",
+    "149,104,42": "Brown",
+    "248,178,119": "Beige",
+  };
 
-const STUDIO_PAID = {
-  "170,170,170": "Medium Gray",
-  "165,14,30": "Dark Red",
-  "250,128,114": "Light Red",
-  "228,92,26": "Dark Orange",
-  "156,132,49": "Dark Goldenrod",
-  "197,173,49": "Goldenrod",
-  "232,212,95": "Light Goldenrod",
-  "74,107,58": "Dark Olive",
-  "90,148,74": "Olive",
-  "132,197,115": "Light Olive",
-  "15,121,159": "Dark Cyan",
-  "187,250,242": "Light Cyan",
-  "125,199,255": "Light Blue",
-  "77,49,184": "Dark Indigo",
-  "74,66,132": "Dark Slate Blue",
-  "122,113,196": "Slate Blue",
-  "181,174,241": "Light Slate Blue",
-  "155,82,73": "Dark Peach",
-  "209,128,120": "Peach",
-  "250,182,164": "Light Peach",
-  "219,164,99": "Light Brown",
-  "123,99,82": "Dark Tan",
-  "156,132,107": "Tan",
-  "214,181,148": "Light Tan",
-  "209,128,81": "Dark Beige",
-  "255,197,165": "Light Beige",
-  "109,100,63": "Dark Stone",
-  "148,140,107": "Stone",
-  "205,197,158": "Light Stone",
-  "51,57,65": "Dark Slate",
-  "109,117,141": "Slate",
-  "179,185,209": "Light Slate"
-};
+  const STUDIO_PAID = {
+    "170,170,170": "Medium Gray",
+    "165,14,30": "Dark Red",
+    "250,128,114": "Light Red",
+    "228,92,26": "Dark Orange",
+    "156,132,49": "Dark Goldenrod",
+    "197,173,49": "Goldenrod",
+    "232,212,95": "Light Goldenrod",
+    "74,107,58": "Dark Olive",
+    "90,148,74": "Olive",
+    "132,197,115": "Light Olive",
+    "15,121,159": "Dark Cyan",
+    "187,250,242": "Light Cyan",
+    "125,199,255": "Light Blue",
+    "77,49,184": "Dark Indigo",
+    "74,66,132": "Dark Slate Blue",
+    "122,113,196": "Slate Blue",
+    "181,174,241": "Light Slate Blue",
+    "155,82,73": "Dark Peach",
+    "209,128,120": "Peach",
+    "250,182,164": "Light Peach",
+    "219,164,99": "Light Brown",
+    "123,99,82": "Dark Tan",
+    "156,132,107": "Tan",
+    "214,181,148": "Light Tan",
+    "209,128,81": "Dark Beige",
+    "255,197,165": "Light Beige",
+    "109,100,63": "Dark Stone",
+    "148,140,107": "Stone",
+    "205,197,158": "Light Stone",
+    "51,57,65": "Dark Slate",
+    "109,117,141": "Slate",
+    "179,185,209": "Light Slate",
+  };
 
-/* Build hex -> name lookup */
-const COLOR_NAME_BY_HEX = (() => {
-  const toHex = (rgb) => {
-    const [r,g,b] = rgb.split(',').map(Number);
-    const h = n => n.toString(16).padStart(2,'0');
+  /* Build hex -> name lookup */
+  const COLOR_NAME_BY_HEX = (() => {
+    const toHex = (rgb) => {
+      const [r, g, b] = rgb.split(",").map(Number);
+      const h = (n) => n.toString(16).padStart(2, "0");
+      return `#${h(r)}${h(g)}${h(b)}`;
+    };
+    const map = {};
+    Object.entries(STUDIO_FREE).forEach(
+      ([rgb, name]) => (map[toHex(rgb)] = name),
+    );
+    Object.entries(STUDIO_PAID).forEach(
+      ([rgb, name]) => (map[toHex(rgb)] = name),
+    );
+    return map;
+  })();
+
+  function hexFromRGB(r, g, b) {
+    const h = (n) => n.toString(16).padStart(2, "0");
     return `#${h(r)}${h(g)}${h(b)}`;
-  };
-  const map = {};
-  Object.entries(STUDIO_FREE).forEach(([rgb,name]) => map[toHex(rgb)] = name);
-  Object.entries(STUDIO_PAID).forEach(([rgb,name]) => map[toHex(rgb)] = name);
-  return map;
-})();
-
-function hexFromRGB(r,g,b){
-  const h = n => n.toString(16).padStart(2,'0');
-  return `#${h(r)}${h(g)}${h(b)}`;
-}
-
-function rgbKeyToHex(key){
-  const [r,g,b] = key.split(',').map(Number);
-  const h = n => n.toString(16).padStart(2,'0');
-  return `#${h(r)}${h(g)}${h(b)}`;
-}
-
-function pressSwatchByHex(hex){
-  const hx = hex.toLowerCase();
-  document.querySelectorAll('.palette .swatch[aria-pressed="true"]')
-    .forEach(el => el.setAttribute('aria-pressed','false'));
-  const btn = document.querySelector(`.palette .swatch[data-hex="${hx}"]`);
-  if (btn) btn.setAttribute('aria-pressed','true');
-}
-
-function pickNearestAndSelect(r,g,b){
-  const [nr,ng,nb] = nearestInPalette(r,g,b);
-  const hex = hexFromRGB(nr,ng,nb);
-  const name = COLOR_NAME_BY_HEX[hex] || hex;
-  setColor(hex, name);
-  pressSwatchByHex(hex);
-}
-
-function buildPalette(){
-  const freeRoot = document.getElementById('palette-free');
-  const paidRoot = document.getElementById('palette-paid');
-  let firstBtn = null;
-
-  const render = (root, dict) => {
-    if (!root) return;
-    root.innerHTML = '';
-    Object.entries(dict).forEach(([rgb, name]) => {
-      const hex = rgbKeyToHex(rgb);
-      const btn = document.createElement('button');
-      btn.className = 'swatch';
-      btn.style.background = hex;
-      btn.dataset.hex = hex.toLowerCase();
-      btn.title = name;
-      btn.onclick = () => {
-        setColor(hex, name);
-        document.querySelectorAll('.palette .swatch[aria-pressed="true"]')
-          .forEach(el => el.setAttribute('aria-pressed','false'));
-        btn.setAttribute('aria-pressed','true');
-      };
-      root.appendChild(btn);
-
-      if (!firstBtn && name === "Black") firstBtn = btn;
-    });
-  };
-
-  render(freeRoot, STUDIO_FREE);
-  render(paidRoot, STUDIO_PAID);
-
-  // Default to Black
-  if (firstBtn){
-    firstBtn.click();
   }
-}
 
-// --- Quantize to Studio palette
-
-// Build array of [r,g,b] from Studio palettes
-function getStudioPalette() {
-  const toArr = (obj) => Object.keys(obj).map(k => k.split(',').map(Number));
-  return [...toArr(STUDIO_FREE), ...toArr(STUDIO_PAID)];
-}
-
-// Compuphase-weighted nearest color (same as main.js corMaisProxima)
-function nearestInPalette(r, g, b, palette = getStudioPalette()) {
-  let best = palette[0], bestD = Infinity;
-  for (let i = 0; i < palette.length; i++) {
-    const [pr, pg, pb] = palette[i];
-    const rmean = (pr + r) / 2;
-    const rdiff = pr - r, gdiff = pg - g, bdiff = pb - b;
-    const x = (512 + rmean) * rdiff * rdiff >> 8;
-    const y = 4 * gdiff * gdiff;
-    const z = (767 - rmean) * bdiff * bdiff >> 8;
-    const dist = Math.sqrt(x + y + z);
-    if (dist < bestD) { bestD = dist; best = palette[i]; }
+  function rgbKeyToHex(key) {
+    const [r, g, b] = key.split(",").map(Number);
+    const h = (n) => n.toString(16).padStart(2, "0");
+    return `#${h(r)}${h(g)}${h(b)}`;
   }
-  return best;
-}
 
-// Rewrite current paint canvas pixels to palette colors only
-function clampPaintToPalette() {
-  const w = gridN, h = gridN;
-  const img = pctx.getImageData(0, 0, w, h);
-  const d = img.data;
-  for (let i = 0; i < d.length; i += 4) {
-    if (d[i+3] === 0) continue; // keep transparent pixels
-    const [nr, ng, nb] = nearestInPalette(d[i], d[i+1], d[i+2]);
-    d[i] = nr; d[i+1] = ng; d[i+2] = nb; d[i+3] = 255;
+  function pressSwatchByHex(hex) {
+    const hx = hex.toLowerCase();
+    document
+      .querySelectorAll('.palette .swatch[aria-pressed="true"]')
+      .forEach((el) => el.setAttribute("aria-pressed", "false"));
+    const btn = document.querySelector(`.palette .swatch[data-hex="${hx}"]`);
+    if (btn) btn.setAttribute("aria-pressed", "true");
   }
-  pctx.putImageData(img, 0, 0);
-}
 
-// Common draw+quantize routine for imported or generated images
-function drawImportedFitQuantized(img) {
-  pctx.imageSmoothingEnabled = false;
-  pctx.clearRect(0, 0, gridN, gridN);
-  const W = img.width, H = img.height;
-  const s = Math.min(gridN / W, gridN / H);
-  const w = Math.max(1, Math.floor(W * s));
-  const h = Math.max(1, Math.floor(H * s));
-  const x = Math.floor((gridN - w) / 2), y = Math.floor((gridN - h) / 2);
-  pctx.drawImage(img, 0, 0, W, H, x, y, w, h);
-  clampPaintToPalette();
-}
+  function pickNearestAndSelect(r, g, b) {
+    const [nr, ng, nb] = nearestInPalette(r, g, b);
+    const hex = hexFromRGB(nr, ng, nb);
+    const name = COLOR_NAME_BY_HEX[hex] || hex;
+    setColor(hex, name);
+    pressSwatchByHex(hex);
+  }
+
+  function buildPalette() {
+    const freeRoot = document.getElementById("palette-free");
+    const paidRoot = document.getElementById("palette-paid");
+    let firstBtn = null;
+
+    const render = (root, dict) => {
+      if (!root) return;
+      root.innerHTML = "";
+      Object.entries(dict).forEach(([rgb, name]) => {
+        const hex = rgbKeyToHex(rgb);
+        const btn = document.createElement("button");
+        btn.className = "swatch";
+        btn.style.background = hex;
+        btn.dataset.hex = hex.toLowerCase();
+        btn.title = name;
+        btn.onclick = () => {
+          setColor(hex, name);
+          document
+            .querySelectorAll('.palette .swatch[aria-pressed="true"]')
+            .forEach((el) => el.setAttribute("aria-pressed", "false"));
+          btn.setAttribute("aria-pressed", "true");
+        };
+        root.appendChild(btn);
+
+        if (!firstBtn && name === "Black") firstBtn = btn;
+      });
+    };
+
+    render(freeRoot, STUDIO_FREE);
+    render(paidRoot, STUDIO_PAID);
+
+    // Default to Black
+    if (firstBtn) {
+      firstBtn.click();
+    }
+  }
+
+  // --- Quantize to Studio palette
+
+  // Build array of [r,g,b] from Studio palettes
+  function getStudioPalette() {
+    const toArr = (obj) =>
+      Object.keys(obj).map((k) => k.split(",").map(Number));
+    return [...toArr(STUDIO_FREE), ...toArr(STUDIO_PAID)];
+  }
+
+  // Compuphase-weighted nearest color (same as main.js corMaisProxima)
+  function nearestInPalette(r, g, b, palette = getStudioPalette()) {
+    let best = palette[0],
+      bestD = Infinity;
+    for (let i = 0; i < palette.length; i++) {
+      const [pr, pg, pb] = palette[i];
+      const rmean = (pr + r) / 2;
+      const rdiff = pr - r,
+        gdiff = pg - g,
+        bdiff = pb - b;
+      const x = ((512 + rmean) * rdiff * rdiff) >> 8;
+      const y = 4 * gdiff * gdiff;
+      const z = ((767 - rmean) * bdiff * bdiff) >> 8;
+      const dist = Math.sqrt(x + y + z);
+      if (dist < bestD) {
+        bestD = dist;
+        best = palette[i];
+      }
+    }
+    return best;
+  }
+
+  // Rewrite current paint canvas pixels to palette colors only
+  function clampPaintToPalette() {
+    const w = gridN,
+      h = gridN;
+    const img = pctx.getImageData(0, 0, w, h);
+    const d = img.data;
+    for (let i = 0; i < d.length; i += 4) {
+      if (d[i + 3] === 0) continue; // keep transparent pixels
+      const [nr, ng, nb] = nearestInPalette(d[i], d[i + 1], d[i + 2]);
+      d[i] = nr;
+      d[i + 1] = ng;
+      d[i + 2] = nb;
+      d[i + 3] = 255;
+    }
+    pctx.putImageData(img, 0, 0);
+  }
+
+  // Common draw+quantize routine for imported or generated images
+  function drawImportedFitQuantized(img) {
+    pctx.imageSmoothingEnabled = false;
+    pctx.clearRect(0, 0, gridN, gridN);
+    const W = img.width,
+      H = img.height;
+    const s = Math.min(gridN / W, gridN / H);
+    const w = Math.max(1, Math.floor(W * s));
+    const h = Math.max(1, Math.floor(H * s));
+    const x = Math.floor((gridN - w) / 2),
+      y = Math.floor((gridN - h) / 2);
+    pctx.drawImage(img, 0, 0, W, H, x, y, w, h);
+    clampPaintToPalette();
+  }
 
   // ====== Geometry helpers ======
-  function cellFromEvent(e){
+  function cellFromEvent(e) {
     const r = paint.getBoundingClientRect();
-    const x = clamp(Math.floor((e.clientX-r.left)/r.width  * gridN),0,gridN-1);
-    const y = clamp(Math.floor((e.clientY-r.top )/r.height * gridN),0,gridN-1);
-    return {x,y};
+    const x = clamp(
+      Math.floor(((e.clientX - r.left) / r.width) * gridN),
+      0,
+      gridN - 1,
+    );
+    const y = clamp(
+      Math.floor(((e.clientY - r.top) / r.height) * gridN),
+      0,
+      gridN - 1,
+    );
+    return { x, y };
   }
-  function putPixel(x,y,hex){ pctx.fillStyle=hex; pctx.fillRect(x,y,1,1); }
+  function putPixel(x, y, hex) {
+    pctx.fillStyle = hex;
+    pctx.fillRect(x, y, 1, 1);
+  }
 
-    function stampBrush(cx, cy, hex){
-    const r  = Math.floor(brushSize/2);
-    const r2 = r*r;
-    for (let y = cy - r; y <= cy + r; y++){
+  function stampBrush(cx, cy, hex) {
+    const r = Math.floor(brushSize / 2);
+    const r2 = r * r;
+    for (let y = cy - r; y <= cy + r; y++) {
       if (y < 0 || y >= gridN) continue;
-      for (let x = cx - r; x <= cx + r; x++){
+      for (let x = cx - r; x <= cx + r; x++) {
         if (x < 0 || x >= gridN) continue;
-        const dx = x - cx, dy = y - cy;
-        if ((dx*dx + dy*dy) <= r2) putPixel(x,y,hex);
+        const dx = x - cx,
+          dy = y - cy;
+        if (dx * dx + dy * dy <= r2) putPixel(x, y, hex);
       }
     }
   }
 
-  function endStroke(e){
+  function endStroke(e) {
     state.down = false;
     state.last = null;
     dragStart = null;
@@ -694,23 +766,31 @@ function drawImportedFitQuantized(img) {
     applyCursor();
   }
 
-  function strokeBrush(x0, y0, x1, y1, hex){
-    const dx = x1 - x0, dy = y1 - y0;
+  function strokeBrush(x0, y0, x1, y1, hex) {
+    const dx = x1 - x0,
+      dy = y1 - y0;
     const steps = Math.max(Math.abs(dx), Math.abs(dy));
-    if (steps === 0){ stampBrush(x0,y0,hex); return; }
-    for (let i=0;i<=steps;i++){
-      const t = i/steps;
-      const x = Math.round(x0 + dx*t);
-      const y = Math.round(y0 + dy*t);
+    if (steps === 0) {
+      stampBrush(x0, y0, hex);
+      return;
+    }
+    for (let i = 0; i <= steps; i++) {
+      const t = i / steps;
+      const x = Math.round(x0 + dx * t);
+      const y = Math.round(y0 + dy * t);
       stampBrush(x, y, hex);
     }
   }
-  
-  function strokePencil(x0, y0, x1, y1, hex){
-    const dx = x1 - x0, dy = y1 - y0;
+
+  function strokePencil(x0, y0, x1, y1, hex) {
+    const dx = x1 - x0,
+      dy = y1 - y0;
     const steps = Math.max(Math.abs(dx), Math.abs(dy));
-    if (steps === 0){ putPixel(x0, y0, hex); return; }
-    for (let i = 0; i <= steps; i++){
+    if (steps === 0) {
+      putPixel(x0, y0, hex);
+      return;
+    }
+    for (let i = 0; i <= steps; i++) {
       const t = i / steps;
       const x = Math.round(x0 + dx * t);
       const y = Math.round(y0 + dy * t);
@@ -718,9 +798,9 @@ function drawImportedFitQuantized(img) {
     }
   }
 
-  function stampEraserSquare(cx, cy){
+  function stampEraserSquare(cx, cy) {
     const s = eraserSize;
-    const r = Math.floor(s/2);
+    const r = Math.floor(s / 2);
     const xa = Math.max(0, cx - r);
     const ya = Math.max(0, cy - r);
     const xb = Math.min(gridN - 1, cx + (s % 2 ? r : r - 1));
@@ -730,23 +810,31 @@ function drawImportedFitQuantized(img) {
     pctx.clearRect(xa, ya, w, h);
   }
 
-  function strokeEraserSquare(x0, y0, x1, y1){
-    const dx = x1 - x0, dy = y1 - y0;
+  function strokeEraserSquare(x0, y0, x1, y1) {
+    const dx = x1 - x0,
+      dy = y1 - y0;
     const steps = Math.max(Math.abs(dx), Math.abs(dy));
-    if (steps === 0){ stampEraserSquare(x0, y0); return; }
-    for (let i=0;i<=steps;i++){
-      const t = i/steps;
-      const x = Math.round(x0 + dx*t);
-      const y = Math.round(y0 + dy*t);
+    if (steps === 0) {
+      stampEraserSquare(x0, y0);
+      return;
+    }
+    for (let i = 0; i <= steps; i++) {
+      const t = i / steps;
+      const x = Math.round(x0 + dx * t);
+      const y = Math.round(y0 + dy * t);
       stampEraserSquare(x, y);
     }
   }
 
-  function strokeEraser(x0, y0, x1, y1){
-    const dx = x1 - x0, dy = y1 - y0;
+  function strokeEraser(x0, y0, x1, y1) {
+    const dx = x1 - x0,
+      dy = y1 - y0;
     const steps = Math.max(Math.abs(dx), Math.abs(dy));
-    if (steps === 0){ pctx.clearRect(x0, y0, 1, 1); return; }
-    for (let i = 0; i <= steps; i++){
+    if (steps === 0) {
+      pctx.clearRect(x0, y0, 1, 1);
+      return;
+    }
+    for (let i = 0; i <= steps; i++) {
       const t = i / steps;
       const x = Math.round(x0 + dx * t);
       const y = Math.round(y0 + dy * t);
@@ -754,50 +842,89 @@ function drawImportedFitQuantized(img) {
     }
   }
 
-  function drawLine(x0,y0,x1,y1,hex){
-    let dx=Math.abs(x1-x0), sx=x0<x1?1:-1, dy=-Math.abs(y1-y0), sy=y0<y1?1:-1, err=dx+dy;
-    while(true){ putPixel(x0,y0,hex); if(x0===x1&&y0===y1) break;
-      const e2=2*err; if(e2>=dy){ err+=dy; x0+=sx; } if(e2<=dx){ err+=dx; y0+=sy; } }
+  function drawLine(x0, y0, x1, y1, hex) {
+    let dx = Math.abs(x1 - x0),
+      sx = x0 < x1 ? 1 : -1,
+      dy = -Math.abs(y1 - y0),
+      sy = y0 < y1 ? 1 : -1,
+      err = dx + dy;
+    while (true) {
+      putPixel(x0, y0, hex);
+      if (x0 === x1 && y0 === y1) break;
+      const e2 = 2 * err;
+      if (e2 >= dy) {
+        err += dy;
+        x0 += sx;
+      }
+      if (e2 <= dx) {
+        err += dx;
+        y0 += sy;
+      }
+    }
   }
-  function drawRectStroke(x0,y0,x1,y1,hex){
-    const xa=Math.min(x0,x1), xb=Math.max(x0,x1), ya=Math.min(y0,y1), yb=Math.max(y0,y1);
-    for(let x=xa;x<=xb;x++){ putPixel(x,ya,hex); putPixel(x,yb,hex); }
-    for(let y=ya;y<=yb;y++){ putPixel(xa,y,hex); putPixel(xb,y,hex); }
+  function drawRectStroke(x0, y0, x1, y1, hex) {
+    const xa = Math.min(x0, x1),
+      xb = Math.max(x0, x1),
+      ya = Math.min(y0, y1),
+      yb = Math.max(y0, y1);
+    for (let x = xa; x <= xb; x++) {
+      putPixel(x, ya, hex);
+      putPixel(x, yb, hex);
+    }
+    for (let y = ya; y <= yb; y++) {
+      putPixel(xa, y, hex);
+      putPixel(xb, y, hex);
+    }
   }
-  function drawRectFill(x0,y0,x1,y1,hex){
-    const xa=Math.min(x0,x1), xb=Math.max(x0,x1), ya=Math.min(y0,y1), yb=Math.max(y0,y1);
-    pctx.fillStyle=hex; pctx.fillRect(xa,ya,(xb-xa+1),(yb-ya+1));
+  function drawRectFill(x0, y0, x1, y1, hex) {
+    const xa = Math.min(x0, x1),
+      xb = Math.max(x0, x1),
+      ya = Math.min(y0, y1),
+      yb = Math.max(y0, y1);
+    pctx.fillStyle = hex;
+    pctx.fillRect(xa, ya, xb - xa + 1, yb - ya + 1);
   }
-  function drawEllipseStroke(x0,y0,x1,y1,hex){
-    const cx=(x0+x1)/2, cy=(y0+y1)/2, rx=Math.abs(x1-x0)/2, ry=Math.abs(y1-y0)/2;
-    const steps=Math.max(32, Math.ceil(2*Math.PI*Math.max(rx,ry)*2));
-    for(let i=0;i<steps;i++){
-      const t=i/steps*2*Math.PI;
-      const x=Math.round(cx+rx*Math.cos(t)), y=Math.round(cy+ry*Math.sin(t));
-      if(x>=0&&x<gridN&&y>=0&&y<gridN) putPixel(x,y,hex);
+  function drawEllipseStroke(x0, y0, x1, y1, hex) {
+    const cx = (x0 + x1) / 2,
+      cy = (y0 + y1) / 2,
+      rx = Math.abs(x1 - x0) / 2,
+      ry = Math.abs(y1 - y0) / 2;
+    const steps = Math.max(32, Math.ceil(2 * Math.PI * Math.max(rx, ry) * 2));
+    for (let i = 0; i < steps; i++) {
+      const t = (i / steps) * 2 * Math.PI;
+      const x = Math.round(cx + rx * Math.cos(t)),
+        y = Math.round(cy + ry * Math.sin(t));
+      if (x >= 0 && x < gridN && y >= 0 && y < gridN) putPixel(x, y, hex);
     }
   }
 
-  function drawEllipseFill(x0,y0,x1,y1,hex){
-    const cx=(x0+x1)/2, cy=(y0+y1)/2, rx=Math.abs(x1-x0)/2, ry=Math.abs(y1-y0)/2;
-    pctx.fillStyle=hex;
-    for(let y=Math.floor(cy-ry); y<=Math.ceil(cy+ry); y++){
-      const dy=(y-cy)/ry; if(!Number.isFinite(dy)) continue;
-      const dx=rx*Math.sqrt(Math.max(0,1-dy*dy));
-      const xl=Math.floor(cx-dx), xr=Math.ceil(cx+dx);
-      pctx.fillRect(Math.max(0,xl), y, Math.max(0,xr-xl+1), 1);
+  function drawEllipseFill(x0, y0, x1, y1, hex) {
+    const cx = (x0 + x1) / 2,
+      cy = (y0 + y1) / 2,
+      rx = Math.abs(x1 - x0) / 2,
+      ry = Math.abs(y1 - y0) / 2;
+    pctx.fillStyle = hex;
+    for (let y = Math.floor(cy - ry); y <= Math.ceil(cy + ry); y++) {
+      const dy = (y - cy) / ry;
+      if (!Number.isFinite(dy)) continue;
+      const dx = rx * Math.sqrt(Math.max(0, 1 - dy * dy));
+      const xl = Math.floor(cx - dx),
+        xr = Math.ceil(cx + dx);
+      pctx.fillRect(Math.max(0, xl), y, Math.max(0, xr - xl + 1), 1);
     }
     // also add stroke to smooth the edge
-    drawEllipseStroke(x0,y0,x1,y1,hex);
+    drawEllipseStroke(x0, y0, x1, y1, hex);
   }
 
   // ====== Flood fill (RGBA-accurate, fills transparent) ======
-  function rgbaEq(a,b){ return a[0]===b[0]&&a[1]===b[1]&&a[2]===b[2]&&a[3]===b[3]; }
-  function hexToRgb(hex){
+  function rgbaEq(a, b) {
+    return a[0] === b[0] && a[1] === b[1] && a[2] === b[2] && a[3] === b[3];
+  }
+  function hexToRgb(hex) {
     const m = /^#?([0-9a-f]{6})$/i.exec(hex);
-    if (!m) return [0,0,0];
-    const n = parseInt(m[1],16);
-    return [(n>>16)&255,(n>>8)&255,n&255];
+    if (!m) return [0, 0, 0];
+    const n = parseInt(m[1], 16);
+    return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
   }
 
   /**
@@ -808,740 +935,859 @@ function drawImportedFitQuantized(img) {
    * @param {number} tol color tolerance (0..255), default 12
    *        (use 0 for exact match; ~12–24 works well for AA/noise)
    */
-  function floodFill(x0, y0, fillHex, tol = 14){
+  function floodFill(x0, y0, fillHex, tol = 14) {
     const [fr, fg, fb] = hexToRgb(fillHex);
-    const w = gridN, h = gridN;
+    const w = gridN,
+      h = gridN;
 
     // snapshot once
     const img = pctx.getImageData(0, 0, w, h);
-    const d   = img.data;
-    const idx = (x,y) => (y*w + x) * 4;
+    const d = img.data;
+    const idx = (x, y) => (y * w + x) * 4;
 
     // seed color (with alpha)
     const i0 = idx(x0, y0);
-    const sr = d[i0], sg = d[i0+1], sb = d[i0+2], sa = d[i0+3];
+    const sr = d[i0],
+      sg = d[i0 + 1],
+      sb = d[i0 + 2],
+      sa = d[i0 + 3];
 
     // quick exit if seed is already (approximately) the fill color
-    const same = (r,g,b,a) =>
-      Math.abs(r-fr) <= tol && Math.abs(g-fg) <= tol &&
-      Math.abs(b-fb) <= tol && a === 255;
+    const same = (r, g, b, a) =>
+      Math.abs(r - fr) <= tol &&
+      Math.abs(g - fg) <= tol &&
+      Math.abs(b - fb) <= tol &&
+      a === 255;
 
-    if (same(sr,sg,sb,sa)) return;
+    if (same(sr, sg, sb, sa)) return;
 
     // Use squared distance for tolerance (faster & smoother)
     const T2 = tol * tol;
-    const near = (r,g,b,a) => {
+    const near = (r, g, b, a) => {
       // treat fully transparent seed uniformly
       if (sa === 0) return a === 0;
-      const dr = r - sr, dg = g - sg, db = b - sb;
-      return (dr*dr + dg*dg + db*db) <= T2 && a === sa; 
+      const dr = r - sr,
+        dg = g - sg,
+        db = b - sb;
+      return dr * dr + dg * dg + db * db <= T2 && a === sa;
     };
 
-    const seen = new Uint8Array(w*h);
-    const stack = [[x0,y0]];
+    const seen = new Uint8Array(w * h);
+    const stack = [[x0, y0]];
 
-    while (stack.length){
-      const [x,y] = stack.pop();
-      if (x<0||x>=w||y<0||y>=h) continue;
-      const i = idx(x,y);
-      if (seen[i>>2]) continue;
-      const r = d[i], g = d[i+1], b = d[i+2], a = d[i+3];
-      if (!near(r,g,b,a)) continue;
+    while (stack.length) {
+      const [x, y] = stack.pop();
+      if (x < 0 || x >= w || y < 0 || y >= h) continue;
+      const i = idx(x, y);
+      if (seen[i >> 2]) continue;
+      const r = d[i],
+        g = d[i + 1],
+        b = d[i + 2],
+        a = d[i + 3];
+      if (!near(r, g, b, a)) continue;
 
       // write fill color (opaque)
-      d[i] = fr; d[i+1] = fg; d[i+2] = fb; d[i+3] = 255;
-      seen[i>>2] = 1;
+      d[i] = fr;
+      d[i + 1] = fg;
+      d[i + 2] = fb;
+      d[i + 3] = 255;
+      seen[i >> 2] = 1;
 
       // 4-neighbours
-      stack.push([x+1,y],[x-1,y],[x,y+1],[x,y-1]);
+      stack.push([x + 1, y], [x - 1, y], [x, y + 1], [x, y - 1]);
     }
 
     pctx.putImageData(img, 0, 0);
   }
 
-// Helper: return null if pointer is outside the paintable area
-function cellFromEventOrNull(e){
-  const r = paint.getBoundingClientRect();
-  const px = (e.clientX - r.left) / r.width  * gridN;
-  const py = (e.clientY - r.top ) / r.height * gridN;
-  if (px < 0 || px >= gridN || py < 0 || py >= gridN) return null;
-  return { x: Math.floor(px), y: Math.floor(py) };
-}
-
-// ====== Pointer handling (stop drawing when leaving canvas) ======
-let dragStart = null, snapshot = null;
-
-function onPointer(type, e){
-  if (type === 'cancel' || type === 'leave') {
-    endStroke(e);
-    return;
+  // Helper: return null if pointer is outside the paintable area
+  function cellFromEventOrNull(e) {
+    const r = paint.getBoundingClientRect();
+    const px = ((e.clientX - r.left) / r.width) * gridN;
+    const py = ((e.clientY - r.top) / r.height) * gridN;
+    if (px < 0 || px >= gridN || py < 0 || py >= gridN) return null;
+    return { x: Math.floor(px), y: Math.floor(py) };
   }
 
-  if (type === 'down'){
-    const pos = cellFromEventOrNull(e);
-    if (state.tool === 'cursor') { return; }
-    if (e.button !== 2) state.quickErase = false;
-    if (!pos) return; // ignore press events that start outside the paintable area
-    state.down = true; state.last = null;
-    dragStart = pos;
+  // ====== Pointer handling (stop drawing when leaving canvas) ======
+  let dragStart = null,
+    snapshot = null;
 
-    if (e.button === 2) { // quick erase
-      state.down = true; state.last = null; state.quickErase = true;
-      paint.setPointerCapture?.(e.pointerId);
-      paint.style.cursor = CURSORS.eraser;
-      pushUndo();
-      pctx.clearRect(pos.x, pos.y, 1, 1);
-      state.last = pos;
-      return;
-    }
-
-    paint.setPointerCapture?.(e.pointerId);
-
-    if (state.tool === 'fill'){ pushUndo(); floodFill(pos.x,pos.y,state.color); return; }
-
-    if (state.tool === 'pencil' || state.tool === 'eraser' || state.tool === 'picker' || state.tool === 'brush'){
-      pushUndo();
-      if (state.tool === 'pencil') {
-        putPixel(pos.x,pos.y,state.color);
-        state.last = pos; // start of stroke for interpolation
-      }
-      else if (state.tool === 'eraser') {
-        pctx.clearRect(pos.x,pos.y,1,1);
-        stampEraserSquare(pos.x, pos.y);
-        state.last = pos;
-      }
-      else if (state.tool === 'brush') {
-        stampBrush(pos.x,pos.y,state.color);
-        state.last = pos;
-      }
-      else { // picker
-        const px = pctx.getImageData(pos.x,pos.y,1,1).data;
-        if (px[3] !== 0) {              // ignore fully transparent picks
-          pickNearestAndSelect(px[0], px[1], px[2]); // press swatch
-        }
-      }
-      return;
-    }
-
-    // begin shape preview
-    snapshot = pctx.getImageData(0,0,gridN,gridN);
-    return;
-  }
-
-  if (type === 'move'){
-    if (!state.down) return;
-
-    if (state.quickErase){
-      const pos = cellFromEventOrNull(e);
-      if (!pos){ state.down=false; state.quickErase=false; paint.releasePointerCapture?.(e.pointerId); return; }
-      const last = state.last || pos;
-      strokeEraser(last.x, last.y, pos.x, pos.y); // 1×1 path
-      state.last = pos;
-      return;
-    }
-
-    const pos = cellFromEventOrNull(e);
-    if (!pos){
-      // pointer left the canvas; terminate the current stroke immediately
-      state.down = false; state.last = null; dragStart = null; snapshot = null;
-      paint.releasePointerCapture?.(e.pointerId);
-      return;
-    }
-    const {x,y} = pos;
-
-    if (state.tool === 'pencil'){
-      const last = state.last || {x, y};
-      const dx = x - last.x, dy = y - last.y;
-      const steps = Math.max(Math.abs(dx), Math.abs(dy));
-      if (steps === 0) {
-        putPixel(x, y, state.color);
-      } else {
-        for (let i = 0; i <= steps; i++){
-          const t = i / steps;
-          const xi = Math.round(last.x + dx * t);
-          const yi = Math.round(last.y + dy * t);
-          putPixel(xi, yi, state.color);
-        }
-      }
-      state.last = {x,y}; return;
-    }
-
-    if (state.tool === 'eraser') {
-      const last = state.last || {x, y};
-      if (last.x === x && last.y === y) {
-        // single point
-        stampEraserSquare(x, y);
-      } else {
-        // line stroke
-        strokeEraserSquare(last.x, last.y, x, y);
-      }
-      state.last = {x, y};
-      return;
-    }
-
-    if (state.tool === 'brush'){
-      const last = state.last || {x,y};
-      strokeBrush(last.x, last.y, x, y, state.color);
-      state.last = {x,y}; return;
-    }
-
-    if (state.tool === 'picker') return;
-
-    // live preview for geometric tools
-    if (snapshot){
-      pctx.putImageData(snapshot,0,0);
-      const sx = dragStart.x, sy = dragStart.y;
-      if (state.tool === 'line')       drawLine(sx,sy,x,y,state.color);
-      else if (state.tool === 'rect')  drawRectStroke(sx,sy,x,y,state.color);
-      else if (state.tool === 'rectf') drawRectFill(sx,sy,x,y,state.color);
-      else if (state.tool === 'circ')  drawEllipseStroke(sx,sy,x,y,state.color);
-      else if (state.tool === 'circf') drawEllipseFill(sx,sy,x,y,state.color);
-    }
-    return;
-  }
-
-  if (type === 'up'){
-    if (!state.down) return;
-
-    // --- quick erase: finish and RESET the flag ---
-    if (state.quickErase){
-      const pos = cellFromEventOrNull(e);
-      if (pos){
-        const last = state.last || pos;
-        strokeEraser(last.x, last.y, pos.x, pos.y);
-        state.last = pos;
-      }
+  function onPointer(type, e) {
+    if (type === "cancel" || type === "leave") {
       endStroke(e);
       return;
     }
 
-    const pos = cellFromEventOrNull(e);
-    if (['line','rect','rectf','circ','circf'].includes(state.tool) && snapshot && pos){
-      pushUndo();
-      pctx.putImageData(snapshot,0,0);
-      const sx = dragStart.x, sy = dragStart.y;
-      const {x,y} = pos;
-      if (state.tool === 'line')       drawLine(sx,sy,x,y,state.color);
-      else if (state.tool === 'rect')  drawRectStroke(sx,sy,x,y,state.color);
-      else if (state.tool === 'rectf') drawRectFill(sx,sy,x,y,state.color);
-      else if (state.tool === 'circ')  drawEllipseStroke(sx,sy,x,y,state.color);
-      else if (state.tool === 'circf') drawEllipseFill(sx,sy,x,y,state.color);
+    if (type === "down") {
+      const pos = cellFromEventOrNull(e);
+      if (state.tool === "cursor") {
+        return;
+      }
+      if (e.button !== 2) state.quickErase = false;
+      if (!pos) return; // ignore press events that start outside the paintable area
+      state.down = true;
+      state.last = null;
+      dragStart = pos;
+
+      if (e.button === 2) {
+        // quick erase
+        state.down = true;
+        state.last = null;
+        state.quickErase = true;
+        paint.setPointerCapture?.(e.pointerId);
+        paint.style.cursor = CURSORS.eraser;
+        pushUndo();
+        pctx.clearRect(pos.x, pos.y, 1, 1);
+        state.last = pos;
+        return;
+      }
+
+      paint.setPointerCapture?.(e.pointerId);
+
+      if (state.tool === "fill") {
+        pushUndo();
+        floodFill(pos.x, pos.y, state.color);
+        return;
+      }
+
+      if (
+        state.tool === "pencil" ||
+        state.tool === "eraser" ||
+        state.tool === "picker" ||
+        state.tool === "brush"
+      ) {
+        pushUndo();
+        if (state.tool === "pencil") {
+          putPixel(pos.x, pos.y, state.color);
+          state.last = pos; // start of stroke for interpolation
+        } else if (state.tool === "eraser") {
+          pctx.clearRect(pos.x, pos.y, 1, 1);
+          stampEraserSquare(pos.x, pos.y);
+          state.last = pos;
+        } else if (state.tool === "brush") {
+          stampBrush(pos.x, pos.y, state.color);
+          state.last = pos;
+        } else {
+          // picker
+          const px = pctx.getImageData(pos.x, pos.y, 1, 1).data;
+          if (px[3] !== 0) {
+            // ignore fully transparent picks
+            pickNearestAndSelect(px[0], px[1], px[2]); // press swatch
+          }
+        }
+        return;
+      }
+
+      // begin shape preview
+      snapshot = pctx.getImageData(0, 0, gridN, gridN);
+      return;
     }
-    state.down = false; state.last = null; dragStart = null; snapshot = null;
-    paint.releasePointerCapture?.(e.pointerId);
-  }
-  endStroke(e);
-}
 
-// Event wiring
-paint.addEventListener('pointerdown', e => onPointer('down', e));
-paint.addEventListener('pointermove', e => onPointer('move', e));
-paint.addEventListener('pointerup',   e => onPointer('up',   e));
-paint.addEventListener('pointercancel', e => onPointer('cancel', e));
-paint.addEventListener('contextmenu', e => e.preventDefault());
-paint.addEventListener('pointerleave', e => {
-  if (!paint.hasPointerCapture || !paint.hasPointerCapture(e.pointerId)) {
-    onPointer('leave', e);
-  }
-});
+    if (type === "move") {
+      if (!state.down) return;
 
-// ====== Import / Generate ======
-async function importFile(file){
-  if (!file) return;
+      if (state.quickErase) {
+        const pos = cellFromEventOrNull(e);
+        if (!pos) {
+          state.down = false;
+          state.quickErase = false;
+          paint.releasePointerCapture?.(e.pointerId);
+          return;
+        }
+        const last = state.last || pos;
+        strokeEraser(last.x, last.y, pos.x, pos.y); // 1×1 path
+        state.last = pos;
+        return;
+      }
 
-  // Revoke previous object URL to avoid leaks
-  if (_lastObjUrl) URL.revokeObjectURL(_lastObjUrl);
-  _lastObjUrl = URL.createObjectURL(file);
+      const pos = cellFromEventOrNull(e);
+      if (!pos) {
+        // pointer left the canvas; terminate the current stroke immediately
+        state.down = false;
+        state.last = null;
+        dragStart = null;
+        snapshot = null;
+        paint.releasePointerCapture?.(e.pointerId);
+        return;
+      }
+      const { x, y } = pos;
 
-  const img = new Image();
-  img.src = _lastObjUrl;
-  await img.decode();
+      if (state.tool === "pencil") {
+        const last = state.last || { x, y };
+        const dx = x - last.x,
+          dy = y - last.y;
+        const steps = Math.max(Math.abs(dx), Math.abs(dy));
+        if (steps === 0) {
+          putPixel(x, y, state.color);
+        } else {
+          for (let i = 0; i <= steps; i++) {
+            const t = i / steps;
+            const xi = Math.round(last.x + dx * t);
+            const yi = Math.round(last.y + dy * t);
+            putPixel(xi, yi, state.color);
+          }
+        }
+        state.last = { x, y };
+        return;
+      }
 
-  lastImage = img;                // remember for reapply
-  drawImportedFitQuantized(img);  // draw + clamp to palette
-}
+      if (state.tool === "eraser") {
+        const last = state.last || { x, y };
+        if (last.x === x && last.y === y) {
+          // single point
+          stampEraserSquare(x, y);
+        } else {
+          // line stroke
+          strokeEraserSquare(last.x, last.y, x, y);
+        }
+        state.last = { x, y };
+        return;
+      }
 
-// Ensure re-selecting the *same* file triggers the change event
-upInput?.addEventListener('click', () => { upInput.value = ''; });
+      if (state.tool === "brush") {
+        const last = state.last || { x, y };
+        strokeBrush(last.x, last.y, x, y, state.color);
+        state.last = { x, y };
+        return;
+      }
 
-upInput?.addEventListener('change', (e) => {
-  importFile(e.target.files?.[0]);
-  // Clear after handling as well (covers browser quirks)
-  e.target.value = '';
-});
+      if (state.tool === "picker") return;
 
-// --- mini card wiring ---
-const miniUpload = document.getElementById('miniUpload');
-
-// click / keyboard opens the hidden input (and clears it first)
-miniUpload?.addEventListener('click', () => {
-  if (!upInput) return;
-  upInput.value = '';
-  upInput.click();
-});
-miniUpload?.addEventListener('keydown', (e) => {
-  if (e.key === 'Enter' || e.key === ' ') {
-    e.preventDefault();
-    if (!upInput) return;
-    upInput.value = '';
-    upInput.click();
-  }
-});
-
-// drag & drop on the card
-['dragenter','dragover'].forEach(t =>
-  miniUpload?.addEventListener(t, (e)=>{ e.preventDefault(); e.dataTransfer.dropEffect='copy'; miniUpload.classList.add('is-dragover'); })
-);
-['dragleave','drop'].forEach(t =>
-  miniUpload?.addEventListener(t, ()=> miniUpload.classList.remove('is-dragover'))
-);
-miniUpload?.addEventListener('drop', (e) => {
-  e.preventDefault();
-  const f = (e.dataTransfer.files && e.dataTransfer.files[0]) || null;
-  importFile(f);
-});
-
-// paste anywhere
-document.addEventListener('paste', (e) => {
-  const items = e.clipboardData?.items || [];
-  for (const it of items){
-    if (it.type && it.type.startsWith('image/')){
-      const f = it.getAsFile();
-      if (f) { importFile(f); break; }
+      // live preview for geometric tools
+      if (snapshot) {
+        pctx.putImageData(snapshot, 0, 0);
+        const sx = dragStart.x,
+          sy = dragStart.y;
+        if (state.tool === "line") drawLine(sx, sy, x, y, state.color);
+        else if (state.tool === "rect")
+          drawRectStroke(sx, sy, x, y, state.color);
+        else if (state.tool === "rectf")
+          drawRectFill(sx, sy, x, y, state.color);
+        else if (state.tool === "circ")
+          drawEllipseStroke(sx, sy, x, y, state.color);
+        else if (state.tool === "circf")
+          drawEllipseFill(sx, sy, x, y, state.color);
+      }
+      return;
     }
+
+    if (type === "up") {
+      if (!state.down) return;
+
+      // --- quick erase: finish and RESET the flag ---
+      if (state.quickErase) {
+        const pos = cellFromEventOrNull(e);
+        if (pos) {
+          const last = state.last || pos;
+          strokeEraser(last.x, last.y, pos.x, pos.y);
+          state.last = pos;
+        }
+        endStroke(e);
+        return;
+      }
+
+      const pos = cellFromEventOrNull(e);
+      if (
+        ["line", "rect", "rectf", "circ", "circf"].includes(state.tool) &&
+        snapshot &&
+        pos
+      ) {
+        pushUndo();
+        pctx.putImageData(snapshot, 0, 0);
+        const sx = dragStart.x,
+          sy = dragStart.y;
+        const { x, y } = pos;
+        if (state.tool === "line") drawLine(sx, sy, x, y, state.color);
+        else if (state.tool === "rect")
+          drawRectStroke(sx, sy, x, y, state.color);
+        else if (state.tool === "rectf")
+          drawRectFill(sx, sy, x, y, state.color);
+        else if (state.tool === "circ")
+          drawEllipseStroke(sx, sy, x, y, state.color);
+        else if (state.tool === "circf")
+          drawEllipseFill(sx, sy, x, y, state.color);
+      }
+      state.down = false;
+      state.last = null;
+      dragStart = null;
+      snapshot = null;
+      paint.releasePointerCapture?.(e.pointerId);
+    }
+    endStroke(e);
   }
-});
 
-let _genHintTimer = null;
-function showGenHint(text, timeoutMs = 0){
-  if (!genHint) return;
-  genHint.textContent = text;
-  if (_genHintTimer) clearTimeout(_genHintTimer);
-  if (timeoutMs > 0){
-    _genHintTimer = setTimeout(() => { genHint.textContent = ''; }, timeoutMs);
-  }
-}
+  // Event wiring
+  paint.addEventListener("pointerdown", (e) => onPointer("down", e));
+  paint.addEventListener("pointermove", (e) => onPointer("move", e));
+  paint.addEventListener("pointerup", (e) => onPointer("up", e));
+  paint.addEventListener("pointercancel", (e) => onPointer("cancel", e));
+  paint.addEventListener("contextmenu", (e) => e.preventDefault());
+  paint.addEventListener("pointerleave", (e) => {
+    if (!paint.hasPointerCapture || !paint.hasPointerCapture(e.pointerId)) {
+      onPointer("leave", e);
+    }
+  });
 
-async function generateFromPrompt(){
-  const lang = (window.getCurrentLang?.() || 'en');
-  const t = (k, fallback) => (window.translations?.[lang]?.[k] || fallback);
-
-  const prompt = ($('#prompt').value || '').trim();
-  if (!prompt){
-    showGenHint(t('typePrompt','Type a prompt first'));
-    return;
-  }
-
-  const prevDisabled = !!genBtn?.disabled;
-  if (genBtn){ genBtn.disabled = true; genBtn.setAttribute('aria-busy','true'); }
-
-  showGenHint(t('generating','Generating…'));
-
-  try{
-    const url = 'https://image.pollinations.ai/prompt/' +
-                encodeURIComponent(prompt) + '?n=1&size=512x512';
-
-    const res = await fetch(url, { cache: 'no-store' });
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-
-    const blob = await res.blob();
+  // ====== Import / Generate ======
+  async function importFile(file) {
+    if (!file) return;
 
     // Revoke previous object URL to avoid leaks
     if (_lastObjUrl) URL.revokeObjectURL(_lastObjUrl);
-    _lastObjUrl = URL.createObjectURL(blob);
+    _lastObjUrl = URL.createObjectURL(file);
 
     const img = new Image();
     img.src = _lastObjUrl;
     await img.decode();
 
-    lastImage = img;
-    drawImportedFitQuantized(img);
+    lastImage = img; // remember for reapply
+    drawImportedFitQuantized(img); // draw + clamp to palette
+  }
 
-    showGenHint(t('done','Done ✓'), 2000);
-  }catch(err){
-    console.error(err);
-    showGenHint(t('genFailed','Generation failed'), 3000);
-  }finally{
-    if (genBtn){
-      genBtn.disabled = prevDisabled;
-      genBtn.removeAttribute('aria-busy');
+  // Ensure re-selecting the *same* file triggers the change event
+  upInput?.addEventListener("click", () => {
+    upInput.value = "";
+  });
+
+  upInput?.addEventListener("change", (e) => {
+    importFile(e.target.files?.[0]);
+    // Clear after handling as well (covers browser quirks)
+    e.target.value = "";
+  });
+
+  // --- mini card wiring ---
+  const miniUpload = document.getElementById("miniUpload");
+
+  // click / keyboard opens the hidden input (and clears it first)
+  miniUpload?.addEventListener("click", () => {
+    if (!upInput) return;
+    upInput.value = "";
+    upInput.click();
+  });
+  miniUpload?.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      if (!upInput) return;
+      upInput.value = "";
+      upInput.click();
+    }
+  });
+
+  // drag & drop on the card
+  ["dragenter", "dragover"].forEach((t) =>
+    miniUpload?.addEventListener(t, (e) => {
+      e.preventDefault();
+      e.dataTransfer.dropEffect = "copy";
+      miniUpload.classList.add("is-dragover");
+    }),
+  );
+  ["dragleave", "drop"].forEach((t) =>
+    miniUpload?.addEventListener(t, () =>
+      miniUpload.classList.remove("is-dragover"),
+    ),
+  );
+  miniUpload?.addEventListener("drop", (e) => {
+    e.preventDefault();
+    const f = (e.dataTransfer.files && e.dataTransfer.files[0]) || null;
+    importFile(f);
+  });
+
+  // paste anywhere
+  document.addEventListener("paste", (e) => {
+    const items = e.clipboardData?.items || [];
+    for (const it of items) {
+      if (it.type && it.type.startsWith("image/")) {
+        const f = it.getAsFile();
+        if (f) {
+          importFile(f);
+          break;
+        }
+      }
+    }
+  });
+
+  let _genHintTimer = null;
+  function showGenHint(text, timeoutMs = 0) {
+    if (!genHint) return;
+    genHint.textContent = text;
+    if (_genHintTimer) clearTimeout(_genHintTimer);
+    if (timeoutMs > 0) {
+      _genHintTimer = setTimeout(() => {
+        genHint.textContent = "";
+      }, timeoutMs);
     }
   }
-}
 
-genBtn?.addEventListener('click', generateFromPrompt);
+  async function generateFromPrompt() {
+    const lang = window.getCurrentLang?.() || "en";
+    const t = (k, fallback) => window.translations?.[lang]?.[k] || fallback;
+
+    const prompt = ($("#prompt").value || "").trim();
+    if (!prompt) {
+      showGenHint(t("typePrompt", "Type a prompt first"));
+      return;
+    }
+
+    const prevDisabled = !!genBtn?.disabled;
+    if (genBtn) {
+      genBtn.disabled = true;
+      genBtn.setAttribute("aria-busy", "true");
+    }
+
+    showGenHint(t("generating", "Generating…"));
+
+    try {
+      const url =
+        "https://image.pollinations.ai/prompt/" +
+        encodeURIComponent(prompt) +
+        "?n=1&size=512x512";
+
+      const res = await fetch(url, { cache: "no-store" });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+      const blob = await res.blob();
+
+      // Revoke previous object URL to avoid leaks
+      if (_lastObjUrl) URL.revokeObjectURL(_lastObjUrl);
+      _lastObjUrl = URL.createObjectURL(blob);
+
+      const img = new Image();
+      img.src = _lastObjUrl;
+      await img.decode();
+
+      lastImage = img;
+      drawImportedFitQuantized(img);
+
+      showGenHint(t("done", "Done ✓"), 2000);
+    } catch (err) {
+      console.error(err);
+      showGenHint(t("genFailed", "Generation failed"), 3000);
+    } finally {
+      if (genBtn) {
+        genBtn.disabled = prevDisabled;
+        genBtn.removeAttribute("aria-busy");
+      }
+    }
+  }
+
+  genBtn?.addEventListener("click", generateFromPrompt);
 
   // ====== Top-level UI ======
-  gridSel.addEventListener('change', e=>{ gridN=parseInt(e.target.value,10)||32; resizeLogical(); });
-  zoomSel.addEventListener('input', e=>{
-    zoom = parseInt(e.target.value,10) || 12;
+  gridSel.addEventListener("change", (e) => {
+    gridN = parseInt(e.target.value, 10) || 32;
+    resizeLogical();
+  });
+  zoomSel.addEventListener("input", (e) => {
+    zoom = parseInt(e.target.value, 10) || 12;
     applyZoom();
     if (showGrid) drawGrid();
   });
-  gridBtn.addEventListener('click', ()=>{
+  gridBtn.addEventListener("click", () => {
     showGrid = !showGrid;
     localStorage.setItem(GRID_PREF_KEY, JSON.stringify(showGrid));
     syncGridButton();
     drawGrid();
   });
-  clearBtn.addEventListener('click', ()=> pctx.clearRect(0,0,gridN,gridN));
-// True-size export by default. Hold Alt while clicking to export at 8×.
-dlBtn.addEventListener('click', (e) => {
-  e.preventDefault();
+  clearBtn.addEventListener("click", () => pctx.clearRect(0, 0, gridN, gridN));
+  // True-size export by default. Hold Alt while clicking to export at 8×.
+  dlBtn.addEventListener("click", (e) => {
+    e.preventDefault();
 
-  // Block transparent/empty downloads
-  const lang = (window.getCurrentLang?.() || 'en');
-  const dict = (window.translations?.[lang] || {});
-  const msgNoImg = dict.imageNotFound || 'No image to download.';
+    // Block transparent/empty downloads
+    const lang = window.getCurrentLang?.() || "en";
+    const dict = window.translations?.[lang] || {};
+    const msgNoImg = dict.imageNotFound || "No image to download.";
 
-  // Prefer the live paint canvas reference if you have it, else fallback by id
-  const c = (typeof paint !== 'undefined' && paint) ? paint : document.getElementById('paintCanvas');
+    // Prefer the live paint canvas reference if you have it, else fallback by id
+    const c =
+      typeof paint !== "undefined" && paint
+        ? paint
+        : document.getElementById("paintCanvas");
 
-  if (!c || isCanvasEmpty(c)) {
-    if (typeof showToast === 'function') showToast(msgNoImg, 'error');
-    else alert(msgNoImg);
-    return;
-  }
-
-  const upscale = e.altKey ? 8 : 1;   // Alt = upscale 8×
-  const out = document.createElement('canvas');
-  out.width  = c.width  * upscale;
-  out.height = c.height * upscale;
-
-  const o = out.getContext('2d');
-  o.imageSmoothingEnabled = false;
-  o.drawImage(c, 0, 0, out.width, out.height);
-
-  const a = document.createElement('a');
-  a.download = upscale === 1
-    ? `pixel-${c.width}x${c.height}.png`
-    : `pixel-${c.width}x${c.height}@${upscale}x.png`;
-  a.href = out.toDataURL('image/png');
-  a.click();
-});
-
-
-// ====== Brush popover handling (tools-only close) ======
-(function setupBrushPopover(){
-  if (!toolBrush || !brushPopover) return;
-
-  // mount on <body>
-  if (brushPopover.parentElement !== document.body) {
-    document.body.appendChild(brushPopover);
-  }
-
-  // swatches
-  brushPopover.innerHTML = '';
-  BRUSH_SIZES.forEach(sz => {
-    const btn = document.createElement('button');
-    btn.type = 'button';
-    btn.className = 'brush-size-swatch';
-    btn.dataset.size = String(sz);
-    btn.title = `Brush ${sz}`;
-    btn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      brushSize = sz;
-      brushPopover.querySelectorAll('.brush-size-swatch')
-        .forEach(b => b.setAttribute('aria-pressed','false'));
-      btn.setAttribute('aria-pressed','true');
-      setTool('brush');
-    });
-    brushPopover.appendChild(btn);
-  });
-
-  function positionPopover(){
-    const r = toolBrush.getBoundingClientRect();
-    brushPopover.style.position = 'fixed';
-    brushPopover.style.top  = `${Math.round(r.bottom + 6)}px`;
-    brushPopover.style.left = `${Math.round(r.left)}px`;
-  }
-  function showPopover(){
-    positionPopover();
-    brushPopover.hidden = false;
-    brushPopover.setAttribute('aria-hidden','false');
-  }
-  function hidePopover(){
-    brushPopover.hidden = true;
-    brushPopover.setAttribute('aria-hidden','true');
-  }
-
-  // toggle on brush click
-  toolBrush.addEventListener('click', (e) => {
-    e.stopPropagation();
-    if (brushPopover.hidden) { setTool('brush'); showPopover(); }
-    else { hidePopover(); }
-  });
-
-  // Close only on:
-  const toolsPanel = document.querySelector('.gp-right');
-  function onGlobalPointerDown(e){
-    if (brushPopover.hidden) return;
-    const path = e.composedPath ? e.composedPath() : [];
-    const insidePopover = path.includes(brushPopover);
-    const insideTools   = toolsPanel && path.includes(toolsPanel);
-    const isToolBtn     = path.some(el => el instanceof HTMLElement && el.classList?.contains('toolbtn'));
-
-    // Clicking a tool closes (including brush)
-    if (isToolBtn && !insidePopover) { hidePopover(); return; }
-
-    // Clicking outside both popover and tools panel closes
-    if (!insidePopover && !insideTools) { hidePopover(); }
-  }
-  // capturing so it works even if something stops propagation
-  document.addEventListener('pointerdown', onGlobalPointerDown, true);
-
-  window.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') hidePopover();
-  });
-
-    // Close on any scroll (page or inner scrollable containers)
-  function onAnyScroll(){
-    if (!brushPopover.hidden) hidePopover();
-  }
-  // capture phase so we catch scrolls from inner panels too
-  document.addEventListener('scroll', onAnyScroll, true);
-
-  // Keep position correct if the window is resized
-  window.addEventListener('resize', () => {
-    if (!brushPopover.hidden) positionPopover();
-  });
-
-
-  // Hide when changing to any other tool
-  const __setTool = setTool;
-  setTool = function(t){
-    if (t !== 'brush') hidePopover();
-    __setTool(t);
-  };
-})();
-
-// ====== Eraser popover handling (tools-only close) ======
-(function setupEraserPopover(){
-  const eraserPopover = document.getElementById('eraserSizePopover');
-  if (!toolEraser || !eraserPopover) return;
-
-  // mount on <body>
-  if (eraserPopover.parentElement !== document.body) {
-    document.body.appendChild(eraserPopover);
-  }
-
-  // build size chips
-  eraserPopover.innerHTML = '';
-  ERASER_SIZES.forEach(sz => {
-    const btn = document.createElement('button');
-    btn.type = 'button';
-    btn.className = 'brush-size-swatch';
-    btn.dataset.size = String(sz);
-    btn.title = `Eraser ${sz}`;
-    btn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      eraserSize = sz;
-      eraserPopover.querySelectorAll('.brush-size-swatch')
-        .forEach(b => b.setAttribute('aria-pressed','false'));
-      btn.setAttribute('aria-pressed','true');
-      setTool('eraser');
-    });
-    eraserPopover.appendChild(btn);
-  });
-
-  function positionPopover(){
-    const r = toolEraser.getBoundingClientRect();
-    eraserPopover.style.position = 'fixed';
-    eraserPopover.style.top  = `${Math.round(r.bottom + 6)}px`;
-    eraserPopover.style.left = `${Math.round(r.left)}px`;
-  }
-  function showPopover(){
-    positionPopover();
-    eraserPopover.hidden = false;
-    eraserPopover.setAttribute('aria-hidden','false');
-  }
-  function hidePopover(){
-    eraserPopover.hidden = true;
-    eraserPopover.setAttribute('aria-hidden','true');
-  }
-
-  // toggle on eraser click
-  toolEraser.addEventListener('click', (e) => {
-    e.stopPropagation();
-    if (eraserPopover.hidden) { setTool('eraser'); showPopover(); }
-    else { hidePopover(); }
-  });
-
-  // close behaviors (same pattern as brush)
-  const toolsPanel = document.querySelector('.gp-right');
-  function onGlobalPointerDown(e){
-    if (eraserPopover.hidden) return;
-    const path = e.composedPath ? e.composedPath() : [];
-    const insidePopover = path.includes(eraserPopover);
-    const insideTools   = toolsPanel && path.includes(toolsPanel);
-    const isToolBtn     = path.some(el => el instanceof HTMLElement && el.classList?.contains('toolbtn'));
-    if (isToolBtn && !insidePopover) { hidePopover(); return; }
-    if (!insidePopover && !insideTools) { hidePopover(); }
-  }
-  document.addEventListener('pointerdown', onGlobalPointerDown, true);
-
-  window.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') hidePopover();
-  });
-
-  // Hide on any scroll
-  function onAnyScroll(){ if (!eraserPopover.hidden) hidePopover(); }
-  document.addEventListener('scroll', onAnyScroll, true);
-
-  // Reposition on resize
-  window.addEventListener('resize', () => {
-    if (!eraserPopover.hidden) positionPopover();
-  });
-
-  // Ensure it closes when switching to another tool
-  const __setTool2 = setTool;
-  setTool = function(t){
-    if (t !== 'eraser') hidePopover();
-    __setTool2(t);
-  };
-})();
-
-// Add to Gallery logic
-(() => {
-  // Helper: check if a canvas is fully transparent (no pixels drawn)
-  function canvasIsEmpty(c) {
-    if (!c || !c.width || !c.height) return true;
-    const ctx = c.getContext("2d");
-    const { data } = ctx.getImageData(0, 0, c.width, c.height);
-    for (let i = 3; i < data.length; i += 4) {
-      if (data[i] !== 0) return false; // found a non-transparent pixel
+    if (!c || isCanvasEmpty(c)) {
+      if (typeof showToast === "function") showToast(msgNoImg, "error");
+      else alert(msgNoImg);
+      return;
     }
-    return true;
-  }
 
-  // Helper: save PNG blob to the same IndexedDB used by the Gallery
-  async function saveImageToGallery(blob) {
-    return new Promise((resolve, reject) => {
-      const req = indexedDB.open("wplaceGallery", 1);
-      req.onupgradeneeded = () => {
-        const db = req.result;
-        if (!db.objectStoreNames.contains("images")) {
-          const store = db.createObjectStore("images", { keyPath: "id", autoIncrement: true });
-          store.createIndex("created", "created", { unique: false });
-          store.createIndex("name", "name", { unique: false });
-        }
-      };
-      req.onsuccess = () => {
-        const db = req.result;
-        const tx = db.transaction("images", "readwrite");
-        const store = tx.objectStore("images");
-        store.add({ blob, created: Date.now() });
-        tx.oncomplete = resolve;
-        tx.onerror = reject;
-      };
-      req.onerror = () => reject(req.error);
+    const upscale = e.altKey ? 8 : 1; // Alt = upscale 8×
+    const out = document.createElement("canvas");
+    out.width = c.width * upscale;
+    out.height = c.height * upscale;
+
+    const o = out.getContext("2d");
+    o.imageSmoothingEnabled = false;
+    o.drawImage(c, 0, 0, out.width, out.height);
+
+    const a = document.createElement("a");
+    a.download =
+      upscale === 1
+        ? `pixel-${c.width}x${c.height}.png`
+        : `pixel-${c.width}x${c.height}@${upscale}x.png`;
+    a.href = out.toDataURL("image/png");
+    a.click();
+  });
+
+  // ====== Brush popover handling (tools-only close) ======
+  (function setupBrushPopover() {
+    if (!toolBrush || !brushPopover) return;
+
+    // mount on <body>
+    if (brushPopover.parentElement !== document.body) {
+      document.body.appendChild(brushPopover);
+    }
+
+    // swatches
+    brushPopover.innerHTML = "";
+    BRUSH_SIZES.forEach((sz) => {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "brush-size-swatch";
+      btn.dataset.size = String(sz);
+      btn.title = `Brush ${sz}`;
+      btn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        brushSize = sz;
+        brushPopover
+          .querySelectorAll(".brush-size-swatch")
+          .forEach((b) => b.setAttribute("aria-pressed", "false"));
+        btn.setAttribute("aria-pressed", "true");
+        setTool("brush");
+      });
+      brushPopover.appendChild(btn);
     });
-  }
 
-  // Bind "Add to Gallery" button
-  document.addEventListener("DOMContentLoaded", () => {
-    const btn = document.getElementById("addToGallery");
-    if (!btn || btn.dataset.bound === "true") return;
-    btn.dataset.bound = "true";
+    function positionPopover() {
+      const r = toolBrush.getBoundingClientRect();
+      brushPopover.style.position = "fixed";
+      brushPopover.style.top = `${Math.round(r.bottom + 6)}px`;
+      brushPopover.style.left = `${Math.round(r.left)}px`;
+    }
+    function showPopover() {
+      positionPopover();
+      brushPopover.hidden = false;
+      brushPopover.setAttribute("aria-hidden", "false");
+    }
+    function hidePopover() {
+      brushPopover.hidden = true;
+      brushPopover.setAttribute("aria-hidden", "true");
+    }
 
-    btn.addEventListener("click", () => {
-      try {
-        // Use the Studio paint canvas
-        const c = document.getElementById("paintCanvas");
-
-        // Translations (fallbacks if missing)
-        const lang = (typeof getCurrentLang === "function" ? getCurrentLang() : "en");
-        const dict = (typeof window.translations !== "undefined" && window.translations[lang]) || {};
-        const msgNoImg   = dict.imageNotFound || "No image to add.";
-        const msgSaved   = dict.imageSaved    || "Added to gallery!";
-        const msgFailed  = dict.saveFailed    || "Failed to save image.";
-        const msgStorage = dict.storageFull   || "Your browser storage is full. Remove some items from the gallery and try again.";
-
-        // No canvas / zero size / fully transparent → toast error
-        if (!c || !c.width || !c.height || canvasIsEmpty(c)) {
-          if (typeof showToast === "function") showToast(msgNoImg, "error");
-          else alert(msgNoImg);
-          return;
-        }
-
-        // Prevent double clicks while we save
-        btn.disabled = true;
-        btn.setAttribute("aria-busy", "true");
-
-        const finish = async (blob) => {
-          btn.disabled = false;
-          btn.removeAttribute("aria-busy");
-          if (!blob) {
-            if (typeof showToast === "function") showToast(msgFailed, "error");
-            else alert(msgFailed);
-            return;
-          }
-          try {
-            await saveImageToGallery(blob);
-            if (typeof showToast === "function") showToast(msgSaved, "success");
-            else alert(msgSaved);
-          } catch (err) {
-            console.error(err);
-            const msg = String(err).toLowerCase().includes("quota") ? msgStorage : msgFailed;
-            if (typeof showToast === "function") showToast(msg, "error");
-            else alert(msg);
-          }
-        };
-
-        // Prefer async toBlob; fallback to dataURL for older browsers
-        if (c.toBlob) {
-          c.toBlob(finish, "image/png");
-        } else {
-          const dataURL = c.toDataURL("image/png");
-          const b64 = (dataURL.split(",")[1] || "");
-          const bin = atob(b64);
-          const u8  = new Uint8Array(bin.length);
-          for (let i = 0; i < bin.length; i++) u8[i] = bin.charCodeAt(i);
-          finish(new Blob([u8], { type: "image/png" }));
-        }
-      } catch (e) {
-        console.error(e);
+    // toggle on brush click
+    toolBrush.addEventListener("click", (e) => {
+      e.stopPropagation();
+      if (brushPopover.hidden) {
+        setTool("brush");
+        showPopover();
+      } else {
+        hidePopover();
       }
     });
-  });
-})();
 
+    // Close only on:
+    const toolsPanel = document.querySelector(".gp-right");
+    function onGlobalPointerDown(e) {
+      if (brushPopover.hidden) return;
+      const path = e.composedPath ? e.composedPath() : [];
+      const insidePopover = path.includes(brushPopover);
+      const insideTools = toolsPanel && path.includes(toolsPanel);
+      const isToolBtn = path.some(
+        (el) => el instanceof HTMLElement && el.classList?.contains("toolbtn"),
+      );
 
-// ====== Init ======
-function init(){
-  buildPalette();
-  setColor('#000000');
-  zoom = parseInt(zoomSel?.value || '12', 10);
-  resizeLogical();
-  applyZoom();
-  window.initLang?.();
-  syncGridButton();
-  document.getElementById('lang-select')
-    ?.addEventListener('change', () => syncGridButton());
+      // Clicking a tool closes (including brush)
+      if (isToolBtn && !insidePopover) {
+        hidePopover();
+        return;
+      }
 
-  // --- custom cursor toggle ---
-  const customCursorKey = 'studio.customCursors';
-  const toggle = document.getElementById('toggleCursors');
-  if (toggle){
-    const saved = localStorage.getItem(customCursorKey);
-    if (saved !== null) toggle.checked = (saved === '1');
+      // Clicking outside both popover and tools panel closes
+      if (!insidePopover && !insideTools) {
+        hidePopover();
+      }
+    }
+    // capturing so it works even if something stops propagation
+    document.addEventListener("pointerdown", onGlobalPointerDown, true);
 
-    const setCursorsEnabled = (on) => {
-      state.customCursors = !!on;
-      applyCursor();
-    };
-
-    setCursorsEnabled(toggle.checked);
-
-    toggle.addEventListener('change', () => {
-      localStorage.setItem(customCursorKey, toggle.checked ? '1' : '0');
-      setCursorsEnabled(toggle.checked);
+    window.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") hidePopover();
     });
+
+    // Close on any scroll (page or inner scrollable containers)
+    function onAnyScroll() {
+      if (!brushPopover.hidden) hidePopover();
+    }
+    // capture phase so we catch scrolls from inner panels too
+    document.addEventListener("scroll", onAnyScroll, true);
+
+    // Keep position correct if the window is resized
+    window.addEventListener("resize", () => {
+      if (!brushPopover.hidden) positionPopover();
+    });
+
+    // Hide when changing to any other tool
+    const __setTool = setTool;
+    setTool = function (t) {
+      if (t !== "brush") hidePopover();
+      __setTool(t);
+    };
+  })();
+
+  // ====== Eraser popover handling (tools-only close) ======
+  (function setupEraserPopover() {
+    const eraserPopover = document.getElementById("eraserSizePopover");
+    if (!toolEraser || !eraserPopover) return;
+
+    // mount on <body>
+    if (eraserPopover.parentElement !== document.body) {
+      document.body.appendChild(eraserPopover);
+    }
+
+    // build size chips
+    eraserPopover.innerHTML = "";
+    ERASER_SIZES.forEach((sz) => {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "brush-size-swatch";
+      btn.dataset.size = String(sz);
+      btn.title = `Eraser ${sz}`;
+      btn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        eraserSize = sz;
+        eraserPopover
+          .querySelectorAll(".brush-size-swatch")
+          .forEach((b) => b.setAttribute("aria-pressed", "false"));
+        btn.setAttribute("aria-pressed", "true");
+        setTool("eraser");
+      });
+      eraserPopover.appendChild(btn);
+    });
+
+    function positionPopover() {
+      const r = toolEraser.getBoundingClientRect();
+      eraserPopover.style.position = "fixed";
+      eraserPopover.style.top = `${Math.round(r.bottom + 6)}px`;
+      eraserPopover.style.left = `${Math.round(r.left)}px`;
+    }
+    function showPopover() {
+      positionPopover();
+      eraserPopover.hidden = false;
+      eraserPopover.setAttribute("aria-hidden", "false");
+    }
+    function hidePopover() {
+      eraserPopover.hidden = true;
+      eraserPopover.setAttribute("aria-hidden", "true");
+    }
+
+    // toggle on eraser click
+    toolEraser.addEventListener("click", (e) => {
+      e.stopPropagation();
+      if (eraserPopover.hidden) {
+        setTool("eraser");
+        showPopover();
+      } else {
+        hidePopover();
+      }
+    });
+
+    // close behaviors (same pattern as brush)
+    const toolsPanel = document.querySelector(".gp-right");
+    function onGlobalPointerDown(e) {
+      if (eraserPopover.hidden) return;
+      const path = e.composedPath ? e.composedPath() : [];
+      const insidePopover = path.includes(eraserPopover);
+      const insideTools = toolsPanel && path.includes(toolsPanel);
+      const isToolBtn = path.some(
+        (el) => el instanceof HTMLElement && el.classList?.contains("toolbtn"),
+      );
+      if (isToolBtn && !insidePopover) {
+        hidePopover();
+        return;
+      }
+      if (!insidePopover && !insideTools) {
+        hidePopover();
+      }
+    }
+    document.addEventListener("pointerdown", onGlobalPointerDown, true);
+
+    window.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") hidePopover();
+    });
+
+    // Hide on any scroll
+    function onAnyScroll() {
+      if (!eraserPopover.hidden) hidePopover();
+    }
+    document.addEventListener("scroll", onAnyScroll, true);
+
+    // Reposition on resize
+    window.addEventListener("resize", () => {
+      if (!eraserPopover.hidden) positionPopover();
+    });
+
+    // Ensure it closes when switching to another tool
+    const __setTool2 = setTool;
+    setTool = function (t) {
+      if (t !== "eraser") hidePopover();
+      __setTool2(t);
+    };
+  })();
+
+  // Add to Gallery logic
+  (() => {
+    // Helper: check if a canvas is fully transparent (no pixels drawn)
+    function canvasIsEmpty(c) {
+      if (!c || !c.width || !c.height) return true;
+      const ctx = c.getContext("2d");
+      const { data } = ctx.getImageData(0, 0, c.width, c.height);
+      for (let i = 3; i < data.length; i += 4) {
+        if (data[i] !== 0) return false; // found a non-transparent pixel
+      }
+      return true;
+    }
+
+    // Helper: save PNG blob to the same IndexedDB used by the Gallery
+    async function saveImageToGallery(blob) {
+      return new Promise((resolve, reject) => {
+        const req = indexedDB.open("wplaceGallery", 1);
+        req.onupgradeneeded = () => {
+          const db = req.result;
+          if (!db.objectStoreNames.contains("images")) {
+            const store = db.createObjectStore("images", {
+              keyPath: "id",
+              autoIncrement: true,
+            });
+            store.createIndex("created", "created", { unique: false });
+            store.createIndex("name", "name", { unique: false });
+          }
+        };
+        req.onsuccess = () => {
+          const db = req.result;
+          const tx = db.transaction("images", "readwrite");
+          const store = tx.objectStore("images");
+          store.add({ blob, created: Date.now() });
+          tx.oncomplete = resolve;
+          tx.onerror = reject;
+        };
+        req.onerror = () => reject(req.error);
+      });
+    }
+
+    // Bind "Add to Gallery" button
+    document.addEventListener("DOMContentLoaded", () => {
+      const btn = document.getElementById("addToGallery");
+      if (!btn || btn.dataset.bound === "true") return;
+      btn.dataset.bound = "true";
+
+      btn.addEventListener("click", () => {
+        try {
+          // Use the Studio paint canvas
+          const c = document.getElementById("paintCanvas");
+
+          // Translations (fallbacks if missing)
+          const lang =
+            typeof getCurrentLang === "function" ? getCurrentLang() : "en";
+          const dict =
+            (typeof window.translations !== "undefined" &&
+              window.translations[lang]) ||
+            {};
+          const msgNoImg = dict.imageNotFound || "No image to add.";
+          const msgSaved = dict.imageSaved || "Added to gallery!";
+          const msgFailed = dict.saveFailed || "Failed to save image.";
+          const msgStorage =
+            dict.storageFull ||
+            "Your browser storage is full. Remove some items from the gallery and try again.";
+
+          // No canvas / zero size / fully transparent → toast error
+          if (!c || !c.width || !c.height || canvasIsEmpty(c)) {
+            if (typeof showToast === "function") showToast(msgNoImg, "error");
+            else alert(msgNoImg);
+            return;
+          }
+
+          // Prevent double clicks while we save
+          btn.disabled = true;
+          btn.setAttribute("aria-busy", "true");
+
+          const finish = async (blob) => {
+            btn.disabled = false;
+            btn.removeAttribute("aria-busy");
+            if (!blob) {
+              if (typeof showToast === "function")
+                showToast(msgFailed, "error");
+              else alert(msgFailed);
+              return;
+            }
+            try {
+              await saveImageToGallery(blob);
+              if (typeof showToast === "function")
+                showToast(msgSaved, "success");
+              else alert(msgSaved);
+            } catch (err) {
+              console.error(err);
+              const msg = String(err).toLowerCase().includes("quota")
+                ? msgStorage
+                : msgFailed;
+              if (typeof showToast === "function") showToast(msg, "error");
+              else alert(msg);
+            }
+          };
+
+          // Prefer async toBlob; fallback to dataURL for older browsers
+          if (c.toBlob) {
+            c.toBlob(finish, "image/png");
+          } else {
+            const dataURL = c.toDataURL("image/png");
+            const b64 = dataURL.split(",")[1] || "";
+            const bin = atob(b64);
+            const u8 = new Uint8Array(bin.length);
+            for (let i = 0; i < bin.length; i++) u8[i] = bin.charCodeAt(i);
+            finish(new Blob([u8], { type: "image/png" }));
+          }
+        } catch (e) {
+          console.error(e);
+        }
+      });
+    });
+  })();
+
+  // ====== Init ======
+  function init() {
+    buildPalette();
+    setColor("#000000");
+    zoom = parseInt(zoomSel?.value || "12", 10);
+    resizeLogical();
+    applyZoom();
+    window.initLang?.();
+    syncGridButton();
+    document
+      .getElementById("lang-select")
+      ?.addEventListener("change", () => syncGridButton());
+
+    // --- custom cursor toggle ---
+    const customCursorKey = "studio.customCursors";
+    const toggle = document.getElementById("toggleCursors");
+    if (toggle) {
+      const saved = localStorage.getItem(customCursorKey);
+      if (saved !== null) toggle.checked = saved === "1";
+
+      const setCursorsEnabled = (on) => {
+        state.customCursors = !!on;
+        applyCursor();
+      };
+
+      setCursorsEnabled(toggle.checked);
+
+      toggle.addEventListener("change", () => {
+        localStorage.setItem(customCursorKey, toggle.checked ? "1" : "0");
+        setCursorsEnabled(toggle.checked);
+      });
+    }
+
+    applyCursor();
   }
 
-  applyCursor();
-}
-
-if (document.readyState !== 'loading') init();
-else document.addEventListener('DOMContentLoaded', init);
+  if (document.readyState !== "loading") init();
+  else document.addEventListener("DOMContentLoaded", init);
 })();
